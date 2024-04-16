@@ -41,7 +41,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        print(f"Validated data: {validated_data}") 
+
         email = validated_data.get('email')
         first_name = validated_data.get('first_name')
         last_name = validated_data.get('last_name')
@@ -124,4 +124,152 @@ class UserSerializer(serializers.ModelSerializer):
             'profile_image',
             'gender',
             'address'
+        ]
+
+
+class TutorRegistrationSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(max_length=128,required=True, write_only=True)
+    password2 = serializers.CharField(max_length=128,required=True, write_only=True)
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'first_name',
+            'last_name',
+            'contact',
+            'gender',
+            'address',
+            'password',
+            'password2',
+            'profile_image',
+            'short_bio',
+            'city',
+            'subjects',
+            'experience',
+            'dob',
+            'price'
+        ]
+        
+        extra_kwargs = {
+            'password':{
+                'write_only':True
+            },
+            'password2':{
+                'write_only':True
+            }
+        }
+    def create(self, validated_data):
+        email = validated_data.get('email')
+        first_name = validated_data.get('first_name')
+        last_name = validated_data.get('last_name')
+        contact = validated_data.get('contact')
+        gender = validated_data.get('gender')
+        address = validated_data.get('address')
+        password = validated_data.get('password')
+        password2 = validated_data.get('password2')
+        profile_image = validated_data.get('profile_image')
+        short_bio = validated_data.get('short_bio')
+        city = validated_data.get('city')
+        subject = validated_data.get('subjects')
+        experience = validated_data.get('experience')
+        dob = validated_data.get('dob')
+        price = validated_data.get('price')
+        
+        if password == password2 :
+            user = User(email=email,
+                        first_name=first_name,
+                        last_name=last_name,
+                        contact = contact,
+                        gender = gender,
+                        address = address,
+                        profile_image = profile_image,
+                        short_bio = short_bio,
+                        city = city,
+                        subjects = subject,
+                        experience = experience,
+                        dob = dob,
+                        price = price, 
+                        role=2 
+                    )
+            user.set_password(password)
+            user.save()
+            return user
+        else:
+            raise serializers.ValidationError('Password and Confirm password does not match')
+class TutorLoginSerializer(serializers.Serializer):
+    password = serializers.CharField(max_length=128, write_only=True)
+    email = serializers.EmailField()
+    role = serializers.CharField(read_only=True)
+    access = serializers.CharField(read_only=True)
+    refresh = serializers.CharField(read_only=True)
+    first_name = serializers.CharField(read_only=True)
+    last_name = serializers.CharField(read_only=True)
+    contact = serializers.CharField(read_only=True)
+    gender = serializers.CharField(read_only=True)
+    profile_image = serializers.CharField(read_only=True)
+    dob = serializers.CharField(read_only=True)
+    price = serializers.CharField(read_only=True)
+    short_bio = serializers.CharField(read_only=True)
+    city = serializers.CharField(read_only=True)
+    subjects = serializers.CharField(read_only=True)
+    id = serializers.CharField(read_only=True)
+    address = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = '__all__'
+    
+    def validate(self, attrs):
+        email = attrs['email']
+        password = attrs['password']
+        
+        user = authenticate(email=email, password=password)
+        
+        if user is None:
+            raise serializers.ValidationError('Invalid login credentials!')
+        try:
+            refresh = RefreshToken.for_user(user)
+            refresh_token = str(refresh)
+            access_token = str(refresh.access_token)
+            update_last_login(None,user)
+            validation = {
+                'id':user.id,
+                'access':access_token,
+                'refresh':refresh_token,
+                'email':user.email,
+                'first_name':user.first_name,
+                'last_name':user.last_name,
+                'contact':user.contact,
+                'gender':user.gender,
+                'address':user.address,
+                'profile_image':user.profile_image,
+                'dob':user.dob,
+                'price':user.price,
+                'short_bio':user.short_bio,
+                'city':user.city.city_name,
+                'subjects':user.subjects.subject_name,
+                'role':user.role
+            }
+            return validation
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User does not exist")
+
+    
+class TutorSeriliazer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'first_name',
+            'last_name',
+            'contact',
+            'gender',
+            'address',
+            'profile_image',
+            'short_bio',
+            'city',
+            'subjects',
+            'experience',
+            'dob',
+            'price'
         ]

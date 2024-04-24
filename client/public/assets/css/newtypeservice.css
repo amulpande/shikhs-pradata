@@ -1,0 +1,64 @@
+.container {
+    width: 100%;
+    margin-top: 100;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+}
+
+.row {
+    margin-top: 30px;
+}
+img {
+    height: ;
+    width: ;
+    object-fit: scale-down;
+    display: flex;
+}
+.product-bottom .fa {
+    color: #28a745;
+    font-size: 10px;
+}
+.product-bottom .h3{
+    font-size: 20px;
+    font-weight: bold;
+}
+.product-bottom .h5{
+    font-size: 15px;
+    padding-bottom: 10px;
+}
+.overlay {
+    display: black;
+    opacity: 0;
+    position: absolute;
+    top: 10%;
+    margin-left: 0;
+    width: 70px;
+}
+.product-top:hover  
+{
+    opacity: 1;
+    margin-left: 5%;
+    transition: 0.5s;
+}
+.product-top:hover .overlay {
+    transform: translate3d(0px, 0, 0px);
+    -webkit-transform: translate3d(0px, 0, 0px);
+    -moz-transform: translate3d(0px, 0, 0px);
+    -ms-transform: translate3d(0px, 0, 0px);
+    -o-transform: translate3d(0px, 0, 0px);
+    transition-delay: 0.1s;
+  }
+
+.overlay .fa 
+{
+    cursor: pointer;
+    background-color: #555;
+    color: #000;
+    height: 35px;
+    width: 35px;
+    font-size: 2opx;
+    padding: 7px;
+    margin: 5%;
+    margin-bottom: 5%;
+
+}

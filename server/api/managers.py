@@ -42,13 +42,11 @@ class CustomUserManager(BaseUserManager):
     
 
 class TutorManager(models.Manager):
-    # def get_queryset(self) -> models.QuerySet:
-    #     return super().get_queryset().filter()
     
     def get_tutor_by_id(self,pk):
-        return super().get_queryset().get(pk=pk)
+        return super().get_queryset().filter(role='2').get(pk=pk)
     def get_all_tutor(self,search):
-        return super().get_queryset().filter(role='2').filter(Q(subject__icontains=search)|Q(first_name__icontains=search)).all().order_by('-id')
+        return super().get_queryset().filter(role='2').filter(first_name__icontains=search).all().order_by('-id')
     
     def get_approve_tutor(self):
         return super().get_queryset().filter(tutor_approve=True).filter(role='2').all().order_by('-id')
@@ -57,10 +55,8 @@ class TutorManager(models.Manager):
         return super().get_queryset().filter(tutor_approve=False).filter(role='2').all().order_by('-id')
     
     def get_tutor_subject(self,search=None,order=None):
-        # return super().get_queryset().filter(tutor_approve=True).filter(role='2').filter(subject__icontains=subject).all()
-        return super().get_queryset().filter(tutor_approve=True).filter(role='2').filter(Q(subject__icontains=search)|Q(first_name__icontains=search))
-    # def get_order_for_tutor(self,tutorID):
-    #     return super().get_queryset()
+        
+        return super().get_queryset().filter(tutor_approve=True).filter(role='2').filter(Q(subjects__icontains=search)|Q(first_name__icontains=search))
 
     def get_tutor_order_by(self,order):
         return super().get_queryset().filter(tutor_approve=True).filter(role='2').all().order_by() 

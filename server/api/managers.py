@@ -61,6 +61,9 @@ class TutorManager(models.Manager):
     def get_tutor_order_by(self,order):
         return super().get_queryset().filter(tutor_approve=True).filter(role='2').all().order_by() 
 
+    # get all blocked tutor data 
+    def get_all_blocked_tutor(self):
+        return super().get_queryset().filter(user_blocked=True).filter(role='2').all().order_by('-id')
  
     
 class UserManager(models.Manager):

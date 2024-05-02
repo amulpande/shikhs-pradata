@@ -414,3 +414,10 @@ class TutorApproveByAdminSerializer(serializers.ModelSerializer):
         fields = [
             'tutor_approve'
         ]
+        
+class TutorUserBlockedByAdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'user_blocked'
+        ]

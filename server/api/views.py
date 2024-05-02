@@ -11,6 +11,7 @@ from api.serializers import (
     TutorSeriliazer,
     TutorApproveByAdminSerializer,
     TutorApprovedSerializer,
+    TutorUserBlockedByAdminSerializer,
 )
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -382,7 +383,22 @@ class AdminAllApprovedTutorView(APIView):
         serializer = TutorApprovedSerializer(user,many=True)
         # print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)    
-            
+       
+class  AdminBlockedTutorOrUserView(APIView):
+    serializer_class = TutorUserBlockedByAdminSerializer
+    def patch(self,request,pk):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response({'Message':'User does not exist'},status=status.HTTP_404_NOT_FOUND)
+        if not user:
+            return Response({'Error':'User not found for this id'},status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializer_class(user,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+     
 class AdminNotApprovedTutorView(APIView):
     permission_classes = [IsAdminUser]
     def get(self,request):

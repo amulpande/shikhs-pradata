@@ -398,6 +398,16 @@ class  AdminBlockedTutorOrUserView(APIView):
             serializer.save()
             return Response(serializer.data,status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET']) 
+@permission_classes([IsAdmin])
+def getBlockedUserTutorApiView(request):
+    try:
+        user = User.tutorObject.get_all_blocked_tutor()
+        print(user)
+        return Response({'h':'users'})
+    except User.DoesNotExist:
+        return Response({'Message':'User does not exist'},status=status.HTTP_404_NOT_FOUND)
      
 class AdminNotApprovedTutorView(APIView):
     permission_classes = [IsAdminUser]

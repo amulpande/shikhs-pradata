@@ -9,20 +9,21 @@ import { registeredSuccessfullyNotify, userEmailAlreadyExistNotify } from '../..
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TextField, Input, Button, Grid, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { UserRegisterType } from '../../../../lib/types/types';
 
-interface InitialValuesDataType {
-    email: string;
-    firstName: string;
-    lastName: string;
-    contact: string;
-    gender: string;
-    address: string;
-    password: string;
-    confirmPassword: string;
-    profileImage: File | null;
-}
+// interface InitialValuesDataType {
+//     email: string;
+//     firstName: string;
+//     lastName: string;
+//     contact: string;
+//     gender: string;
+//     address: string;
+//     password: string;
+//     confirmPassword: string;
+//     profileImage: File | null;
+// }
 
-const initialValues: InitialValuesDataType = {
+const initialValues: UserRegisterType = {
     email: '',
     firstName: '',
     lastName: '',
@@ -47,8 +48,8 @@ const RegisterHomePage = () => {
             // alert(JSON.stringify(values, null, 2));
             formData.append('email', values.email)
             formData.append('first_name', values.firstName)
-            formData.append('last_name', values.lastName),
-                formData.append('contact', values.contact)
+            formData.append('last_name', values.lastName)
+            formData.append('contact', values.contact)
             formData.append('gender', values.gender)
             formData.append('address', values.address)
             formData.append('password', values.password)
@@ -228,11 +229,11 @@ const RegisterHomePage = () => {
 
                                         {/* Submit Button */}
                                         {/* <Grid container spacing={2} justifyContent="center"> */}
-                                            <Grid container item xs={12} justifyContent="center">
-                                                <Button type="submit" variant="contained" color="primary">
-                                                    Register Now
-                                                </Button>
-                                            </Grid>
+                                        <Grid container item xs={12} justifyContent="center">
+                                            <Button type="submit" variant="contained" color="primary">
+                                                Register Now
+                                            </Button>
+                                        </Grid>
                                         {/* </Grid> */}
                                     </Grid>
                                 </form>

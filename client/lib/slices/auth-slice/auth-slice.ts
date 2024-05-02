@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { checkUserLogin } from "../../store/thunk-api/auth-api";
 import { cookies } from 'next/headers'
 import { useEffect } from "react";
+import { clearCookies, getAuthCookies, setCookies, setRoleCookie } from "../../utils/cookieStore";
+import { RooState } from "../../store/store";
+
 
 interface AuthState {
     isAuthenticated: boolean;
@@ -22,16 +25,25 @@ const authSlice = createSlice({
     reducers: {
         authLogin: (state, { type, payload }) => {
             state.isAuthenticated = true
-            console.log('payload from auth slice ', payload)
-            state.userAccessToken = payload
-            localStorage.setItem('access_token', payload)
+            state.userAccessToken = payload.access
+            let auth = {
+                access_token: payload.access,
+                refresh_token: payload.refresh,
+                role:payload.user.role
+            }
+            setCookies('token',JSON.stringify(auth))
+            console.log('role of user ', auth)
+            const {access_token,refresh_token} = getAuthCookies('token')
+            localStorage.setItem('access_token', payload.access)
+            localStorage.setItem('refresh_token', payload.refresh)
         },
         authLogout: (state) => {
-            // console.log('state null hua hai ')
             state.isAuthenticated = false
             state.userAccessToken = null
-            // destroyCookie(null, 'userAccessToken');
             localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
+            clearCookies('token')
+            clearCookies('role')
         }
     },
     extraReducers: (builder) => {
@@ -45,8 +57,6 @@ const authSlice = createSlice({
                     state.isPending = false
                 state.userAccessToken = payload
                 localStorage.setItem('access_token', payload)
-                // localStorage.setItem('refresh_token',payload)
-
             }),
             builder.addCase(checkUserLogin.rejected, (state, { type, payload }) => {
                 state.isAuthenticated = false
@@ -57,8 +67,8 @@ const authSlice = createSlice({
     }
 })
 
-export const accessToken = (state: any) => state.authData.userAccessToken
-export const isLoginUser = (state: any) => state.authData.isAuthenticated
-export const isErrorUser = (state: any) => state.authData.isError
+export const accessToken = (state: RooState) => state.authData.userAccessToken
+export const isLoginUser = (state: RooState) => state.authData.isAuthenticated
+export const isErrorUser = (state: RooState) => state.authData.isError
 export const { authLogout, authLogin } = authSlice.actions
 export default authSlice.reducer

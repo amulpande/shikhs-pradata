@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "corsheaders",
     "api",
+    'booking',
 ]
 
 MIDDLEWARE = [
@@ -202,9 +203,9 @@ SIMPLE_JWT = {
 
 # cloudinary setup
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "dossxd9nu",
-    "API_KEY": "252818118326922",
-    "API_SECRET": "wqZu7YApDpe74R_dHy7FCrHmyLc",
+    "CLOUD_NAME": os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    "API_KEY": os.environ.get('CLOUDINARY_API_KEY'),
+    "API_SECRET": os.environ.get('CLOUDINARY_API_SECRET')
 }
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
@@ -216,7 +217,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-# EMAIL_HOST_USER = 'pande.amul.dcs24@vnsgu.ac.in'
+
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
-# EMAIL_HOST_PASSWORD = 'amul4577'
+
 EMAIL_USE_TLS = True

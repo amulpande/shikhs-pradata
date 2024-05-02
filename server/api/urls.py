@@ -1,13 +1,18 @@
-from django.contrib import admin
+from django.contrib import admin 
 from django.urls import path,include
 from api.views import (UserRegisterApiView,UserLoginApiView,UserProfileAndUpdateApiView,
                        UserPasswordChangeView,UserPasswordResetEmailView,UserPasswordResetView,
-                    TutorRegisterApiView,TutotLoginApiView,TutorProfifeAndUpdateApiView,
-                    AdminTutorView,AdminNotApprovedTutorView,approveTutorByAdmin
+                    TutorRegisterApiView,TutotLoginApiView,TutorProfifeAndUpdateApiView,AdminAllApprovedTutorView,
+                    AdminTutorView,AdminNotApprovedTutorView,approveTutorByAdmin,AdminLoginView
                     )
 
+from rest_framework_simplejwt.views import (TokenVerifyView,TokenObtainPairView,TokenRefreshView)
+
 urlpatterns = [
+    
     # path('api/', include('api.urls')),
+    path('user/login/token/verify/',TokenVerifyView.as_view(),name='user-register-api-view'),
+    path('user/login/token/refresh/',TokenRefreshView.as_view(),name='user-register-api-view'),
     path('user/register/',UserRegisterApiView.as_view(),name='user-register-api-view'),
     path('user/login/',UserLoginApiView.as_view(),name='user-login-api-view'),
     path('user/profile/',UserProfileAndUpdateApiView.as_view(),name='user-profile-api-view'),
@@ -18,15 +23,22 @@ urlpatterns = [
     
     #City api 
     path('admin/',include('cityandsubject.urls'),name='user-update-api-view'),
+    
+    
+    #Booking Api
+    path('booking/',include('booking.urls'),name='user-update-api-view'),
      
     #admin tutor
-    path('admin/allTutor/',AdminTutorView.as_view(),name='user-update-api-view'),
-    path('admin/allNotApprovedTutor/',AdminNotApprovedTutorView.as_view(),name='admin-all-not-approved-tutor-api-view'),
-    path('admin/approveTutor/<pk>',approveTutorByAdmin, name='admin-approve-tutor'),
+    path('admin/login/',AdminLoginView.as_view(),name='Admin-login-api-view'),
+    path('admin/all-tutor/',AdminTutorView.as_view(),name='Admin-All-Tutor-api-view'),
+    path('admin/all-not-approved-tutor/',AdminNotApprovedTutorView.as_view(),name='admin-all-not-approved-tutor-api-view'),
+    path('admin/approve-tutor/<pk>',approveTutorByAdmin, name='admin-approve-tutor'),
+    path('admin/all-approved-tutor/',AdminAllApprovedTutorView.as_view(), name='all-approved-tutor'),
     
     # Tutor Api
     path('tutor/register/',TutorRegisterApiView.as_view(),name='tutor-register-api-view'),
     path('tutor/login/',TutotLoginApiView.as_view(),name='tutor-login-api-view'),
     path('tutor/profile/',TutorProfifeAndUpdateApiView.as_view(),name='tutor-profile-api-view'),
     path('tutor/update/',TutorProfifeAndUpdateApiView.as_view(),name='tutor-update-api-view'),
+    
 ] 

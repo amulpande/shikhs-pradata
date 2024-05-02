@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Script from "next/script"
 
 const FooterHome = () => {
@@ -9,10 +10,10 @@ const FooterHome = () => {
                     <div className="row">
                         <div className="col-lg-3 col-md-6 col-sm-6 col-12">
                             <div className="footer-logo-area">
-                                <a >
+                                <Link href='#'>
                                     {/* need to add shikhs pradata logo image */}
                                     <img src="" alt="logo" />
-                                </a>
+                                </Link>
                                 <p>
                                     We are here to help you learn better and get good Marks
                                 </p>
@@ -20,24 +21,24 @@ const FooterHome = () => {
                                     <span>Follow Us: </span>
                                     <ul>
                                         <li>
-                                            <a href="#">
+                                            <Link href="#">
                                                 <i className="fab fa-facebook-f" />
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <Link href="#">
                                                 <i className="fab fa-twitter" />
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <Link href="#">
                                                 <i className="fab fa-instagram" />
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <Link href="#">
                                                 <i className="fab fa-pinterest-p" />
-                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -50,17 +51,17 @@ const FooterHome = () => {
                                     <li>
                                         <i className="fas fa-map-marker-alt" />
                                         <p>Location:</p>
-                                        <a href="#">Vapi, Gujrat, India</a>
+                                        <Link href="#">Vapi, Gujrat, India</Link>
                                     </li>
                                     <li>
                                         <i className="fas fa-envelope" />
                                         <p>Email:</p>
-                                        <a href="#">homeservice@gmail.com</a>
+                                        <Link href="#">homeservice@gmail.com</Link>
                                     </li>
                                     <li>
                                         <i className="fas fa-phone-alt" />
                                         <p>Phone:</p>
-                                        <a href="tel:9988776655">9988776655</a>
+                                        <Link href="tel:9988776655">9988776655</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -70,25 +71,25 @@ const FooterHome = () => {
                                 <h3>Quick Links</h3>
                                 <ul>
                                     <li>
-                                        <a href="index.php">
+                                        <Link href="/index">
                                             <i className="fas fa-long-arrow-alt-right" /> Home{" "}
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="about.php">
+                                        <Link href="/about">
                                             <i className="fas fa-long-arrow-alt-right" /> About Us{" "}
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="service.php">
-                                            <i className="fas fa-long-arrow-alt-right" /> Services{" "}
-                                        </a>
+                                        <Link href="service.php">
+                                            <i className="fas fa-long-arrow-alt-right" /> Subject{" "}
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a href="contact.php">
+                                        <Link href="contact.php">
                                             <i className="fas fa-long-arrow-alt-right" /> Contact{" "}
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
@@ -118,7 +119,7 @@ const FooterHome = () => {
                 <div className="container">
                     <p>
                         © Copyright 2022, All Rights Reserved.{" "}
-                        <a href="#">SHIKHA PRADATA</a>
+                        <Link href="#">SHIKHA PRADATA</Link>
                     </p>
                 </div>
             </div>

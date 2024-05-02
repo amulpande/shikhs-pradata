@@ -30,92 +30,87 @@ const HeaderHome = () => {
     }
     return (
         <>
-        
-        
-        <div className="header-area">
-            <div className="navbar-area">
-                {/* <div className="main-responsive-nav">
-                    <div className="container">
-                        <div className="mobile-nav">
-                            <ul className="menu-sidebar menu-small-device">
+            <div className="header-area">
+                <div className="navbar-area">
+                    <div className="main-responsive-nav">
+                        <div className="container">
+                            <div className="mobile-nav">
+                                {/* <ul className="menu-sidebar menu-small-device">
                                 <li>
                                     <button className="popup-button">
                                         <i className="fas fa-search" />
                                     </button>
                                 </li>
-                            </ul>
+                            </ul> */}
+                            </div>
                         </div>
                     </div>
-                </div> */}
-                <div className="main-nav">
-                    <div className="container">
-                        <nav className="navbar navbar-expand-md navbar-light bg-light">
-                            {/* <a className="navbar-brand" href="index.php">
-                                <img src="assets/images/logo23.png" alt="logo" />
-                            </a> */}
-                            SHIKHSHA-PRADATA LOGO
-                            <div
-                                className="collapse navbar-collapse mean-menu justify-content-center"
-                                id="navbarSupportedContent"
-                            >
-                                <ul className="navbar-nav">
-                                    <li className="nav-item">
-                                        <Link href="index" className="nav-link">
-                                            HOME
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href="about.php" className="nav-link">
-                                            ABOUT
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href="#" className="nav-link dropdown-toggle">
-                                            SERVICES <i className="fas fa-sort-down" />
-                                        </a>
-                                        <ul className="dropdown-menu">
+                    <div className="main-nav">
+                        <div className="container">
+                            <nav className="navbar navbar-expand-md navbar-light bg-light">
+                                SHIKHSHA-PRADATA LOGO
+                                <div
+                                    className="collapse navbar-collapse mean-menu justify-content-center"
+                                    id="navbarSupportedContent"
+                                >
+                                    <ul className="navbar-nav">
+                                        <li className="nav-item">
+                                            <Link href="index" as="/index" className="nav-link">
+                                                HOME
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a href="about" className="nav-link">
+                                                ABOUT
+                                            </a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a href="#" className="nav-link dropdown-toggle">
+                                                SUBJECT <i className="fas fa-sort-down" />
+                                            </a>
+                                            <ul className="dropdown-menu">
 
-                                            <li className="nav-item">
-                                                <a href="service-details.php?sid=<?php echo $ro1['sid']?>">
+                                                <li className="nav-item">
+                                                    <Link href={`tutor-details/${1}`}>
+                                                        ENGLISH
+                                                    </Link>
+                                                </li>
 
-                                                </a>
-                                            </li>
+                                            </ul>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link href="tutor-details" as="/tutor-details" className="nav-link">
+                                                TUTOR
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link href="contact-us" as="/contact-us" className="nav-link">
+                                                CONTACT US
+                                            </Link>
+                                        </li>
+                                    </ul>
 
-                                        </ul>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href="booking.php" className="nav-link">
-                                            BOOKING
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href="contact.php" className="nav-link">
-                                            CONTACT US
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <div id="mySidebar" className="sidebar">
-                                    <a href="#" className="closebtn" onClick={closeNav}>&times;</a>
-                                    <a href="profiles.php">PROFILE</a>
-                                    <a href="invoice.php">MY BOOKING</a>
-                                    <a href="view_cart.php">MY CART</a>
-                                    <a href="invoices1.php">MY INVOICE</a>
-                                    <a href="login.php">LOGIN</a>
-                                    <a href="userreg.php">REGISTER</a>
+                                    <div id="mySidebar" className="sidebar">
+                                        <Link href="#" className="closebtn" onClick={closeNav}>&times;</Link>
+                                        <Link href="profile" as='/profile'>PROFILE</Link>
+                                        <Link href="invoice" as='/my-booking' >MY BOOKING</Link>
+                                        <Link href="view-cart" as="view-cart" >MY CART</Link>
+                                        <Link href="invoices1">MY INVOICE</Link>
+                                        <Link href="login">LOGIN</Link>
+                                        <Link href="register">REGISTER</Link>
+                                    </div>
+                                    <div id="main">
+                                        <button className="openbtn" onClick={handleNavClose}>&#9776;</button>
+                                    </div>
                                 </div>
-                                <div id="main">
-                                    <button className="openbtn" onClick={handleNavClose}>&#9776;</button>
-                                </div>
-                            </div>
-                        </nav>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
+
         </>
-        
+
     )
 }
 

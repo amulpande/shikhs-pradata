@@ -1,7 +1,7 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState } from 'react'; 
 
-const page = () => {
+const ResetpasswordPage = () => {
     const [resetPassword, setResetPassword] = useState({
         passowrd: '',
         password2: ''
@@ -12,9 +12,9 @@ const page = () => {
     }
     return (
         <div>
-            <form action="" onSubmit={(e)=>{
-                e.preventDefault()
-                console.log(resetPassword)
+            <form onSubmit={(e)=>{
+                e.preventDefault();
+                console.log(resetPassword);
             }}>
                 <input type='text'
                     name='password'
@@ -31,4 +31,4 @@ const page = () => {
     )
 }
 
-export default page
+export default ResetpasswordPage

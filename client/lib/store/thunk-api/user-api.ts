@@ -36,21 +36,6 @@ export const fetchUserDataUsingToken = createAsyncThunk('fetchUserDataUsingToken
     }
 });
 
-
-
-// export const fetchUserDataUsingToken = createAsyncThunk('fetchUserDataUsingToken', async (userAccessToken: string,{ rejectWithValue }) => {
-//     try {
-//         const response = await axiosInstance.get('user/profile/');
-//         console.log('inside fetchuserwithtoken',response.data.user)
-//         return response.data.user;
-//     } catch (error) {
-//         // console.error('Failed to fetch user data:', error);
-//         // throw error; 
-//         return rejectWithValue(error.response.data);
-//     }
-// });
-
-
 export const userRegisterationPostApi = async(data:any)=>{
     try {
         const responce = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}user/register/`,data)
@@ -60,10 +45,4 @@ export const userRegisterationPostApi = async(data:any)=>{
         return 
     }
 }
-
-// export const userFetchAccess = async()=>{
-//     try{
-//         const responce = await axiosInstance.get()
-//     }
-// }
 

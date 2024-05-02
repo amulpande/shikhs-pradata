@@ -1420,7 +1420,8 @@ Main Banner Area CSS
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(../images/banner/inner-banner-bg.jpg);
+    /* background-image: url(../images/banner/inner-banner-bg.jpg); */
+    background-image: url(../images/banner/blackBoard.jpg);
     position: relative
 }
 

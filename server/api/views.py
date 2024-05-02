@@ -10,6 +10,7 @@ from api.serializers import (
     TutorLoginSerializer,
     TutorSeriliazer,
     TutorApproveByAdminSerializer,
+    TutorApprovedSerializer,
 )
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -18,7 +19,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework.decorators import permission_classes
-from api.permissions import IsTutor, IsUser
+from api.permissions import IsTutor, IsUser,IsAdmin
 from rest_framework.permissions import IsAdminUser
 
 from api.models import User
@@ -128,8 +129,8 @@ class UserPasswordChangeView(APIView):
 class UserPasswordResetEmailView(APIView):
     # permission_classes=[IsAuthenticated,IsUser]
     def post(self, request, format=None):
-        print("email reset -> ", request.data)
-        print("os email", os.environ.get("EMAIL_USER"))
+        # print("email reset -> ", request.data)
+        # print("os email", os.environ.get("EMAIL_USER"))
 
         serializer = UserPasswordResetEmailSerializer(data=request.data)
         if serializer.is_valid():
@@ -155,7 +156,7 @@ class UserPasswordResetView(APIView):
 
 
 class UserProfileAndUpdateApiView(APIView):
-    permission_classes = [IsUser]
+    # permission_classes = [IsUser]
 
     def get(self, request):
         status_code = status.HTTP_401_UNAUTHORIZED
@@ -316,10 +317,35 @@ class TutorProfifeAndUpdateApiView(APIView):
 
 class AdminLoginView(APIView):
     serializer_class = UserLoginSeriliazer
+    
+    def post(self,request,format=None):
+        serializer = UserLoginSeriliazer(data=request.data)
+        valid = serializer.is_valid(raise_exception=False)
+        status_code = status.HTTP_401_UNAUTHORIZED
+        response = {
+            'success':False,
+            'statusCode':status_code,
+            'errors':'Invalid credentials'
+        }
+        if valid:
+            if serializer.data["role"]=='1':
+                status_code = status.HTTP_200_OK
+                response = {
+                    'success':True,
+                    'statusCode':status_code,
+                    'access':serializer.data['access'],
+                    'refresh':serializer.data['refresh'],
+                    'user':{
+                        'id':serializer.data['id'],
+                        'eamil':serializer.data['email'],
+                        'role':serializer.data['role']
+                    }
+                }
+        return Response(response,status=status_code)
 
 
 class AdminTutorView(APIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         search = request.query_params.get("search", "")
@@ -346,8 +372,17 @@ class AdminTutorView(APIView):
             return Response({"Message": "Deleted"})
         except:
             return Response({"Error": "Tutor not found"})
-        
-        
+    
+class AdminAllApprovedTutorView(APIView):
+    # permission_classes = [IsAdminUser]
+    def get(self,request):
+        user = User.tutorObject.get_approve_tutor()
+        if user is None:
+            return Response({'Error':'No Tutor found in database'},status=status.HTTP_400_BAD_REQUEST)
+        serializer = TutorApprovedSerializer(user,many=True)
+        # print(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)    
+            
 class AdminNotApprovedTutorView(APIView):
     permission_classes = [IsAdminUser]
     def get(self,request):

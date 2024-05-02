@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
+// import "./globals.css";
 import StoreProvider from "../../lib/store/StoreProvider";
 import Script from "next/script";
 
@@ -24,7 +24,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/assets/css/fontawsome.min.css" />
         <link rel="stylesheet" href="/assets/fonts/font/flaticon.css" />
         <link rel="stylesheet" href="/assets/css/meanmenu.min.css" />
-        <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
+        <link rel="stylesheet" href="/assets/css/owl.carousel.min.css" />
         <link rel="stylesheet" href="/assets/css/jquery.nice-number.css" />
         <link rel="stylesheet" href="/assets/css/nice-select.css" />
         <link rel="stylesheet" href="/assets/css/barfiller.css" />
@@ -38,18 +38,20 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"
         />
-        <link rel="stylesheet" href="assets/css/menuprofile.css" />
-        <Script src="assets/js/jquery-3.5.1.min.js" />
-        <Script src="assets/js/bootstrap.bundle.min.js" />
-        <Script src="assets/js/meanmenu.js" />
-        <Script src="assets/js/owl.carousel.min.js" />
-        <Script src="assets/js/jquery.magnific-popup.min.js" />
-        <Script src="assets/js/jquery.nice-number.js" />
-        <Script src="assets/js/jquery.nice-select.min.js" />
-        <Script src="assets/js/appear.min.js" />
-        <Script src="assets/js/progress-bar.js" />
-        <Script src="assets/js/odometer.min.js" />
-        <Script src="assets/js/custom.js" />
+        {/* <link rel="stylesheet" href="assets/css/menuprofile.css" />  */}
+        <link rel="stylesheet" href="/assets/css/menuprofile.css" />
+
+        <Script src="/assets/js/jquery-3.5.1.min.js" />
+        <Script src="/assets/js/bootstrap.bundle.min.js" />
+        <Script src="/assets/js/meanmenu.js" />
+        <Script src="/assets/js/owl.carousel.min.js" />
+        <Script src="/assets/js/jquery.magnific-popup.min.js" />
+        <Script src="/assets/js/jquery.nice-number.js" />
+        <Script src="/assets/js/jquery.nice-select.min.js" />
+        <Script src="/assets/js/appear.min.js" />
+        <Script src="/assets/js/progress-bar.js" />
+        <Script src="/assets/js/odometer.min.js" />
+        <Script src="/assets/js/custom.js" />
       </head>
       <body className={inter.className}>
         <StoreProvider>

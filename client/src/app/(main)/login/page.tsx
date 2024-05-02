@@ -11,24 +11,20 @@ import * as api from '../../../../lib/api/allApi';
 import { emptyErrorNotify, errorNotify, successNotify } from '../../../../lib/notification-toastify/notification-toastify';
 import Link from 'next/link';
 import { TextField, Button, Grid, Typography,CircularProgress } from '@mui/material';
-
-interface LoginData {
-  email: string;
-  password: string;
-}
+import { UserLoginType } from '../../../../lib/types/types';
 
 const LoginHomePage = () => {
   const [clicked, setClicked] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch()
-  const [userLogindata, setUserLoginData] = useState<LoginData>({
+  const [userLogindata, setUserLoginData] = useState<UserLoginType>({
     email: '',
     password: ''
   })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserLoginData({ ...userLogindata, [e.target.name]: e.target.value })
   }
-
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -36,14 +32,11 @@ const LoginHomePage = () => {
     try {
       setLoading(true);
       const response = await api.userLoginApi(userLogindata);
-      console.log('response data -> ', response.data);
       if (response.data.statuCode === 200) {
         successNotify()
-        console.log('success ho raha hai')
-        dispatch(authLogin(response.data.access))
+        dispatch(authLogin(response.data))
       }
     } catch (error) {
-      console.log('error -> ', error);
       errorNotify();
     } finally{
       setLoading(false);

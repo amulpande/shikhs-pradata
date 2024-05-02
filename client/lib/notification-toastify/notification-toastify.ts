@@ -72,3 +72,28 @@ export const userEmailAlreadyExistNotify = () => toast.error('USER WITH THIS EMA
     transition: Bounce,
 })
 
+// Tutor Accept notification
+export const acceptNotification = () => toast.success('TUTOR APPROVED', {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Bounce,
+});
+
+// Tutor Reject notification
+export const rejectNotification = () => toast.error('REJECTED', {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Bounce,
+})

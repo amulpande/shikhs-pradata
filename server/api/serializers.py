@@ -362,6 +362,8 @@ class TutorLoginSerializer(serializers.Serializer):
 
 
 class TutorSeriliazer(serializers.ModelSerializer):
+    subjects_name = serializers.CharField(source = 'subjects.subject_name',read_only=True)
+    city_name = serializers.CharField(source = 'city.city_name',read_only=True)
     class Meta:
         model = User
         fields = [
@@ -379,9 +381,33 @@ class TutorSeriliazer(serializers.ModelSerializer):
             "experience",
             "dob",
             "price",
-            "tutor_approve"
+            "tutor_approve",
+            "subjects_name",
+            "city_name"
         ]
 
+class TutorApprovedSerializer(serializers.ModelSerializer):
+    subjects_name = serializers.CharField(source='subjects.subject_name',read_only=True)
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "contact",
+            "gender",
+            "address",
+            "profile_image",
+            "short_bio",
+            "city",
+            "subjects",
+            "subjects_name",
+            "experience",
+            "dob",
+            "price",
+            "tutor_approve"
+        ]
 class TutorApproveByAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

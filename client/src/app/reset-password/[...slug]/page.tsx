@@ -22,9 +22,10 @@ const ResetPasswordPage = ({ params }: {
     e.preventDefault()
     try{
       const response = await userPasswordResetApi(uid,token,resetPassword) 
-      console.log('reset password response ',response.data)
+      // console.log('reset password response ',response.data)
     }catch(error){
-      console.log('reset password error',error)
+      // console.log('reset password error',error)
+      throw error
     }
   }
   return (

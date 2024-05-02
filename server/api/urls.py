@@ -3,7 +3,7 @@ from django.urls import path,include
 from api.views import (UserRegisterApiView,UserLoginApiView,UserProfileAndUpdateApiView,
                        UserPasswordChangeView,UserPasswordResetEmailView,UserPasswordResetView,
                     TutorRegisterApiView,TutotLoginApiView,TutorProfifeAndUpdateApiView,AdminAllApprovedTutorView,
-                    AdminTutorView,AdminNotApprovedTutorView,approveTutorByAdmin,AdminLoginView,AdminBlockedTutorOrUserView
+                    AdminTutorView,AdminNotApprovedTutorView,approveTutorByAdmin,AdminLoginView,AdminBlockedTutorOrUserView,getBlockedUserTutorApiView
                     )
 
 from rest_framework_simplejwt.views import (TokenVerifyView,TokenObtainPairView,TokenRefreshView)
@@ -34,7 +34,8 @@ urlpatterns = [
     path('admin/all-not-approved-tutor/',AdminNotApprovedTutorView.as_view(),name='admin-all-not-approved-tutor-api-view'),
     path('admin/approve-tutor/<pk>',approveTutorByAdmin, name='admin-approve-tutor'),
     path('admin/all-approved-tutor/',AdminAllApprovedTutorView.as_view(), name='all-approved-tutor'),
-    path('admin/all-blocked-ubblocked-tutor-user/',AdminBlockedTutorOrUserView.as_view(), name='all-blocked-ubblocked-api-view'),
+    path('admin/all-blocked-ubblocked-tutor-user/',getBlockedUserTutorApiView, name='all-blocked-ubblocked-api-view'),
+    path('admin/all-blocked-ubblocked-tutor-user/<pk>',AdminBlockedTutorOrUserView.as_view(), name='all-blocked-ubblocked-api-view'),
     
     # Tutor Api
     path('tutor/register/',TutorRegisterApiView.as_view(),name='tutor-register-api-view'),

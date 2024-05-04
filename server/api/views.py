@@ -14,6 +14,7 @@ from api.serializers import (
     TutorUserBlockedByAdminSerializer,
 )
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,6 +23,8 @@ from rest_framework.decorators import api_view
 from rest_framework.decorators import permission_classes
 from api.permissions import IsTutor, IsUser,IsAdmin
 from rest_framework.permissions import IsAdminUser
+from rest_framework.pagination import PageNumberPagination
+from api.paginations import UserPagination
 
 from api.models import User
 import os
@@ -385,6 +388,7 @@ class AdminAllApprovedTutorView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)    
        
 class  AdminBlockedTutorOrUserView(APIView):
+    permission_classes = [IsAdmin]
     serializer_class = TutorUserBlockedByAdminSerializer
     def patch(self,request,pk):
         try:
@@ -394,9 +398,10 @@ class  AdminBlockedTutorOrUserView(APIView):
         if not user:
             return Response({'Error':'User not found for this id'},status=status.HTTP_404_NOT_FOUND)
         serializer = self.serializer_class(user,data=request.data,partial=True)
+        print('patch tutor ',serializer)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data,status=status.HTTP_200_OK)
+            return Response({'message':'Updated user status'},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET']) 
@@ -404,8 +409,12 @@ class  AdminBlockedTutorOrUserView(APIView):
 def getBlockedUserTutorApiView(request):
     try:
         user = User.tutorObject.get_all_blocked_tutor()
-        print(user)
-        return Response({'h':'users'})
+        # print(user)
+        serializer = TutorSeriliazer(user,many=True)
+        # if serializer.is_valid():
+        return Response(serializer.data,status=status.HTTP_200_OK)
+        
+        # return Response({'h':'users'})
     except User.DoesNotExist:
         return Response({'Message':'User does not exist'},status=status.HTTP_404_NOT_FOUND)
      
@@ -436,3 +445,35 @@ def approveTutorByAdmin(request,pk):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({'Error':'Wrong Method'})
+    
+class AdminAllUserDataApiView(generics.ListAPIView):
+    # def get
+    # pagination_class
+    queryset = User.userObject.get_all_user()
+    serializer_class = UserSerializer
+    permission_classes = [IsAdmin]
+    pagination_class = UserPagination
+    
+    def get_queryset(self):
+        queryset = User.userObject.get_all_user()
+        query = self.request.query_params.get('search')
+        if query:
+            queryset = queryset.filter(
+                first_name__icontains=query 
+                # Add more fields to search here
+            )
+        return queryset
+    
+class TutorDataByIdApiView(APIView):
+    serializer_class = TutorSeriliazer
+    def get(self,request,pk):
+        try:
+            user = User.tutorObject.get_tutor_by_id(pk)
+        except User.DoesNotExist:
+            return Response({'Message':'User does not exist'},status=status.HTTP_404_NOT_FOUND)
+        if not user:
+            return Response({'Error':'User not found  for this id'},status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializer_class(user)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    
+

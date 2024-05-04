@@ -34,8 +34,35 @@ interface TutorType {
     tutor_approve: boolean;
 }
 
+interface PasswordReseType{
+    password: string,
+    password2: string
+}
+
+interface CityStateType{
+    city_name:string,
+    city_state:string
+}
+
+interface CityFetchType{
+    id:number,
+    city_name:string,
+    city_state:string
+}
+
+
+interface ParamIdType {
+    params: {
+      id: number;
+    };
+  }
+
 export type {
     TutorType,
     UserLoginType,
     UserRegisterType,
+    PasswordReseType,
+    CityStateType,
+    CityFetchType,
+    ParamIdType
 };

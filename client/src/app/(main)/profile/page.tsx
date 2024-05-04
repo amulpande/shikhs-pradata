@@ -1,8 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-// import styles from './ProfilePage.module.scss';
 import styles from './ProfilePage.module.scss'
-import { userProfileApi } from '../../../../lib/api/allApi';
+import { userProfileApi } from '@lib/api/allApi';
+import Image from 'next/image';
+import { CldImage } from 'next-cloudinary';
 
 const ProfilePage = () => {
   const [userProfile, setUserProfile] = useState('')
@@ -27,11 +28,11 @@ const ProfilePage = () => {
         <div className="row">
           <div className="col-md-4">
             <div className={styles['profile-img']}>
-              <img
+              <CldImage
                 src={`${userProfile?.profile_image}`}
-                height="250px"
-                width="350px"
-                alt=""
+                height={250}
+                width={300}
+                alt="hello"
               />
             </div>
           </div>

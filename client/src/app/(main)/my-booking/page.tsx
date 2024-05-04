@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { userMyBookingOrderApi } from '../../../../lib/api/allApi'
-import Link from 'next/link'
+import { userMyBookingOrderApi } from '@lib/api/allApi'
 import { Card, CardContent, Typography, Button } from '@mui/material';
 
 const MyBookingPage = () => {
@@ -10,12 +9,10 @@ const MyBookingPage = () => {
     useEffect(() => {
         userMyBookingOrderApi().then((response) => {
             const myOrder = response.data
-            // console.log('my order',myOrder)
             setMyOrderData(myOrder)
             setLoading(false) // loading false since data has been loaded
             return response.data
         }).catch((error) => {
-            // console.log('errpr aaya',error)
             setLoading(false) // loading false since we have encounter error
             return error
         })
@@ -72,7 +69,7 @@ const MyBookingPage = () => {
                                     </div>
                                     <div>
 
-                                        {myOrderData?.map((order, index) => (
+                                        {myOrderData && myOrderData?.map((order, index) => (
                                             <Card variant="outlined" key={index} style={{ margin: '5px' }}>
                                                 <CardContent>
                                                     <Typography variant="h5" component="div" gutterBottom>

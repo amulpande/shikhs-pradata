@@ -59,8 +59,8 @@ class User(AbstractUser):
     short_bio = models.CharField(max_length=200,blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
-    subjects = models.ForeignKey(Subject, blank=True, on_delete=models.CASCADE, null=True)
+    city = models.ForeignKey(City, on_delete=models.PROTECT, null=True, blank=True)
+    subjects = models.ForeignKey(Subject, blank=True, on_delete=models.PROTECT, null=True)
     user_blocked = models.BooleanField(default=False)
 
 

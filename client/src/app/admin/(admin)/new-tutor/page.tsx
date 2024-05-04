@@ -1,10 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { adminApprovBlockTutorRequestApi, adminNotApprovedTutorApi } from '../../../../../lib/api/allApi'
-import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Button} from '@mui/material';
 import TableComponent from '@/components/AdminComponents/TableComponent/TableComponent';
 import { TutorType } from '../../../../../lib/types/types';
-import useFetchData from '../../../../../lib/hooks/userFetchData';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { acceptNotification, rejectNotification } from '../../../../../lib/notification-toastify/notification-toastify';

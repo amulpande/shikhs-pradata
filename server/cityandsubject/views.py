@@ -21,8 +21,8 @@ class CityRetrieveUpdateDeleteApiView(RetrieveUpdateDestroyAPIView):
             instance = self.get_object()
             self.perform_destroy(instance)
             return Response({"response": "City deleted successfully.",'success':True}, status=status.HTTP_204_NO_CONTENT)
-        except:
-            return Response({"response": "City does not exist",'success':False}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response(e, status=status.HTTP_404_NOT_FOUND)
     
 
 # Subject api view

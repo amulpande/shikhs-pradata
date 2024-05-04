@@ -4,9 +4,11 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { authLogout } from '../../../../lib/slices/auth-slice/auth-slice'
 import { AppBar, Toolbar, Grid, Button, IconButton } from '@mui/material';
+import { RooState } from '../../../../lib/store/store'
 
 const TopBarHome = () => {
   const dispatch = useDispatch()
+  const isAuth = useSelector((state: RooState) => state.authData.isAuthenticated)
   // useEffect(()=>{
 
   // },[dispatch])
@@ -90,15 +92,17 @@ const TopBarHome = () => {
                     </ul>
                   </div>
                   <div className="dropdown account-details">
+                    {isAuth ?
 
-                    <button className="btn bg-transparent" type="button"
-                      id="dropdownMenuButton1"
-                      onClick={() => {
-                        dispatch(authLogout())
-                      }}
-                    >
-                      LOGOUT
-                    </button>
+                      <button className="btn bg-transparent" type="button"
+                        id="dropdownMenuButton1"
+                        onClick={() => {
+                          dispatch(authLogout())
+                        }}
+                      >
+                        LOGOUT
+                      </button>
+                      : " "}
                   </div>
 
                   <div className="dropdown account-details">

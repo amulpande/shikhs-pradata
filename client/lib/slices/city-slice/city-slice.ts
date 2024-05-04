@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getCityApi } from "../../api/allApi";
+import { CityFetchType } from "../../types/types";
 
-const initialState = {
-    cityData: '',
+const initialState:any = {
+    cityData: [],
     isLoading: false,
     isError: false
 }
@@ -25,7 +26,7 @@ const citySlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchCityDataApi.pending, (state, { type, payload }) => {
             state.isLoading = true
-            state.cityData = ''
+            state.cityData = []
         }),
             builder.addCase(fetchCityDataApi.fulfilled, (state, { type, payload }) => {
                 state.cityData = payload
@@ -36,7 +37,7 @@ const citySlice = createSlice({
             builder.addCase(fetchCityDataApi.rejected,(state,{type,payload})=>{
                 state.isError = true
                 state.isLoading = false
-                state.cityData = ''
+                state.cityData = []
             })
     }
 })

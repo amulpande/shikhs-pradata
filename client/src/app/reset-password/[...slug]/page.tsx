@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react"
 import { userPasswordResetApi } from "../../../../lib/api/allApi"
+import { PasswordReseType } from "../../../../lib/types/types"
 
 const ResetPasswordPage = ({ params }: {
   params: {
@@ -8,7 +9,7 @@ const ResetPasswordPage = ({ params }: {
   }
 }) => {
   // 
-  const [resetPassword, setResetPassword] = useState({
+  const [resetPassword, setResetPassword] = useState<PasswordReseType>({
     password: '',
     password2: ''
   })

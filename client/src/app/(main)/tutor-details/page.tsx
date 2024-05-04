@@ -6,10 +6,10 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getAllApprovedTutor } from '../../../../lib/api/allApi';
+import { getAllApprovedTutor } from '@lib/api/allApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RooState } from '../../../../lib/store/store';
-import { tutorApi } from '../../../../lib/store/thunk-api/tutor-api';
+import { AppDispatch, RooState } from '@lib/store/store';
+import { tutorApi } from '@lib/store/thunk-api/tutor-api';
 import { CldImage } from 'next-cloudinary';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -46,7 +46,7 @@ const TutorDetailsPage = () => {
 
                     tutor?.map((tutor, index) => (
 
-                        <Card sx={{ maxWidth: 345, margin: '15px' }}>
+                        <Card sx={{ maxWidth: 345, margin: '15px' }} key={index}>
                             <CardMedia
                                 sx={{ height: 140 }}
                                 image={tutor.profile_image}

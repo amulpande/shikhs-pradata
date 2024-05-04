@@ -1,20 +1,21 @@
 'use client'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectTutorById } from '../../../../../lib/slices/tutor-slice/tutor-slice'
-import { RooState } from '../../../../../lib/store/store'
+import { selectTutorById } from '@lib/slices/tutor-slice/tutor-slice'
+import { AppDispatch, RooState } from '@lib/store/store'
 import { CardMedia } from '@mui/material'
-import { tutorApi } from '../../../../../lib/store/thunk-api/tutor-api'
+import { tutorApi } from '@lib/store/thunk-api/tutor-api'
+import { TutorType } from '@lib/types/types'
 // import { makeStyles } from '@mui/styles';
 
 
 const TutorDetailsByIdPage = ({ params }) => {
   // const classes = useStyles();
-  const data = useSelector((state): RooState => selectTutorById(state, params.tutorId))
-  const dispatch = useDispatch()
+  const data = useSelector<TutorType>((state): RooState => selectTutorById(state, params.tutorId))
+  const dispatch = useDispatch<AppDispatch>()
   useEffect(()=>{
     dispatch(tutorApi())
-  },[])
+  },[dispatch]) 
   console.log('tutor profile', data)
   return (
 
@@ -61,7 +62,7 @@ const TutorDetailsByIdPage = ({ params }) => {
                   <br />
                   <form method="post" name="booking">
                     <input
-                      type="submit"
+                      type="button"
                       id="bookMyService"
                       name="book"
                       defaultValue="Book Now"

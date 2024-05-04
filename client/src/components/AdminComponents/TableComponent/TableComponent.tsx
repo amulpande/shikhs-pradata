@@ -4,12 +4,13 @@ import { Table, Button, TableBody, TableCell, TableHead, TableRow, Avatar, Table
 import Image from 'next/image';
 import { CldImage } from 'next-cloudinary';
 import { TutorType } from '../../../../lib/types/types';
+import Link from 'next/link';
 
-const TableComponent = ({ data, loading ,customActionButtons}) => {
+const TableComponent = ({ data, loading, customActionButtons }) => {
   // console.log('data from table component ', data?.data)
   // console.log('loading', loading)
   return (
-    <Grid justifyContent="center">
+    <Grid container spacing={2}>
       <Table >
         <TableHead>
           <TableRow>
@@ -21,11 +22,12 @@ const TableComponent = ({ data, loading ,customActionButtons}) => {
             <TableCell align="center">SUBJECT</TableCell>
             <TableCell align="center">CITY</TableCell>
             <TableCell align="center">CONTACT</TableCell>
-            <TableCell align="center">APPROVE/REJECT</TableCell>
+            <TableCell align="center">VIEW</TableCell>
+            <TableCell align="center">STATUS</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {Array.isArray(data) && data.length > 0 ?( data?.map((row: TutorType, index: number) => (
+          {Array.isArray(data) && data.length > 0 ? (data?.map((row: TutorType, index: number) => (
             <TableRow key={index}>
               <TableCell>
                 <Image src={row?.profile_image ? row?.profile_image : '/assets/images/logo/profileuser.png'} alt={`${row.first_name} ${row.last_name}`} width={70} height={70} />
@@ -39,6 +41,14 @@ const TableComponent = ({ data, loading ,customActionButtons}) => {
               <TableCell align="center">{row?.subjects_name}</TableCell>
               <TableCell align="center">{row?.city_name}</TableCell>
               <TableCell align="center">{row?.contact}</TableCell>
+              <TableCell align="center">
+                <Link href={`/admin/view-tutor/${row?.id}`}>
+
+                  <Button variant="contained" color="inherit" onClick={() => {
+                    // router.push(`/tutors/${row?.id}`)
+                  }}>VIEW</Button>
+                </Link>
+              </TableCell>
               <TableCell align="center" sx={{ gap: '8px', padding: '5px' }}>
 
                 {/* {children}  */}

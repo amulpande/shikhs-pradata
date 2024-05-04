@@ -383,11 +383,13 @@ class TutorSeriliazer(serializers.ModelSerializer):
             "price",
             "tutor_approve",
             "subjects_name",
-            "city_name"
+            "city_name",
+            "user_blocked"
         ]
 
 class TutorApprovedSerializer(serializers.ModelSerializer):
     subjects_name = serializers.CharField(source='subjects.subject_name',read_only=True)
+    city_name = serializers.CharField(source='city.city_name',read_only=True)
     class Meta:
         model = User
         fields = [
@@ -403,6 +405,7 @@ class TutorApprovedSerializer(serializers.ModelSerializer):
             "city",
             "subjects",
             "subjects_name",
+            "city_name",
             "experience",
             "dob",
             "price",

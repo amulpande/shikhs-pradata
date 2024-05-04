@@ -97,3 +97,16 @@ export const rejectNotification = () => toast.error('REJECTED', {
     theme: "colored",
     transition: Bounce,
 })
+
+// city already exist error message
+export const cityAlreadyExistError = (message:string) => toast.error(message, {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Bounce,
+})

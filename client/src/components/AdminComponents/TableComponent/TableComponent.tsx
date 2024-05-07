@@ -1,16 +1,17 @@
 'use client'
 import React from 'react'
-import { Table, Button, TableBody, TableCell, TableHead, TableRow, Avatar, TableContainer, Grid } from '@mui/material';
+import { Table, Button, TableBody, TableCell, TableHead, TableRow, Avatar, TableContainer, Grid, makeStyles } from '@mui/material';
 import Image from 'next/image';
 import { CldImage } from 'next-cloudinary';
 import { TutorType } from '../../../../lib/types/types';
 import Link from 'next/link';
 
+
 const TableComponent = ({ data, loading, customActionButtons }) => {
   // console.log('data from table component ', data?.data)
   // console.log('loading', loading)
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={5}>
       <Table >
         <TableHead>
           <TableRow>

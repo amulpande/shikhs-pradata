@@ -1,63 +1,43 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
+import Image from 'next/image'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getAllApprovedTutor } from '@lib/api/allApi';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RooState } from '@lib/store/store';
-import { tutorApi } from '@lib/store/thunk-api/tutor-api';
-import { CldImage } from 'next-cloudinary';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { CircularProgress, LinearProgress } from '@mui/material';
-import LoadMore from './LoadMore';
 import { fetchTutorData } from '@lib/utils/action';
 
-const TutorDetailsPage = () => {
-    // const [tutorData, setTutorData] = useState<any[]>([])
-    // const [loading, setLoading] = useState(true);
-    // const dispatch = useDispatch<AppDispatch>()
-    // const { tutor, status, error } = useSelector((state: RooState) => state.tutorData)
-    // // const router = useRouter()
-    // useEffect(() => {
-    //     // dispatch()
-    //     dispatch(tutorApi())
-    // }, [dispatch])
-    const [tutor, setTutor] = useState([]);
+let page = 2
 
+const LoadMore = () => {
+    const { ref, inView } = useInView()
+    const [tutor, setTutor] = useState<any[]>([])
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetchTutorData({page:1,search:''});
-                console.log('data', response.results);
-                setTutor(response.results); // Assuming response is the array of tutors
-            } catch (error) {
-                console.error('Error fetching tutor data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-    console.log('hello', tutor)
+        if (inView) {
+            // alert('You have reached bottom')
+            // const data = fetchTutorData({page:page,search:''})
+            // console.log('readmore ----> ',data)
+            // // setTutor(data.results)
+            // page = page + 1
+            const fetchData = async () => {
+                try {
+                    const response = await fetchTutorData({ page: page, search: '' });
+                    console.log('data', response.results);
+                    setTutor([...response.results]); // Assuming response is the array of tutors
+                } catch (error) {
+                    console.error('Error fetching tutor data:', error);
+                }
+            };
+            fetchData();
+        }
+    }, [inView])
     return (
         <>
-            <div className="uni-banner">
-                <div className="container">
-                    <div className="uni-banner-text">
-                        <h1>Service Details</h1>
-                        <ul>
-                            <li>
-                                <a href="index.php">HOME</a>
-                            </li>
-                            <li>SERVICE DETAILS</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
             <div style={{ margin: 30, padding: 10, display: 'flex', flexWrap: 'wrap' }}>
                 {/* {status == 'succeeded' ? */}
                 {
@@ -91,12 +71,20 @@ const TutorDetailsPage = () => {
                 {/* : <LinearProgress color="secondary" />} */}
 
             </div>
-
-
-            <LoadMore />
-
+            {/* <section className="flex justify-center items-center w-full">
+                
+            </section> */}
+            <div ref={ref} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Image
+                    src="./spinner.svg"
+                    alt="spinner"
+                    width={56}
+                    height={56}
+                    className="object-contain"
+                />
+            </div>
         </>
     )
 }
 
-export default TutorDetailsPage
+export default LoadMore

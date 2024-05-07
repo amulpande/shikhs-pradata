@@ -5,7 +5,7 @@ import { getAuthCookies } from '@lib/utils/cookieStore'
 export function middleware(request: NextRequest) {
 
   const accessToken = request.cookies.get('token')?.value
-  console.log('access token from middleware', accessToken)
+  // console.log('access token from middleware', accessToken)
   const tokenData = getAuthCookies('token') ? getAuthCookies('token') : null
 
   // All admin related routes are here based on role

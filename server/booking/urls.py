@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path,include
-from booking.views import (CheckingView,updateBookingStatus,UserCheckOrderApproval,TutorBookingOrderView,BookingOrderView)
+from booking.views import (CheckingView,updateBookingStatus,UserCheckOrderApproval,
+                           TutorBookingOrderView,BookingOrderView,AdminOrderBookingApiView)
 urlpatterns = [
     path('all-booking/', CheckingView.as_view(), name='booking-test-api-view'),
     
@@ -11,5 +12,9 @@ urlpatterns = [
     # user booking
     path('user/my-order/',UserCheckOrderApproval.as_view(), name='user-order'),
     path('user/book-tutor/',BookingOrderView.as_view(), name='user-order'),
+    
+    #admin booking api
+    path('admin/order-booking/',AdminOrderBookingApiView.as_view(), name='admin-order-booking-api-view'),
+    
 
 ]

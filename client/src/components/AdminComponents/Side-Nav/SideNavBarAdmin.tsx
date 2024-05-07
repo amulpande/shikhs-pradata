@@ -33,6 +33,12 @@ const SideNavBarAdmin = ({ children }: any) => {
                 <span className="ms-3">Subject</span>
               </Link>
             </li>
+            <li>
+              <Link href="/admin/order-booking" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <i className="fa fa-book w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                <span className="ms-3">Booking</span>
+              </Link>
+            </li>
 
             <li>
               <Link href="" className="flex items-center justify-between p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" onClick={toggleCityDropdown}>
@@ -76,10 +82,16 @@ const SideNavBarAdmin = ({ children }: any) => {
                   </div>
                 </li>
                 <li>
-                  <Link href="/admin/approved-tutor" className="block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600">Approved Tutor</Link>
+                  <div className='flex items-center'>
+                    <i className="fas fa-user-check w-5 h-5 text-gray-500 mr-2 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                    <Link href="/admin/approved-tutor" className="block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600">Approved Tutor</Link>
+                  </div>
                 </li>
                 <li>
-                  <Link href="/admin/blocked-tutor" className="block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600">Blocked Tutor</Link>
+                  <div className='flex items-center'>
+                    <i className="fa fa-ban w-5 h-5 text-gray-500 mr-2 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                    <Link href="/admin/blocked-tutor" className="block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600">Blocked Tutor</Link>
+                  </div>
                 </li>
               </ul>
             </li>

@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 # from rest_framework import ap
 # All Booking serializer
 from booking.serializers import (BookingSerializer,BookingStatusUpdateSerializer,BookingOrderSerializer)
+from rest_framework import generics
 
 # All api serializer 
 from api.serializers import (TutorSeriliazer,UserSerializer)
@@ -111,3 +112,9 @@ class UserCheckOrderApproval(APIView):
             return Response(booking_serializer.data ,status=status.HTTP_200_OK) 
         except Booking.DoesNotExist:
             return Response({'Error':'No data found'},status=status.HTTP_404_NOT_FOUND)
+        
+        
+class AdminOrderBookingApiView(generics.ListAPIView):
+    queryset = Booking.objects.all()
+    permission_classes = [IsAdmin]
+    serializer_class = BookingSerializer

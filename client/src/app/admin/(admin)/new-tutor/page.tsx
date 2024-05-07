@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { adminApprovBlockTutorRequestApi, adminNotApprovedTutorApi } from '../../../../../lib/api/allApi'
-import { Button} from '@mui/material';
+import { Button } from '@mui/material';
 import TableComponent from '@/components/AdminComponents/TableComponent/TableComponent';
 import { TutorType } from '../../../../../lib/types/types';
 import { ToastContainer } from 'react-toastify';
@@ -11,20 +11,20 @@ import { acceptNotification, rejectNotification } from '../../../../../lib/notif
 const NewTutorJoinPage = () => {
     const [tutors, setTutors] = useState<TutorType[]>([])
     const [updated, setUpdated] = useState<boolean>(false)
-    const [loadings,setLoading] = useState<boolean>(true)
-    const [errors,setError] = useState('')
-    
+    const [loadings, setLoading] = useState<boolean>(true)
+    const [errors, setError] = useState('')
+
     useEffect(() => {
-        adminNotApprovedTutorApi().then((response)=>{
+        adminNotApprovedTutorApi().then((response) => {
             setTutors(response.data)
             setLoading(false)
         })
-        .catch((error)=>{
-            setLoading(false)
-            setError(error)
-        })
+            .catch((error) => {
+                setLoading(false)
+                setError(error)
+            })
     }, [loadings, updated])
-    
+
     const handleAccept = (tutorId: number) => {
         setUpdated(false);
         setTutors([]); // Clear tutors data temporarily to show loading state
@@ -35,13 +35,13 @@ const NewTutorJoinPage = () => {
             })
             .catch(error => {
                 console.error('Error accepting tutor:', error);
-                setError(error); 
+                setError(error);
             });
     };
 
     const handleReject = (tutorId: number) => {
         setUpdated(false);
-        setTutors([]); 
+        setTutors([]);
         adminApprovBlockTutorRequestApi(tutorId, { 'tutor_approve': false })
             .then(() => {
                 rejectNotification();
@@ -49,7 +49,7 @@ const NewTutorJoinPage = () => {
             })
             .catch(error => {
                 console.error('Error rejecting tutor:', error);
-                setError(error); 
+                setError(error);
             });
     };
     // Defined button to use in TableComponent
@@ -61,10 +61,13 @@ const NewTutorJoinPage = () => {
     );
     console.log('page rendered')
     return (
-        <div style={{ marginTop: '5px' }}>
-            <TableComponent data={tutors} loading={loadings} customActionButtons={renderCustomActionButtons} />
-            <ToastContainer />
-        </div>
+        <>
+            <div style={{ marginTop: '5px' }}>
+                <TableComponent data={tutors} loading={loadings} customActionButtons={renderCustomActionButtons} />
+                <ToastContainer />
+            </div>
+
+        </>
     )
 }
 

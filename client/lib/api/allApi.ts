@@ -31,6 +31,9 @@ export const tutorRegisterApi = (formData: FormData) =>
 export const getAllApprovedTutor = () =>
     axiosInstance.get('admin/all-approved-tutor/')
 
+export const getAllApprovedTutorApi = ({page=1,search=''}) =>
+    axiosInstance.get(`admin/all-approved-tutor/?page${page}`)
+
 
 
 // All admin api here 
@@ -51,6 +54,9 @@ export const adminBlockedUnblockedTutor = (id:number,data:{user_blocked:boolean}
 
 export const getTutorDataByidApi = (id:number) =>
     axiosInstance.get(`admin/get-tutor-data/${id}`)
+
+export const getAllOrderBookingApi = () =>
+    axiosInstance.get('booking/admin/order-booking')
 
 // admin user apis
 export const getAllUserDataApi = ({page=1,search=''}: { page?: number, search?: string }) =>

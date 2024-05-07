@@ -377,15 +377,25 @@ class AdminTutorView(APIView):
         except:
             return Response({"Error": "Tutor not found"})
     
-class AdminAllApprovedTutorView(APIView):
+class AdminAllApprovedTutorView(generics.ListAPIView):
     # permission_classes = [IsAdminUser]
-    def get(self,request):
-        user = User.tutorObject.get_approve_tutor()
-        if user is None:
-            return Response({'Error':'No Tutor found in database'},status=status.HTTP_400_BAD_REQUEST)
-        serializer = TutorApprovedSerializer(user,many=True)
-        # print(serializer.data)
-        return Response(serializer.data, status=status.HTTP_200_OK)    
+    # def get(self,request):
+    #     user = User.tutorObject.get_approve_tutor()
+    #     if user is None:
+    #         return Response({'Error':'No Tutor found in database'},status=status.HTTP_400_BAD_REQUEST)
+    #     serializer = TutorApprovedSerializer(user,many=True)
+    #     # print(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_200_OK) 
+    queryset = User.tutorObject.get_approve_tutor()
+    serializer_class = TutorApprovedSerializer
+    pagination_class = UserPagination
+    
+    def get_queryset(self):
+        queryset = User.tutorObject.get_approve_tutor()
+        query = self.request.query_params.get('search')
+        if query:
+            queryset = queryset.filter(first_name__icontains=query)
+        return queryset
        
 class  AdminBlockedTutorOrUserView(APIView):
     permission_classes = [IsAdmin]

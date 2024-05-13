@@ -73,7 +73,7 @@ const AddCityPage = () => {
           }}>Submit</Button>
         </Grid>
       </Grid>
-      <CityAdminComponent/>
+      {/* <CityAdminComponent/> */}
       <ToastContainer />
     </>
   )

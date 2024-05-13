@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getCityApi } from "../../api/allApi";
-import { CityFetchType } from "../../types/types";
 
 const initialState:any = {
     cityData: [],

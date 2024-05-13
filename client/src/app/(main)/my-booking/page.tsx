@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { userMyBookingOrderApi } from '@lib/api/allApi'
 import { Card, CardContent, Typography, Button } from '@mui/material';
+import { BookingType } from '@lib/types/types';
 
 const MyBookingPage = () => {
     const [myOrderData, setMyOrderData] = useState<any>([])
@@ -69,9 +70,9 @@ const MyBookingPage = () => {
                                     </div>
                                     <div>
 
-                                        {myOrderData && myOrderData?.map((order, index) => (
-                                            <Card variant="outlined" key={index} style={{ margin: '5px' }}>
-                                                <CardContent>
+                                        {myOrderData && myOrderData?.map((order:BookingType, index:number) => (
+                                            <Card variant="outlined" key={index} style={{ margin: '5px',textAlign:'center' }}>
+                                                <CardContent style={{}}>
                                                     <Typography variant="h5" component="div" gutterBottom>
                                                         Order Details
                                                     </Typography>
@@ -92,7 +93,7 @@ const MyBookingPage = () => {
                                                     </Typography>
 
                                                     <Typography variant="body1" gutterBottom>
-                                                        Tution Charge: Rs{order?.price}/-
+                                                        Tution Charge: Rs{order?.tutor_price}/-
                                                     </Typography>
                                                     <Typography variant="body1" gutterBottom>
                                                         Payment Status: {order?.payment_status}
@@ -115,6 +116,18 @@ const MyBookingPage = () => {
                                                                 </Typography>
                                                                 <Typography variant="body1" gutterBottom>
                                                                     Email:email is not coming from backend
+                                                                </Typography>
+                                                            </CardContent>
+                                                        </Card>
+                                                    )}
+                                                    {order?.status === 'Rejected' && (
+                                                        <Card variant="outlined" style={{ marginTop: '20px',color:'red' }}>
+                                                            <CardContent>
+                                                                <Typography variant="h6" gutterBottom>
+                                                                    Your order has been Rejected by tutor
+                                                                </Typography>
+                                                                <Typography variant="h6" gutterBottom>
+                                                                    Reason : {order?.cancellation_reason}
                                                                 </Typography>
                                                             </CardContent>
                                                         </Card>

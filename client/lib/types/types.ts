@@ -34,6 +34,16 @@ interface TutorType {
     tutor_approve: boolean;
 }
 
+interface TutorProfile {
+    first_name: string;
+    last_name: string;
+    email: string;
+    // short_bio: string;
+    contact: string;
+    address: string;
+    profile_image: string;
+    price: string;
+}
 interface PasswordReseType {
     password: string,
     password2: string
@@ -57,32 +67,57 @@ interface ParamIdType {
     };
 }
 
-interface BookingType{
-    id:number,
-    user_name:string,
-    tutor_name:string,
-    tutor_id:number,
-    user_id:number,
-    cancellation_reason:string,
-    order_date:string,
-    booking_date:string,
-    booking_time:string,
-    payment_status:string,
-    status:string,
-    subject_id:number,
-    subject_name:string
+interface BookingType {
+    id: number,
+    user_name: string,
+    user_email: string,
+    tutor_name: string,
+    tutor_email: string,
+    tutor_id: number,
+    user_id: number,
+    cancellation_reason: string,
+    order_date: string,
+    booking_date: string,
+    booking_time: string,
+    payment_status: string,
+    status: string,
+    subject_id: number,
+    subject_name: string,
+    tutor_price: number
 }
 
-interface UserDataTypes{
-    id:number,
-    email:string,
-    first_name:string,
-    last_name:string,
-    contact:string,
-    role:number,
-    gender:string,
-    profile_image:string,
-    address:string
+
+interface UserDataTypes {
+    id: number,
+    email: string,
+    first_name: string,
+    last_name: string,
+    contact: string,
+    role: number,
+    gender: string,
+    profile_image: string,
+    address: string
+}
+
+interface UserProfileTypes {
+    email: string,
+    first_name: string,
+    last_name: string,
+    contact: string,
+    profile_image: string,
+    address: string
+}
+
+type FetchTutorDataProps = {
+    page: number;
+    search: string;
+}
+
+interface UserBookTutortypes {
+    tutor_id: number,
+    subject_id: number,
+    booking_time: string,
+    booking_date:string
 }
 
 export type {
@@ -94,5 +129,9 @@ export type {
     CityFetchType,
     ParamIdType,
     BookingType,
-    UserDataTypes
+    UserDataTypes,
+    FetchTutorDataProps,
+    TutorProfile,
+    UserProfileTypes,
+    UserBookTutortypes
 };

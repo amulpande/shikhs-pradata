@@ -1,14 +1,16 @@
 import axios from "axios";
-import { CityStateType, PasswordReseType, UserLoginType } from "../types/types";
+import { BookingType, CityStateType, FetchTutorDataProps, PasswordReseType, TutorProfile, UserBookTutortypes, UserLoginType, UserProfileTypes } from "../types/types";
 import axiosInstance from "../utils/axiosInstance";
 
 
 // All user api
 export const userRegisterApi = (formData: FormData) => axiosInstance.post('user/register/', formData)
 
-
 export const userProfileApi = () =>
     axiosInstance.get('user/profile/')
+
+export const userProfileUpdateApi = (data:UserProfileTypes)=>
+    axiosInstance.patch('user/profile/',data)
 
 
 export const userLoginApi = async (formData: UserLoginType) =>
@@ -23,6 +25,15 @@ export const userPasswordResetApi = (uid: string, token: string, data:PasswordRe
 export const userMyBookingOrderApi = () =>
     axiosInstance.get('booking/user/my-order/')
 
+export const userBookTutorApi = (data:UserBookTutortypes) =>
+    axiosInstance.post('booking/user/book-tutor/',data=data,{
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+
+
 
 // All tutor Api
 export const tutorRegisterApi = (formData: FormData) =>
@@ -31,8 +42,31 @@ export const tutorRegisterApi = (formData: FormData) =>
 export const getAllApprovedTutor = () =>
     axiosInstance.get('admin/all-approved-tutor/')
 
+export const tutorLoginApi = (formData:UserLoginType) =>
+    axiosInstance.post('tutor/login/',formData)
+
+export const tutorProfileApi = ()=>
+    axiosInstance.get('tutor/profile')
+
+export const tutorGetAllBooking = () =>
+    axiosInstance.get('booking/tutor/all-booking-order/')
+
+export const tutorUpdateProfile = (data:TutorProfile)=>
+    axiosInstance.patch('tutor/update/',data)
+
+
+export const tutorGetAcceptedAllBooking = () =>
+    axiosInstance.get('booking/tutor/all-accepted-booking-order/')
+
+export const tutorAcceptRejectBokoing = (id:number,data:{status:string}) =>
+    axiosInstance.patch(`booking/tutor/booking-status/${id}`,data)
+
+export const tutorAcceptRejectWithReasonBokoing = (id:number,data:{status:string,cancellation_reason:string}) =>
+    axiosInstance.patch(`booking/tutor/booking-status/${id}`,data)
+
+// using this api for infinite scroll where user can scroll and get new data rather than going throw pagination
 export const getAllApprovedTutorApi = ({page=1,search=''}) =>
-    axiosInstance.get(`admin/all-approved-tutor/?page${page}`)
+    axiosInstance.get(`admin/all-approved-tutor/?page=${page}&search=${search}`)
 
 
 
@@ -52,11 +86,18 @@ export const getAdminAllBlockedTutorApi = () =>
 export const adminBlockedUnblockedTutor = (id:number,data:{user_blocked:boolean}) =>
     axiosInstance.patch(`admin/blocked-unblocked-tutor/${id}`,data)
 
+
+
+
+// get tutor by id
 export const getTutorDataByidApi = (id:number) =>
     axiosInstance.get(`admin/get-tutor-data/${id}`)
 
 export const getAllOrderBookingApi = () =>
     axiosInstance.get('booking/admin/order-booking')
+
+
+
 
 // admin user apis
 export const getAllUserDataApi = ({page=1,search=''}: { page?: number, search?: string }) =>
@@ -64,6 +105,7 @@ export const getAllUserDataApi = ({page=1,search=''}: { page?: number, search?: 
 // Getting all Subject data 
 export const getSubjectsApi = () =>
     axiosInstance.get('admin/subject/')
+
 
 
 

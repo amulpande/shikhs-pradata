@@ -19,7 +19,7 @@ const IndexPage = () => {
     userProfileApi()
       .then((response) => {
         const userDataFromApi = response.data.user;
-        setUserProfile(userDataFromApi); p
+        setUserProfile(userDataFromApi); 
         setLoading(false); 
       })
       .catch((error) => {

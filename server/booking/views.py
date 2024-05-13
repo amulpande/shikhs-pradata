@@ -26,20 +26,21 @@ class CheckingView (APIView):
             return Response(serializer.data)
         except Booking.DoesNotExist:
             return Response({'Error':'Booking does not exist'},status=status.HTTP_404_NOT_FOUND)
-    
-    
+
+
 class BookingOrderView(APIView):
-    permission_classes=[IsAuthenticated,IsUser]
+    # permission_classes=[IsAuthenticated,IsUser]
     def post(self,request,format=None):
         user = request.user.id
-        print(user)
+        # print(user)
+        tutor_id = request.data.get('tutor_id')
         try:
-            tutor_id = request.data['tutor_id']
             tutor_data = User.objects.get(pk=tutor_id)
             if tutor_data.tutor_approve == False:
                 return Response({'Error':'This Tutor is not approved yet'},status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response({'Error':'User does not exist'},status=status.HTTP_404_NOT_FOUND)
+        
         serializer = BookingOrderSerializer(data={ **request.data , "user_id" : user })
         if serializer.is_valid():
             serializer.save()
@@ -49,7 +50,6 @@ class BookingOrderView(APIView):
   
   
 # Tutor can check all the booking of his/hers
-
 class TutorBookingOrderView(APIView):
     permission_classes=[IsTutor]
     def get(self,request,format=None):
@@ -58,8 +58,19 @@ class TutorBookingOrderView(APIView):
             tutor = TutorSeriliazer(user)
             tutorId = tutor.data['id']
             booking = Booking.objects.filter(tutor_id=tutorId).filter(status='Pending').order_by('-order_date')
-            if not booking:
-                return Response({'Error':'You do not have any orders yet'},status=status.HTTP_404_NOT_FOUND)
+            serializer = BookingSerializer(booking,many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Booking.DoesNotExist:
+            return Response({'Error':'Not able to fetch data'},status=status.HTTP_404_NOT_FOUND)
+        
+class TutorAllAcceptedBookingOrder(APIView):
+    permission_classes = [IsTutor]
+    def get(Self,request):
+        try:
+            user = request.user
+            tutor = TutorSeriliazer(user)
+            tutorId = tutor.data['id']
+            booking = Booking.objects.filter(tutor_id=tutorId).filter(status='Accepted').order_by('-order_date')
             serializer = BookingSerializer(booking,many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Booking.DoesNotExist:
@@ -70,11 +81,15 @@ class TutorBookingOrderView(APIView):
 @api_view(['PATCH'])   
 @permission_classes([IsTutor]) 
 def updateBookingStatus(request,pk):
+    print('request',request)
     try:
         booking = Booking.objects.get(pk=pk)
+        print('booking',booking)
         tutor = TutorSeriliazer(request.user)
         tutorId = tutor.data['email']
+        print('tutorid',tutorId)
         if str(booking.tutor_id) == str(tutorId):
+            print('updated')
             serializer = BookingStatusUpdateSerializer(booking,data = request.data,partial=True)
             if serializer.is_valid():
                 serializer.save()

@@ -24,7 +24,7 @@ from rest_framework.decorators import permission_classes
 from api.permissions import IsTutor, IsUser,IsAdmin
 from rest_framework.permissions import IsAdminUser
 from rest_framework.pagination import PageNumberPagination
-from api.paginations import UserPagination
+from api.paginations import UserPagination,TutorPagination
 
 from api.models import User
 import os
@@ -277,6 +277,7 @@ class TutotLoginApiView(APIView):
                         "city": serializer.data["city"],
                         "subjects": serializer.data["subjects"],
                         "role": serializer.data["role"],
+                        "tutor_approve":serializer.data["tutor_approve"]
                     },
                 }
             return Response(response, status=status_code)
@@ -378,17 +379,9 @@ class AdminTutorView(APIView):
             return Response({"Error": "Tutor not found"})
     
 class AdminAllApprovedTutorView(generics.ListAPIView):
-    # permission_classes = [IsAdminUser]
-    # def get(self,request):
-    #     user = User.tutorObject.get_approve_tutor()
-    #     if user is None:
-    #         return Response({'Error':'No Tutor found in database'},status=status.HTTP_400_BAD_REQUEST)
-    #     serializer = TutorApprovedSerializer(user,many=True)
-    #     # print(serializer.data)
-    #     return Response(serializer.data, status=status.HTTP_200_OK) 
     queryset = User.tutorObject.get_approve_tutor()
     serializer_class = TutorApprovedSerializer
-    pagination_class = UserPagination
+    pagination_class = TutorPagination
     
     def get_queryset(self):
         queryset = User.tutorObject.get_approve_tutor()
@@ -408,12 +401,24 @@ class  AdminBlockedTutorOrUserView(APIView):
         if not user:
             return Response({'Error':'User not found for this id'},status=status.HTTP_404_NOT_FOUND)
         serializer = self.serializer_class(user,data=request.data,partial=True)
-        print('patch tutor ',serializer)
+        # print('patch tutor ',serializer)
         if serializer.is_valid():
             serializer.save()
             return Response({'message':'Updated user status'},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+
+class getBlockedTutorApiView(generics.ListAPIView):
+    serializer_class = TutorSeriliazer
+    pagination_class = TutorPagination
+    queryset = User.tutorObject.get_all_blocked_tutor()
+
+    def get_queryset(self):
+        queryset = User.tutorObject.get_all_blocked_tutor()
+        query = self.request.query_params.get('search')
+        if query:
+            queryset = queryset.filter(first_name__icontains=query)
+        return queryset
 @api_view(['GET']) 
 @permission_classes([IsAdmin])
 def getBlockedUserTutorApiView(request):
@@ -437,6 +442,12 @@ class AdminNotApprovedTutorView(APIView):
         serializer = TutorSeriliazer(user,many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class AdminNotApprovedTutorApiView(generics.ListAPIView):
+    queryset = User.tutorObject.get_not_approve_tutor()
+    serializer_class = TutorSeriliazer
+    permission_classes = [IsAdminUser]
+    pagination_class = UserPagination
     
 @api_view(['PATCH'])
 @permission_classes([IsAdminUser])

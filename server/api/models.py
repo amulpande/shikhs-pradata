@@ -62,7 +62,7 @@ class User(AbstractUser):
     city = models.ForeignKey(City, on_delete=models.PROTECT, null=True, blank=True)
     subjects = models.ForeignKey(Subject, blank=True, on_delete=models.PROTECT, null=True)
     user_blocked = models.BooleanField(default=False)
-
+    isDeleted = models.BooleanField(default=False)
 
     objects = CustomUserManager()
     tutorObject = TutorManager()

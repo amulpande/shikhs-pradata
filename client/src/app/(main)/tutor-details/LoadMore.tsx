@@ -2,86 +2,59 @@
 import React, { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Link from 'next/link';
 import { fetchTutorData } from '@lib/utils/action';
+import TutorCard from './TutorCard';
 
-let page = 2
+// let page = 2
 
 const LoadMore = () => {
+    const [page,setPage] = useState(2)
     const { ref, inView } = useInView()
     const [tutor, setTutor] = useState<any[]>([])
     useEffect(() => {
         if (inView) {
-            // alert('You have reached bottom')
-            // const data = fetchTutorData({page:page,search:''})
-            // console.log('readmore ----> ',data)
-            // // setTutor(data.results)
-            // page = page + 1
+            // page = page
             const fetchData = async () => {
                 try {
+                    // console.log('page number ',page)
                     const response = await fetchTutorData({ page: page, search: '' });
-                    console.log('data', response.results);
-                    setTutor([...response.results]); // Assuming response is the array of tutors
+                    // page += 1
+                    console.log('data from load more ->  ', response.results);
+                    setTutor([...tutor,...response.results]); // this will store new data with old data and continue to display in client side
+                    setPage((p)=>p+=1)
                 } catch (error) {
                     console.error('Error fetching tutor data:', error);
                 }
             };
             fetchData();
+
+            // return (
+            //     page = 2
+            // )
+
         }
-    }, [inView])
+    }, [inView,tutor,page])
     return (
         <>
-
-            <div style={{ margin: 30, padding: 10, display: 'flex', flexWrap: 'wrap' }}>
-                {/* {status == 'succeeded' ? */}
+            <div style={{ margin: 30, marginLeft: 50, padding: 10, display: 'flex', flexWrap: 'wrap' }}>
                 {
-
                     tutor?.map((tutor, index) => (
-
-                        <Card sx={{ maxWidth: 322, margin: '15px' }} key={index}>
-                            <CardMedia
-                                sx={{ height: 140 }}
-                                image={tutor.profile_image}
-                                title="green iguana"
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {tutor.first_name + ' ' + tutor.last_name}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                                    species, ranging across all continents except Antarctica
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Link href={`/tutor-details/${tutor.id}`}>
-
-                                    <Button size="small">Learn More</Button>
-                                </Link>
-                            </CardActions>
-                        </Card>
-                    ))}
-                {/* // : <LinearProgress color="secondary" />} */}
-                {/* : <LinearProgress color="secondary" />} */}
-
+                        <TutorCard index={index} tutor={tutor} key={index} />
+                    ))
+                }
             </div>
-            {/* <section className="flex justify-center items-center w-full">
-                
-            </section> */}
-            <div ref={ref} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Image
-                    src="./spinner.svg"
-                    alt="spinner"
-                    width={56}
-                    height={56}
-                    className="object-contain"
-                />
+            <div style={{ margin: 30, marginLeft: 50}}>
+
+
+                <div ref={ref} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Image
+                        src="./spinner.svg"
+                        alt="spinner"
+                        width={56}
+                        height={56}
+                        className="object-contain"
+                    />
+                </div>
             </div>
         </>
     )

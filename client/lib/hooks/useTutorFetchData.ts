@@ -1,30 +1,35 @@
 // const useFetchData = 
 import { useState, useEffect, useCallback } from "react";
-import { adminBlockedUnblockedTutor } from "../api/allApi";
+import { adminApprovBlockTutorRequestApi, adminBlockedUnblockedTutor } from "../api/allApi";
 import { TutorType } from "../types/types";
 
-function useTutorFetchData(api: { (): Promise<any>; }) {
+function useTutorFetchData(api: { ({ page, search }: { page: number, search: string }): Promise<any>; }, page: number, search: string) {
     const [tutors, setTutors] = useState<TutorType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState('')
+    const [totalCount, setTotalCount] = useState<number>(0)
+    const [totalPages, setTotalPages] = useState(1)
 
     // use callback will store tutor data in fetchTutors and will change if its get new value
     const fetchTutors = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await api();
-            setTutors(response.data);
-        } catch (error) {
+            const response = await api({ page, search });
+            setTutors(response.data.results);
+            setTotalCount(response.count)
+            const calculatedTotalPages = Math.ceil(response.data.count / 6); // Assuming 10 items per page
+            setTotalPages(calculatedTotalPages);
+        } catch (error:any) {
             // Handle error
             setError(error)
         } finally {
             setLoading(false);
         }
-    }, [api]);
+    }, [api, page, search]);
 
     useEffect(() => {
         fetchTutors();
-    }, [fetchTutors]); 
+    }, [fetchTutors]);
 
     const blockTutor = async (tutorId: number) => {
         setLoading(true);
@@ -32,7 +37,7 @@ function useTutorFetchData(api: { (): Promise<any>; }) {
             await adminBlockedUnblockedTutor(tutorId, { 'user_blocked': true });
             // Fetching tutor data after 
             await fetchTutors();
-        } catch (error) {
+        } catch (error:any) {
             // Handle error
             setError(error)
         } finally {
@@ -45,7 +50,7 @@ function useTutorFetchData(api: { (): Promise<any>; }) {
         try {
             await adminBlockedUnblockedTutor(tutorId, { 'user_blocked': false })
             await fetchTutors()
-        } catch (error) {
+        } catch (error:any) {
             setError(error)
         } finally {
             setLoading(false)
@@ -53,15 +58,19 @@ function useTutorFetchData(api: { (): Promise<any>; }) {
     }
 
     // will work on future for tutor accept reject method method
-    const acceptTutor = () => {
+    const acceptTutor = async (tutorId:number) => {
         setLoading(true)
         try {
             // await adminApp
-        } catch (error) {
-
+            await adminApprovBlockTutorRequestApi(tutorId, { 'tutor_approve': true })
+            await fetchTutors()
+        } catch (error:any) {
+            setError(error)
+        } finally{
+            setLoading(false)
         }
     }
 
-    return { tutors, loading, error, blockTutor, acceptTutor, unBlockTutor };
+    return { tutors, loading, error, totalCount,totalPages, blockTutor, acceptTutor, unBlockTutor };
 }
 export default useTutorFetchData

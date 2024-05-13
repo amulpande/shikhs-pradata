@@ -52,7 +52,7 @@ class TutorManager(models.Manager):
         return super().get_queryset().filter(tutor_approve=True).filter(user_blocked=False).filter(role='2').all().order_by('-id')
 
     def get_not_approve_tutor(self):
-        return super().get_queryset().filter(tutor_approve=False).filter(role='2').all().order_by('-id')
+        return super().get_queryset().filter(tutor_approve=False).filter(user_blocked=False).filter(role='2').all().order_by('-id')
     
     def get_tutor_subject(self,search=None,order=None):
         

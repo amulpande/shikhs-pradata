@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "api",
     'booking',
+    "rating",
 ]
 
 MIDDLEWARE = [

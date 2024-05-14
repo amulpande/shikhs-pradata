@@ -25,6 +25,10 @@ from api.permissions import IsTutor, IsUser,IsAdmin
 from rest_framework.permissions import IsAdminUser
 from rest_framework.pagination import PageNumberPagination
 from api.paginations import UserPagination,TutorPagination
+# from rest_framework.filters import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import TurorFilter
+# from rest_framework import DjangoFilterBackend
 
 from api.models import User
 import os
@@ -382,13 +386,9 @@ class AdminAllApprovedTutorView(generics.ListAPIView):
     queryset = User.tutorObject.get_approve_tutor()
     serializer_class = TutorApprovedSerializer
     pagination_class = TutorPagination
-    
-    def get_queryset(self):
-        queryset = User.tutorObject.get_approve_tutor()
-        query = self.request.query_params.get('search')
-        if query:
-            queryset = queryset.filter(first_name__icontains=query)
-        return queryset
+    filter_backends = [DjangoFilterBackend]
+    filterset_class  = TurorFilter
+
        
 class  AdminBlockedTutorOrUserView(APIView):
     permission_classes = [IsAdmin]

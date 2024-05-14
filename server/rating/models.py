@@ -9,6 +9,8 @@ class Feedback(models.Model):
     review = models.CharField(max_length=200)
     star = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     isDeleted = models.BooleanField(default=False)
+    isApproved = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.review
+    

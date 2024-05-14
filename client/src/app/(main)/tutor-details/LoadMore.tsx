@@ -7,7 +7,8 @@ import TutorCard from './TutorCard';
 
 // let page = 2
 
-const LoadMore = () => {
+const LoadMore = ({subjects}:{subjects:string}) => {
+    // console.log('subject in load more',subjects)
     const [page,setPage] = useState(2)
     const { ref, inView } = useInView()
     const [tutor, setTutor] = useState<any[]>([])
@@ -16,24 +17,21 @@ const LoadMore = () => {
             // page = page
             const fetchData = async () => {
                 try {
-                    // console.log('page number ',page)
-                    const response = await fetchTutorData({ page: page, search: '' });
-                    // page += 1
-                    console.log('data from load more ->  ', response.results);
-                    setTutor([...tutor,...response.results]); // this will store new data with old data and continue to display in client side
+                    // if(subjects.length>0){
+                    //     setPage(1)
+                    // }
+                    // console.log('page',page)
+                    const response = await fetchTutorData({ page: page, search: subjects });
+                    setTutor([...tutor,...response.results]);
                     setPage((p)=>p+=1)
                 } catch (error) {
                     console.error('Error fetching tutor data:', error);
                 }
             };
             fetchData();
-
-            // return (
-            //     page = 2
-            // )
-
         }
-    }, [inView,tutor,page])
+    // }, [inView,tutor,page])
+    }, [inView,tutor,page,subjects])
     return (
         <>
             <div style={{ margin: 30, marginLeft: 50, padding: 10, display: 'flex', flexWrap: 'wrap' }}>

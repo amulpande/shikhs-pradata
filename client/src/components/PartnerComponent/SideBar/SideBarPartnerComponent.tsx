@@ -39,8 +39,14 @@ const SideBarPartner = ({ children }: any) => {
                 <span className="ms-3">Pending</span>
               </Link>
             </li>
-
             <li>
+              <Link href="/partner/total-booking" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <i className="fa fa-book w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                <span className="ms-3">Total-Booking</span>
+              </Link>
+            </li>
+
+            {/* <li>
               <Link href="" className="flex items-center justify-between p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" onClick={toggleCityDropdown}>
                 <div className="flex items-center">
                   <i className="fa fa-book w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -57,15 +63,18 @@ const SideBarPartner = ({ children }: any) => {
                 <li>
                   <Link href="/partner/total-booking" className="block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600">Total-Booking</Link>
                 </li>
-                {/* <li>
-                  <Link href="#" className="block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600">Option 3</Link>
-                </li> */}
               </ul>
-            </li>
+            </li> */}
             <li>
               <Link href="/partner/partner-profile" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <i className="fa fa-user w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                 <span className="ms-3">Profile</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/partner/my-feedback" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <i className="fa fa-comments w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                <span className="ms-3">My-Feedback</span>
               </Link>
             </li>
             

@@ -120,6 +120,23 @@ interface UserBookTutortypes {
     booking_date:string
 }
 
+interface AdminFeedbackTypes{
+    id: number,
+    tutor_id:number,
+    user_id:number,
+    user_name:string,
+    tutor_name:string,
+    star:number,
+    review:string,
+    isApproved:boolean,
+    isDeleted:boolean
+}
+
+interface SubjectTypes{
+    id:number,
+    subject_name:string
+}
+
 export type {
     TutorType,
     UserLoginType,
@@ -133,5 +150,7 @@ export type {
     FetchTutorDataProps,
     TutorProfile,
     UserProfileTypes,
-    UserBookTutortypes
+    UserBookTutortypes,
+    AdminFeedbackTypes,
+    SubjectTypes
 };

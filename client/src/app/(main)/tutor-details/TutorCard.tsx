@@ -19,6 +19,7 @@ const variant = {
 interface TutorCardProps {
     tutor: TutorType;
     index: any;
+    // rating:any
 }
 
 const TutorCard: React.FC<TutorCardProps> = ({ tutor, index }) => {
@@ -53,6 +54,9 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor, index }) => {
                     <Typography variant="body2" color="text.secondary">
                         {tutor?.short_bio.slice(0, 100)}...
                     </Typography>
+                    {/* <Typography variant="body2" color="text.secondary">
+                        {rating}...
+                    </Typography> */}
                 </CardContent>
                 <CardActions sx={{
                     alignSelf: "stretch",

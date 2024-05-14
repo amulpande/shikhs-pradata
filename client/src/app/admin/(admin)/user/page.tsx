@@ -91,6 +91,12 @@ const AdminUserDataPage = () => {
                 </Table>
                 </div>
 
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
                 <Pagination
                   count={totalPages}
                   page={currentPage}
@@ -98,12 +104,6 @@ const AdminUserDataPage = () => {
                   variant="outlined"
                   shape="rounded"
                 />
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
     </div>
   )

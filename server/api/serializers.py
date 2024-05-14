@@ -366,6 +366,7 @@ class TutorLoginSerializer(serializers.Serializer):
 class TutorSeriliazer(serializers.ModelSerializer):
     subjects_name = serializers.CharField(source = 'subjects.subject_name',read_only=True)
     city_name = serializers.CharField(source = 'city.city_name',read_only=True)
+    
     class Meta:
         model = User
         fields = [

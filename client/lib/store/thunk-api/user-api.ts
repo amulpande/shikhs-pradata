@@ -29,7 +29,7 @@ export const fetchUserDataUsingToken = createAsyncThunk('fetchUserDataUsingToken
     );
         // console.log('inside fetchuserwithtoken',response.data.user)
         return response.data.user;
-    } catch (error) {
+    } catch (error:any) {
         // console.error('Failed to fetch user data:', error);
         // throw error; 
         return rejectWithValue(error.response.data);

@@ -320,6 +320,7 @@ class TutorLoginSerializer(serializers.Serializer):
     subjects = serializers.CharField(read_only=True)
     id = serializers.CharField(read_only=True)
     address = serializers.CharField(read_only=True)
+    tutor_approve = serializers.CharField(read_only=True)
 
     class Meta:
         model = User
@@ -355,6 +356,7 @@ class TutorLoginSerializer(serializers.Serializer):
                 "city": user.city.city_name,
                 "subjects": user.subjects.subject_name,
                 "role": user.role,
+                "tutor_approve":user.tutor_approve,
             }
             return validation
         except User.DoesNotExist:
@@ -364,6 +366,7 @@ class TutorLoginSerializer(serializers.Serializer):
 class TutorSeriliazer(serializers.ModelSerializer):
     subjects_name = serializers.CharField(source = 'subjects.subject_name',read_only=True)
     city_name = serializers.CharField(source = 'city.city_name',read_only=True)
+    
     class Meta:
         model = User
         fields = [

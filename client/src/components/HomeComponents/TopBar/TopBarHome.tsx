@@ -68,7 +68,8 @@ const TopBarHome = () => {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      JOIN PROVIDER
+                      <i className="fas fa-user"></i>
+                      TUTOR
                     </button>
                     <ul
                       className="dropdown-menu"
@@ -79,8 +80,9 @@ const TopBarHome = () => {
                           TUTOR PROFILE
                         </a>
                       </li>
+
                       <li>
-                        <Link className="dropdown-item" href="/tutor-register">
+                        <Link className="dropdown-item" href="/partner/partner-login">
                           LOGIN
                         </Link>
                       </li>
@@ -100,13 +102,13 @@ const TopBarHome = () => {
                           dispatch(authLogout())
                         }}
                       >
+                        <i className="fa fa-sign-out"></i>
                         LOGOUT
                       </button>
                       : " "}
                   </div>
 
                   <div className="dropdown account-details">
-
                     <button
                       className="btn dropdown-toggle"
                       type="button"
@@ -114,27 +116,43 @@ const TopBarHome = () => {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
+                      <i className="fas fa-user"></i>
                       USER
                     </button>
                     <ul
                       className="dropdown-menu"
                       aria-labelledby="dropdownMenuButton1"
                     >
-                      <li>
-                        <a className="dropdown-item" href="profiles.php">
-                          MY PROFILE
-                        </a>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" href="/login">
-                          LOGIN
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" href="/register">
-                          REGISTRATION
-                        </Link>
-                      </li>
+                      {isAuth ? // is user is logged in than no needs to show him login/registration page
+                        <>
+                          <li>
+                            <Link className="dropdown-item" href="/profile">
+                              MY PROFILE
+                            </Link>
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" href="/my-booking">
+                              MY-BOOKING
+                            </Link>
+                          </li>
+                        </>
+                        :
+                        <>
+
+                          <li>
+                            <Link className="dropdown-item" href="/login">
+                              LOGIN
+                            </Link>
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" href="/register">
+                              REGISTRATION
+                            </Link>
+                          </li>
+                        </>
+
+                      }
+
 
                     </ul>
                   </div>

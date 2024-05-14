@@ -5,8 +5,7 @@ import React, { useEffect } from 'react'
 import { Table, Button, TableBody, TableCell, TableHead, TableRow, Avatar, TableContainer, Grid, makeStyles } from '@mui/material';
 import { BookingType } from '@lib/types/types';
 const AdminOrderBookingPage = () => {  
-  const { data } = useBookingFetchData<BookingType>(getAllOrderBookingApi)
-  console.log('data -> ', data)
+  const { data } = useBookingFetchData(getAllOrderBookingApi)
   return (
     <>
       <Grid container spacing={2}>

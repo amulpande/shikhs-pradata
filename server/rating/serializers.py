@@ -1,0 +1,30 @@
+from rest_framework import serializers
+from api.models import User,Subject
+from rating.models import Feedback
+
+#feed for tutor 
+class TutorFeedBackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feedback
+        fields = '__all__'
+        
+class AdminSideFeedbackSerializer(serializers.ModelSerializer):
+    # user_name = serializers.CharField(source='user_id.get_full_name',read_only=True)
+    user_name = serializers.CharField(source="user_id.email",read_only=True)
+    tutor_name = serializers.CharField(source="tutor_id.email",read_only=True)
+    # ratinggggggggggggg =
+    class Meta:
+        model = Feedback
+        fields = '__all__'
+        
+class FeedbackForPerticularSeriliazer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source = 'user_id.email',read_only=True)
+    class Meta:
+        model = Feedback
+        fields = [
+            'tutor_id',
+            'user_id',
+            'review',
+            'star',
+            'user_name'
+        ]

@@ -64,7 +64,7 @@ const HeaderHome = () => {
                                                 ABOUT
                                             </a>
                                         </li>
-                                        <li className="nav-item">
+                                        {/* <li className="nav-item">
                                             <a href="#" className="nav-link dropdown-toggle">
                                                 SUBJECT <i className="fas fa-sort-down" />
                                             </a>
@@ -77,7 +77,7 @@ const HeaderHome = () => {
                                                 </li>
 
                                             </ul>
-                                        </li>
+                                        </li> */}
                                         <li className="nav-item">
                                             <Link href="tutor-details" as="/tutor-details" className="nav-link">
                                                 TUTOR

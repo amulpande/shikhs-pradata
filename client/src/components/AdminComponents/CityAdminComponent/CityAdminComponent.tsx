@@ -6,7 +6,7 @@ const CityAdminComponent = () => {
     <>
       <Grid xs={12}>
         <Table>
-          Halkat
+          {/* Halkat */}
         </Table>
       </Grid>
     </>

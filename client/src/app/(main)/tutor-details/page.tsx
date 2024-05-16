@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { getSubjectsApi, ratingTutorApi } from '@lib/api/allApi';
 import { Form } from 'react-bootstrap';
 import { SubjectTypes } from '@lib/types/types';
+import { CircularProgress } from '@mui/material';
 
 
 const variant = {
@@ -20,12 +21,13 @@ const TutorDetailsPage = () => {
     const [subjects, setSubject] = useState<SubjectTypes[]>([])
     const [tutor, setTutorData] = useState<any>([]);
     const[rating,setRating] = useState<any[]>([])
+    const [orderBy,setOrderBy] = useState<string>('-id')
 
     const fetchTutors = useCallback(async () => {
-        const tutors = await fetchTutorData({ page: 1, search: searchQuery });
+        const tutors = await fetchTutorData({ page: 1, search: searchQuery,order_by:orderBy });
         // console.log('tutors ',tutor)
         setTutorData(tutors);
-    }, [searchQuery])
+    }, [searchQuery,orderBy])
 
     useEffect(() => {
         const fetchSubjects = async () => {
@@ -41,7 +43,7 @@ const TutorDetailsPage = () => {
             try {
                 const response = await ratingTutorApi()
                 setRating(response.data)
-                console.log('response star', response)
+                // console.log('response star', response)
             } catch (error) {
                 
             }
@@ -52,12 +54,19 @@ const TutorDetailsPage = () => {
     }, [fetchTutors]); // Trigger fetchTutors whenever searchQuery changes
 
     const handleSelectSubject = (e) => {
-        setSearchQuery(e.target.value);
-        
+        setSearchQuery(e.target.value);   
     }
-    const getTutorRating = (tutorId) => {
-        const tutorRating = rating.find((item) => item.tutor_id === tutorId);
-        return tutorRating ? tutorRating.rating : null;
+    const handleOrderByChange = (e)=>{
+        setOrderBy(e.target.value)
+    }
+    const getTutorAverageRating = (tutorId:number) => {
+        const tutorRatings = rating.filter((item) => item.tutor_id === tutorId && !isNaN(parseFloat(item.star)));
+        if (tutorRatings.length === 0) {
+            return 'No rating available';
+        }
+        const totalRating = tutorRatings.reduce((acc, curr) => acc + parseFloat(curr.star), 0);
+        const averageRating = totalRating / tutorRatings.length;
+        return averageRating.toFixed(2); // rounding to 2 decimal places
     };
     // console.log('subjecttctcsdsdsd', subjects)
     return (
@@ -68,9 +77,9 @@ const TutorDetailsPage = () => {
                         <h1>Tutor Details</h1>
                         <ul>
                             <li>
-                                <a href="index.php">HOME</a>
+                                <a href="index">HOME</a>
                             </li>
-                            <li>SERVICE DETAILS</li>
+                            <li>TUTOR DETAILS</li>
                         </ul>
                     </div>
                 </div>
@@ -82,9 +91,17 @@ const TutorDetailsPage = () => {
                         <Form.Control as="select" onChange={handleSelectSubject} value={searchQuery}>
                             <option value={''}>filter subject</option>
                             {subjects?.map((subject,index)=>(
-
                             <option key={index} value={subject?.subject_name}>{subject?.subject_name}</option>
                             ))}
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                        <Form.Control as="select" onChange={handleOrderByChange} value={orderBy}>
+                            <option value={'-id'}>Sort</option>
+                            <option value={'first_name'}>First Name</option>
+                            <option value={'price'}>Price</option>
+                            <option value={'-experience'}>Experience</option>
+                            {/* <option value={'first_name'}>First Name</option> */}
                         </Form.Control>
                     </Form.Group>
                 </div>
@@ -92,15 +109,11 @@ const TutorDetailsPage = () => {
             <div style={{ margin: 30, marginLeft: 50, padding: 10, display: 'flex', flexWrap: 'wrap' }}>
                 {
                     tutor.results?.map((tutor: any, index: any) => (
-                        <TutorCard tutor={tutor} index={index} key={index}/>
-                        
+                        <TutorCard tutor={tutor} index={index} key={index} rating={getTutorAverageRating(tutor?.id)}/>   
                     ))
                 }
             </div>
-            {/* {tutor && tutor.next && <LoadMore subjects={searchQuery}/>} */}
-             {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} />) : <h3 className='text-center'>No data found</h3>) : null}
-            
-
+             {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} />) : <h3 className='text-center'><CircularProgress /></h3>) : null}
         </>
     )
 }

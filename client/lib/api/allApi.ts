@@ -69,8 +69,10 @@ export const tutorAcceptRejectWithReasonBokoing = (id:number,data:{status:string
     axiosInstance.patch(`booking/tutor/booking-status/${id}`,data)
 
 // using this api for infinite scroll where user can scroll and get new data rather than going throw pagination
-export const getAllApprovedTutorApi = ({page=1,search=''}) =>
-    axiosInstance.get(`admin/all-approved-tutor/?page=${page}&subjects=${search}`)
+export const getAllApprovedTutorApi = ({page=1,search='',order_by='-id'}) =>
+    axiosInstance.get(`admin/all-approved-tutor/?page=${page}&subjects=${search}&order_by=${order_by}`)
+
+
 
 // tutor to get all his/her feedback
 export const tutorGetAllFeedback = () =>

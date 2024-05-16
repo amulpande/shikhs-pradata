@@ -81,13 +81,13 @@ const FooterHome = () => {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="service.php">
+                                        <Link href="/service">
                                             <i className="fas fa-long-arrow-alt-right" /> Subject{" "}
                                         </Link>
                                     </li>
 
                                     <li>
-                                        <Link href="contact.php">
+                                        <Link href="/contact">
                                             <i className="fas fa-long-arrow-alt-right" /> Contact{" "}
                                         </Link>
                                     </li>

@@ -119,7 +119,7 @@ class UserCheckOrderApproval(APIView):
             user = request.user
             userserializer = UserSerializer(user)
     
-            booking = Booking.objects.filter(user_id = userserializer.data['id'])
+            booking = Booking.objects.filter(user_id = userserializer.data['id']).order_by('-id')
 
             if not booking:
                 return Response({'You have not yet ordered anything'})

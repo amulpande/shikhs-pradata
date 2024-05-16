@@ -10,6 +10,7 @@ import { MotionDiv } from './MotionDiv';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@lib/store/store';
 import { TutorType } from '@lib/types/types';
+import { Rating } from '@mui/material';
 ;
 
 const variant = {
@@ -19,10 +20,11 @@ const variant = {
 interface TutorCardProps {
     tutor: TutorType;
     index: any;
-    // rating:any
+    rating:any
 }
 
-const TutorCard: React.FC<TutorCardProps> = ({ tutor, index }) => {
+const TutorCard: React.FC<TutorCardProps> = ({ tutor, index,rating }) => {
+    // console.log('rating from tutor card',rating)
     return (
         <MotionDiv
             initial="hidden"
@@ -44,19 +46,23 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor, index }) => {
                     image={tutor.profile_image}
                     title="green iguana"
                 />
-                <CardContent>
+                <CardContent sx={{textAlign:'center'}}>
                     <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
                         {tutor.first_name + ' ' + tutor.last_name}
                     </Typography>
                     <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
                         {tutor?.subjects_name}
                     </Typography>
+                    {/* <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+                        {tutor?.experience}
+                    </Typography> */}
                     <Typography variant="body2" color="text.secondary">
                         {tutor?.short_bio.slice(0, 100)}...
                     </Typography>
                     {/* <Typography variant="body2" color="text.secondary">
                         {rating}...
                     </Typography> */}
+                    <Rating name="half-rating-read" defaultValue={rating} precision={0.5} readOnly />
                 </CardContent>
                 <CardActions sx={{
                     alignSelf: "stretch",

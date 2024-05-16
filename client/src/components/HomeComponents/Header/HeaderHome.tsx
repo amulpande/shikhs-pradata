@@ -89,19 +89,19 @@ const HeaderHome = () => {
                                             </Link>
                                         </li>
                                     </ul>
-
-                                    <div id="mySidebar" className="sidebar">
-                                        <Link href="#" className="closebtn" onClick={closeNav}>&times;</Link>
-                                        <Link href="profile" as='/profile'>PROFILE</Link>
-                                        <Link href="invoice" as='/my-booking' >MY BOOKING</Link>
-                                        <Link href="view-cart" as="view-cart" >MY CART</Link>
-                                        <Link href="invoices1">MY INVOICE</Link>
-                                        <Link href="login">LOGIN</Link>
-                                        <Link href="register">REGISTER</Link>
-                                    </div>
-                                    <div id="main">
-                                        <button className="openbtn" onClick={handleNavClose}>&#9776;</button>
-                                    </div>
+    {/* 
+                                        <div id="mySidebar" className="sidebar">
+                                            <Link href="#" className="closebtn" onClick={closeNav}>&times;</Link>
+                                            <Link href="profile" as='/profile'>PROFILE</Link>
+                                            <Link href="invoice" as='/my-booking' >MY BOOKING</Link>
+                                            <Link href="view-cart" as="view-cart" >MY CART</Link>
+                                            <Link href="invoices1">MY INVOICE</Link>
+                                            <Link href="login">LOGIN</Link>
+                                            <Link href="register">REGISTER</Link>
+                                        </div>
+                                        <div id="main">
+                                            <button className="openbtn" onClick={handleNavClose}>&#9776;</button>
+                                        </div> */}
                                 </div>
                             </nav>
                         </div>

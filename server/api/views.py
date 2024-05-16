@@ -388,6 +388,11 @@ class AdminAllApprovedTutorView(generics.ListAPIView):
     pagination_class = TutorPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class  = TurorFilter
+    def get_queryset(self):
+        # Get the 'order_by' parameter from the query parameters
+        order_by = self.request.query_params.get('order_by', '-id')
+        # Pass the 'order_by' parameter to the manager method
+        return User.tutorObject.get_approve_tutor(order_by=order_by)
 
        
 class  AdminBlockedTutorOrUserView(APIView):

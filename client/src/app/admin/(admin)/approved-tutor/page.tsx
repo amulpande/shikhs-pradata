@@ -38,7 +38,11 @@ const ApproedTutorPage = () => {
   );
   return (
     <>
-      <div className='mt-10 mr-15'>
+    <div className='card-header'>
+      <h3 className='card-title'>Approved Tutor List</h3>
+    </div>
+      <div className='mt-4 mr-15'>
+
         <TableComponent data={tutors} loading={loading} customActionButtons={renderCustomActionButtons} />
         <Pagination
           count={totalPages}

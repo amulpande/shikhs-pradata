@@ -1,8 +1,12 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
-.fade-in-up {
+nextjs-portal{
+  display:none
+}
+
+/* .fade-in-up {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 1s ease forwards;
@@ -34,7 +38,7 @@
   opacity: 1;
   transform: translateX(0);
   }
-  }
+  } */
 
 /*
 :root {

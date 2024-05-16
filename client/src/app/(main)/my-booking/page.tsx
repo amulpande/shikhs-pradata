@@ -21,15 +21,7 @@ const MyBookingPage = () => {
             // return response.data
         }).catch((error) => {
             setLoading(false) // loading false since we have encounter error
-            // return error
         })
-
-
-        // setLoading(true)
-        // const timeoutId = setTimeout(() => {
-        //     setLoading(false);
-        // }, 5000);
-        // return () => clearTimeout(timeoutId)
     }, [loading])
 
     const handleOpen = (tutorId: number) => {
@@ -49,7 +41,7 @@ const MyBookingPage = () => {
                         <h1>MY BOOKING</h1>
                         <ul>
                             <li>
-                                <a href="index.php">HOME</a>
+                                <a href="/index">HOME</a>
                             </li>
                             <li>MY BOOKING</li>
                         </ul>
@@ -98,36 +90,36 @@ const MyBookingPage = () => {
                                         <div>
 
                                             {myOrderData && myOrderData?.map((order: BookingType, index: number) => (
-                                                <Card variant="outlined" key={index} style={{ margin: '5px', textAlign: 'center' }}>
-                                                    <CardContent style={{}}>
-                                                        <Typography variant="h5" component="div" gutterBottom>
+                                                <Card variant="outlined" key={index} style={{ margin: '2px', textAlign: 'center' }}>
+                                                    <CardContent>
+                                                        <Typography variant="h5" component="div" gutterBottom className='card-header'>
                                                             Order Details
                                                         </Typography>
                                                         <Typography variant="body1" gutterBottom>
-                                                            Tutor Name : {order?.tutor_name}
+                                                            <strong>Tutor Name :</strong> {order?.tutor_name}
                                                         </Typography>
                                                         <Typography variant="body1" gutterBottom>
-                                                            Date: {order?.booking_date}
+                                                        <strong>Date </strong>: {order?.booking_date}
                                                         </Typography>
                                                         <Typography variant="body1" gutterBottom>
-                                                            Appointment Time: {order?.booking_time}
+                                                        <strong>Appointment Time</strong> : {order?.booking_time}
                                                         </Typography>
                                                         <Typography variant="body1" gutterBottom>
-                                                            Subject name: {order?.subject_name}
+                                                        <strong>   Subject name </strong>: {order?.subject_name}
                                                         </Typography>
                                                         <Typography variant="body1" gutterBottom>
-                                                            Booking Status: {order?.status}
+                                                        <strong>Booking Status </strong>: {order?.status}
                                                         </Typography>
 
                                                         <Typography variant="body1" gutterBottom>
-                                                            Tution Charge: Rs{order?.tutor_price}/-
+                                                        <strong> Tution Charge </strong>: Rs{order?.tutor_price}/-
                                                         </Typography>
                                                         <Typography variant="body1" gutterBottom>
-                                                            Payment Status: {order?.payment_status}
+                                                        <strong> Payment Status </strong>: {order?.payment_status}
                                                         </Typography>
-                                                        <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }}>
+                                                        {/* <Button variant="contained" style={{ backgroundColor: 'red', color: 'white' }}>
                                                             Cancel booking
-                                                        </Button>
+                                                        </Button> */}
                                                         {/* Add Provider Contact Information here */}
                                                         {order?.status === 'Accepted' && (
                                                             <Card variant="outlined" style={{ marginTop: '20px' }}>
@@ -136,13 +128,13 @@ const MyBookingPage = () => {
                                                                         Provider Contact
                                                                     </Typography>
                                                                     <Typography variant="body1" gutterBottom>
-                                                                        Provider Name: {order?.tutor_name}
+                                                                        Provider Name : {order?.tutor_name}
                                                                     </Typography>
                                                                     <Typography variant="body1" gutterBottom>
-                                                                        Phone Number: radom numbber
+                                                                        Phone Number : {order?.tutor_contact}
                                                                     </Typography>
                                                                     <Typography variant="body1" gutterBottom>
-                                                                        Email:email is not coming from backend
+                                                                        Email : {order?.tutor_email}
                                                                     </Typography>
                                                                     <button className='btn btn-warning text-white' onClick={() => handleOpen(order?.tutor_id)}>Feedback</button>
                                                                 </CardContent>

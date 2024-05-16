@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import styles from './ProfilePage.module.scss'
-import { userProfileApi } from '@lib/api/allApi';
+import { userProfileApi, userProfileUpdateApi } from '@lib/api/allApi';
 import Image from 'next/image';
 import { CldImage } from 'next-cloudinary';
 import { UserDataTypes, UserProfileTypes } from '@lib/types/types';
@@ -32,8 +32,8 @@ const ProfilePage = () => {
   }, [])
   // console.log('userProfile', userProfile)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {name,value} = e.target
-    setUserProfile((prevState)=>({...prevState,[name]:value}))
+    const { name, value } = e.target
+    setUserProfile((prevState) => ({ ...prevState, [name]: value }))
   }
 
   return (
@@ -44,7 +44,7 @@ const ProfilePage = () => {
             <h1>MY BOOKING</h1>
             <ul>
               <li>
-                <a href="index.php">HOME</a>
+                <a href="index">HOME</a>
               </li>
               <li>MY BOOKING</li>
             </ul>
@@ -62,7 +62,17 @@ const ProfilePage = () => {
                       <CldImage className='rounded' src={userProfile?.profile_image || ''} width={300} height={300} alt="..." />
                     </div>
                     <div className="col-lg-8" >
-                      <form className="row g-3 ">
+                      <form className="row g-3 " onSubmit={async (e) => {
+                        e.preventDefault()
+                        try {
+                          const { first_name,last_name,address,contact} = userProfile
+                          const data = { first_name,last_name,address,contact}
+                          const response = await userProfileUpdateApi(data)
+                          console.log('profile response ', response.data)
+                        } catch (error) {
+                          console.error('Error updating profile', error)
+                        }
+                      }}>
                         <div className="col-md-12">
                           <div className="bg-secondary-soft p-4 rounded">
                             <div className="mb-3">
@@ -160,7 +170,7 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
-      </section> 
+      </section>
     </>
   );
 };

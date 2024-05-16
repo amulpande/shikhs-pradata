@@ -83,7 +83,8 @@ interface BookingType {
     status: string,
     subject_id: number,
     subject_name: string,
-    tutor_price: number
+    tutor_price: number,
+    tutor_contact:string
 }
 
 

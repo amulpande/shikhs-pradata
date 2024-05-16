@@ -33,7 +33,7 @@ const TutorDetailsByIdPage = ({ params }) => {
             <h1>Service Details</h1>
             <ul>
               <li>
-                <a href="index.php">HOME</a>
+                <a href="index">HOME</a>
               </li>
               <li>SERVICE DETAILS</li>
             </ul>

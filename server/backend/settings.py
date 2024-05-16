@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "api",
     'booking',
     "rating",
+    "payment",
     "django_filters",
 ]
 
@@ -224,3 +225,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
 EMAIL_USE_TLS = True
+
+
+# stripe configurations
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')

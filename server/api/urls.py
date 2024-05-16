@@ -30,6 +30,9 @@ urlpatterns = [
     
     #feedback-review api
     path('rating/',include('rating.urls'),name='user-update-api-view'),
+    
+    #payment
+    path('payment/',include('payment.urls'),name='payment-stripe-api-view'),
      
     #admin tutor
     path('admin/login/',AdminLoginView.as_view(),name='Admin-login-api-view'),

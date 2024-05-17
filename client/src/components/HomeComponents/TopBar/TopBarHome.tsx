@@ -18,7 +18,9 @@ const TopBarHome = () => {
       <title>SHIKHA PRADATA</title>
       <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
       <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-      <link type="image/x-icon" />
+      {/* <link type="image/x-icon" />
+       */}
+       <link rel="icon" href="/next.svg" />
       <div className="topbar">
         <div className="container">
           <div className="topbar-content">

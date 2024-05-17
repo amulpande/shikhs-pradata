@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { Container, Typography, TextField, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { ToastContainer } from 'react-toastify';
-import { successNotify, errorNotify } from '@lib/notification-toastify/notification-toastify';
+import { successNotify, errorNotify, customErrorMessageErrorNotify } from '@lib/notification-toastify/notification-toastify';
 import { authLogin } from '@lib/slices/auth-slice/auth-slice';
 import { UserLoginType } from '@lib/types/types';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import * as api from '@lib/api/allApi';
 import 'react-toastify/dist/ReactToastify.css';
@@ -42,8 +42,9 @@ const PartnerLoginPage = () => {
     })
     // const router = useRouter()
     const [loading, setLoading] = useState<boolean>(false);
+    const router = useRouter()
     const dispatch = useDispatch()
-    const handleChange = (e) => {
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setTutorLogin({ ...tutorLogin, [e.target.name]: e.target.value })
     }
     const handleLogin = async (e) => {
@@ -53,15 +54,21 @@ const PartnerLoginPage = () => {
             setLoading(true)
             const response = await api.tutorLoginApi(tutorLogin)
             console.log('tutor login response',response)
-            if (response.status === 200) {
-
+            if (response.status==200) {
                 successNotify()
-                console.log('success notify ')
                 dispatch(authLogin(response.data))
-                // router.push('/admin/index')
+                router.push('/partner/partner-profile')
             }
-        } catch (error) {
-            errorNotify()
+        } catch (error:any) {
+            console.error('Error login partner ',error.response)
+            if(error.response.status===400){
+                errorNotify()
+            }else if(error.response.status===401){
+                customErrorMessageErrorNotify(error.response.data.Message)
+            }else if(error.response.status===403){
+                customErrorMessageErrorNotify(error.response.data.Message)
+            }
+            // errorNotify()
         } finally {
             setLoading(false)
         }

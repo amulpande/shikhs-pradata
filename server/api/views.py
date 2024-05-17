@@ -260,6 +260,13 @@ class TutotLoginApiView(APIView):
         if valid:
             print("serializer data -> ", serializer.data)
             if serializer.data["role"] == "2":
+                tutor = User.objects.get(email=serializer.data['email'])
+                if tutor.tutor_approve == False:
+                    return Response({'Message':'You are not approved by admin yet'},status=status.HTTP_401_UNAUTHORIZED)
+                
+                if tutor.user_blocked:
+                    return Response({'Message':'You have been blocked by Admin'},status=status.HTTP_403_FORBIDDEN)
+                
                 status_code = status.HTTP_200_OK
                 response = {
                     "success": True,

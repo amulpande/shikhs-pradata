@@ -4,13 +4,11 @@ import { TutorType } from '@lib/types/types'
 import { getTutorDataByidApi } from '@lib/api/allApi'
 import './TutorDetail.module.css'
 import Image from 'next/image'
-import { Modal, Button } from 'react-bootstrap';
-import { CldImage } from 'next-cloudinary'
 import BookingModelComponent from '@/components/ModalComponent/ModelComponent'
 // import { makeStyles } from '@mui/styles';
 
 
-const TutorDetailsByIdPage = ({ params }) => {
+const TutorDetailsByIdPage = ({ params }:any) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -26,7 +24,6 @@ const TutorDetailsByIdPage = ({ params }) => {
   return (
 
     <>
-
       <div className="uni-banner" >
         <div className="container">
           <div className="uni-banner-text">
@@ -40,13 +37,11 @@ const TutorDetailsByIdPage = ({ params }) => {
           </div>
         </div>
       </div>
-
       <div className="service-details pt-100">
         <div className="container">
           <div className="row">
             <div className="col-lg-8">
               <div className="service-details-text-area">
-
                 <div className="container mt-5">
                   <div className="row">
                     <div className="col-md-4">

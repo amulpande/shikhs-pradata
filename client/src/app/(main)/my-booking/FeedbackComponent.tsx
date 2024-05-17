@@ -3,17 +3,22 @@ import { sendFeedBackApi } from '@lib/api/allApi';
 import { Rating } from '@mui/material';
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import Swal from 'sweetalert2'
 
 const FeedbackComponent = ({ show, handleClose ,tutorId}:any) => {
     const [review, setReview] = useState('');
-    const [value, setValue] = useState(5); // Default star rating
-    console.log('selected tutor in modal',tutorId)
-
+    const [value, setValue] = useState(5);
     const handleSave = async() => {
         // api call for feedback 
         try {
             const response = await sendFeedBackApi({'review':review,'star':value,'tutor_id':tutorId})
-            console.log('response of feedback',response.data)
+            if (response){
+                Swal.fire({
+                    title: "Feedback!",
+                    text: "Thank You for your feedback!",
+                    icon: "success"
+                  });
+            }
         } catch (error) {
             console.error('Error posting feedback',error)
         }
@@ -37,7 +42,6 @@ const FeedbackComponent = ({ show, handleClose ,tutorId}:any) => {
                         />
                     </Form.Group>
                     <Form.Group controlId="formReview">
-                        {/* <Form.Label >Review</Form.Label> */}
                         <Form.Control as="textarea" placeholder='Please provide your review' rows={3} value={review} onChange={(e) => setReview(e.target.value)} />
                     </Form.Group>
                 </Form>
@@ -46,7 +50,7 @@ const FeedbackComponent = ({ show, handleClose ,tutorId}:any) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleSave}>
+                <Button variant="warning" onClick={handleSave}>
                     Save
                 </Button>
             </Modal.Footer>

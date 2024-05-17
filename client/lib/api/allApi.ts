@@ -76,7 +76,7 @@ export const getAllApprovedTutorApi = ({page=1,search='',order_by='-id'}) =>
 
 // tutor to get all his/her feedback
 export const tutorGetAllFeedback = () =>
-    axiosInstance.get('')
+    axiosInstance.get('rating/tutor/feedback/')
 
 
 
@@ -154,3 +154,13 @@ export const approvedDisapprovedFeedbackByAdmin = (id:number,data:boolean) =>
 
 export const deleteFeedbackByAdmin = (id:number) =>
     axiosInstance.delete(`rating/admin/tutor-feedback/delete/${id}`)
+
+
+
+
+// payment api
+export const getPaymentApi = (data) =>
+    axiosInstance.post('payment/create-checkout-session/',data)
+
+export const getWebHookApi = () =>
+    axiosInstance.post('payment/webhook/stripe/')

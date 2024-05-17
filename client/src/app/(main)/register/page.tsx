@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TextField, Input, Button, Grid, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import { UserRegisterType } from '@lib/types/types';
+import { useRouter } from 'next/navigation';
 
 // interface InitialValuesDataType {
 //     email: string;
@@ -36,6 +37,7 @@ const initialValues: UserRegisterType = {
 }
 const RegisterHomePage = () => {
     const [loading, setLoading] = useState<boolean>(false);
+    const router = useRouter()
     // useDispatch()
 
     const formik = useFormik({
@@ -62,7 +64,8 @@ const RegisterHomePage = () => {
             try {
                 const response = await userRegisterApi(formData)
                 registeredSuccessfullyNotify()
-                console.log('register data => ', response.data)
+                router.push('/login')
+                // console.log('register data => ', response.data)
             } catch (error: any) {
                 console.log('register error => ', error.response.data.email[0])
                 if (error.response.data.email[0] == 'user with this email already exists.') {

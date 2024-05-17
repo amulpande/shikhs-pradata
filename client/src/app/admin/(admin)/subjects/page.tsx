@@ -16,6 +16,7 @@ const AdminSubjectPage = () => {
     id:'',
     subject_name:''
   })
+  const [updated,setUpdated] = useState<boolean>(false)
   
   useEffect(() => {
     const fetchSubjectData = async () => {
@@ -23,7 +24,8 @@ const AdminSubjectPage = () => {
       setSubjectData(response.data)
     }
     fetchSubjectData()
-  }, [showUpdateModal])
+  }, [showUpdateModal,subjectData])
+
   const handleOpenUpdateModal = (subject_name:any,id:any) => {
     setSelectedSubject({id:id,subject_name:subject_name})
     setShowUpdateModal(true);
@@ -39,12 +41,13 @@ const AdminSubjectPage = () => {
       <div className='card text-center'>
         <form onSubmit={async (e) => {
           e.preventDefault()
+          setUpdated(false)
           try {
             const response = await postSubjectApi(subjectName.toUpperCase())
-            console.log(response)
-            if (response.data.subject_name) {
-              console.log('subject already exist')
+            if (response){
+              setUpdated(true)
             }
+            
           } catch (error: any) {
             if (error.response && error.response.data) {
               const errorMessage = error.response.data.subject_name[0];

@@ -7,25 +7,27 @@ import React, { useState } from 'react'
 
 const PartnerRejectedBookingPage = () => {
 
-    const {data,loading} = useBookingFetchData(tutorGetAcceptedAllBooking)
-    const renderInvoice = () =>{
+    const { data, loading } = useBookingFetchData(tutorGetAcceptedAllBooking)
+    const renderInvoice = () => {
 
-        return <InvoiceCompoent/>
+        return <InvoiceCompoent />
     }
-    
-    const renderButton = () =>(
-        <button className='btn btn-success' onClick={()=>renderInvoice()}> INVOICE </button>
+
+    const renderButton = () => (
+        <button className='btn btn-success' onClick={() => renderInvoice()}> INVOICE </button>
         // <button className='btn btn-success'> INVOICE </button>
     )
     return (
         <>
-            <div className='card'>
+            <div className='card-header'>
                 <h3 >
                     TOTAL BOOKING
                 </h3>
             </div>
-            <PartnerBookingTabel data={data} loading={loading} customActionButtons={renderButton} />
-            <InvoiceCompoent/>
+            <div>
+                <PartnerBookingTabel data={data} loading={loading} customActionButtons={renderButton} />
+            </div>
+            {/* <InvoiceCompoent/> */}
         </>
     )
 }

@@ -9,7 +9,7 @@ export const tutorRegistrationValidationSchema = yup.object({
 
     contact: yup.string().required('Contact is required')
         .matches(/^[0-9]+$/, 'Contact must contain only numbers')
-        .max(10, 'Contact must be at most 15 characters'),
+        .max(10, 'Contact must be at most 10 characters'),
 
     gender: yup.string()
         .required('Gender is required')

@@ -9,10 +9,12 @@ import { errorNotify,successNotify } from '@lib/notification-toastify/notificati
 import Link from 'next/link';
 import { TextField, Button, Grid, Typography,CircularProgress } from '@mui/material'
 import { UserLoginType } from '@lib/types/types';
+import { useRouter } from 'next/navigation';
 
 const LoginHomePage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch()
+  const router = useRouter()
   const [userLogindata, setUserLoginData] = useState<UserLoginType>({
     email: '',
     password: ''
@@ -31,6 +33,7 @@ const LoginHomePage = () => {
       if (response.data.statuCode === 200) {
         successNotify()
         dispatch(authLogin(response.data))
+        router.push('/profile')
       }
     } catch (error) {
       errorNotify();

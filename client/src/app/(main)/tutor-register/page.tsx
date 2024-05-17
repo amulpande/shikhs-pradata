@@ -9,6 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCityDataApi } from '../../../../lib/slices/city-slice/city-slice';
 import { fetchUserDataUsingToken } from '../../../../lib/store/thunk-api/user-api';
 import { fetchSubjectApi } from '../../../../lib/slices/subject-slice/subject-slice';
+import { customErrorMessageErrorNotify, registeredSuccessfullyNotify, successNotify } from '@lib/notification-toastify/notification-toastify';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 const TutorRegisterPage = () => {
   // const data = async()=>{
@@ -17,6 +21,7 @@ const TutorRegisterPage = () => {
   // }
   // data()
 
+  const router = useRouter()
   const dispatch = useDispatch();
   const cityHai = useSelector((state) => state.cityData.cityData)
   const subjectData = useSelector((state) => state.subjectData.subjects)
@@ -66,7 +71,7 @@ const TutorRegisterPage = () => {
     // console.log('aa')
     initialValues,
     validationSchema: tutorRegistrationValidationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // console.log('register data ',values)
       // alert(JSON.stringify(values, null, 2));
       const formData = new FormData()
@@ -86,14 +91,28 @@ const TutorRegisterPage = () => {
       formData.append('dob', values.dob)
       formData.append('price', values.price)
       console.log('Tutor Form Data')
-      console.log([...formData.entries()])
+      // console.log([...formData.entries()])
 
-      
-      tutorRegisterApi(formData)
+      try {
+        
+        const response = await tutorRegisterApi(formData)
+        if (response.status==200){
+          registeredSuccessfullyNotify()
+          router.push('/partner/partner-login')
+          
+        }
+        console.log('response on ths page',response.data)
+      } catch (error:any) {
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.email[0];
+          customErrorMessageErrorNotify(errorMessage) 
+        }
+        console.error('Error registering tutor',error)
+      }
     }
   })
 
-  console.log(formik.errors)
+  // console.log(formik.errors)
   return (
 
     <>
@@ -242,8 +261,8 @@ const TutorRegisterPage = () => {
                       name="password"
                       className="form-control"
                       placeholder="Password"
-                      maxLength={12}
-                      minLength={5}
+                      // maxLength={}
+                      minLength={8}
                       value={formik.values.password}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -333,7 +352,7 @@ const TutorRegisterPage = () => {
                       className="form-control"
                     >
                       <option value="">Select a city</option>
-                      {cityHai && cityHai?.map((city) => (
+                      {cityHai && cityHai?.map((city:any) => (
                         <option key={city.id} value={city.id}>{city.city_name}</option>
                       ))}
                     </select>
@@ -354,7 +373,7 @@ const TutorRegisterPage = () => {
                       className="form-control"
                     >
                       <option value="">Select a city</option>
-                      {subjectData && subjectData?.map((subject) => (
+                      {subjectData && subjectData?.map((subject:any) => (
                         <option key={subject.id} value={subject.id}>{subject.subject_name}</option>
                       ))}
                     </select>
@@ -419,6 +438,7 @@ const TutorRegisterPage = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </>
 
 

@@ -14,3 +14,7 @@ class Feedback(models.Model):
     def __str__(self) -> str:
         return self.review
     
+    @property
+    def get_user_profile(self):
+        return f'{self.user_id.first_name}'
+    

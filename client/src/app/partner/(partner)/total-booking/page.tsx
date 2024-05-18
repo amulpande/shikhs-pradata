@@ -13,8 +13,8 @@ const PartnerRejectedBookingPage = () => {
         return <InvoiceCompoent />
     }
 
-    const renderButton = () => (
-        <button className='btn btn-success' onClick={() => renderInvoice()}> INVOICE </button>
+    const renderButton = (id) => (
+        <button className='btn btn-success' onClick={() => renderInvoice()}> {id} </button>
         // <button className='btn btn-success'> INVOICE </button>
     )
     return (

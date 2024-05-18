@@ -13,3 +13,6 @@ class Booking(models.Model):
     cancellation_reason = models.TextField(blank=True)
     payment_status = models.CharField(max_length=20, choices=[('Paid', 'Paid'), ('Unpaid', 'Unpaid')], default='Unpaid')
     isDeleted = models.BooleanField(default=False)
+    
+    def __str__(self) -> str:
+        return f'{self.id}'

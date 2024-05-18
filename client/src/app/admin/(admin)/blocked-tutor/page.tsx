@@ -4,7 +4,7 @@ import { Box, Button, Modal, Pagination, Typography } from '@mui/material'
 import { getAdminAllBlockedTutorApi } from '@lib/api/allApi'
 import useTutorFetchData from '@lib/hooks/useTutorFetchData'
 import { useState } from 'react'
-import ModelComponent from '@/components/ModalComponent/ModelComponent'
+import Swal from 'sweetalert2'
 
 const BlockedTutoAdminPage = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -16,6 +16,11 @@ const BlockedTutoAdminPage = () => {
         if (isConfirmed) {
             // setOpen(true)
             unBlockTutor(tutorId)
+            Swal.fire({
+                title: "UnBlocked!",
+                text: "Tutor Has been unblocked and email has sent to him",
+                icon: "success"
+              });
         }
     };
     const renderCustomActionButtons = (tutorId: number, tutorName: string) => {

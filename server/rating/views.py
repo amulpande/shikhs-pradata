@@ -65,3 +65,13 @@ class TutorFeedbackGetApi(APIView):
         except :
             return Response({'error': 'Feedback not found'}, status=status.HTTP_404_NOT_FOUND)
         
+        
+class MainPageRatingToShowApi(APIView):
+    def get(self,request):
+        try:
+            feedback = Feedback.objects.filter(isApproved=True).filter(isDeleted=False).order_by('-star')
+            serializers = FeedbackSerializer(feedback,many=True)
+            return Response(serializers.data,status=status.HTTP_200_OK)
+        except Feedback.DoesNotExist:
+            return Response(serializers.errors,status=status.HTTP_404_NOT_FOUND)
+        

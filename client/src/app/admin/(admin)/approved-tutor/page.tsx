@@ -5,6 +5,7 @@ import useTutorFetchData from '@lib/hooks/useTutorFetchData'
 import { getAllApprovedTutorApi } from '@lib/api/allApi';
 import { useState } from 'react';
 import ModelComponent from '@/components/ModalComponent/ModelComponent';
+import Swal from 'sweetalert2'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -20,7 +21,6 @@ const style = {
 const ApproedTutorPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
   const [open, setOpen] = useState<boolean>(false);
   const { tutors, loading, blockTutor, totalCount, totalPages } = useTutorFetchData(getAllApprovedTutorApi, currentPage, searchQuery)
   const handleOpen = (tutorId: number, tutorName: string) => {
@@ -28,6 +28,12 @@ const ApproedTutorPage = () => {
     if (isConfirmed) {
       // setOpen(true)
       blockTutor(tutorId)
+      Swal.fire({
+        title: "Blocked!",
+        text: "Tutor Has been blocked and email has sent to him",
+        icon: "success"
+      });
+
     }
   };
   const renderCustomActionButtons = (tutorId: number, tutorName: string) => (
@@ -38,9 +44,16 @@ const ApproedTutorPage = () => {
   );
   return (
     <>
-    <div className='card-header'>
-      <h3 className='card-title'>Approved Tutor List</h3>
-    </div>
+      <div className='card-header'>
+        <h3 className='card-title'>Approved Tutor List</h3>
+      </div>
+      {/* <div className="form-group col-md-4">
+        <input className="form-control rounded-0 py-2" type="search" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} id="example-search-input"/>
+      </div> */}
+      {/* <div>
+
+        <input type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='Search' />
+      </div> */}
       <div className='mt-4 mr-15'>
 
         <TableComponent data={tutors} loading={loading} customActionButtons={renderCustomActionButtons} />

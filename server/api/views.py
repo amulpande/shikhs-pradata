@@ -28,6 +28,7 @@ from api.paginations import UserPagination,TutorPagination
 # from rest_framework.filters import DjangoFilterBackend
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import TurorFilter
+from api.utils import Utils
 # from rest_framework import DjangoFilterBackend
 
 from api.models import User
@@ -413,9 +414,17 @@ class  AdminBlockedTutorOrUserView(APIView):
         if not user:
             return Response({'Error':'User not found for this id'},status=status.HTTP_404_NOT_FOUND)
         serializer = self.serializer_class(user,data=request.data,partial=True)
-        # print('patch tutor ',serializer)
+        
+        
         if serializer.is_valid():
+            data = user.email
             serializer.save()
+            print('blocked hua kya',serializer.data['user_blocked'])
+            approved = serializer.data['user_blocked']
+            if approved == True:
+                Utils.send_blocked_email(data)
+            else:
+                Utils.send_approve_email(data)
             return Response({'message':'Updated user status'},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
@@ -474,6 +483,7 @@ def approveTutorByAdmin(request,pk):
         serializers = TutorApproveByAdminSerializer(user,data=request.data,partial=True)
         if serializers.is_valid():
             serializers.save()
+            Utils.send_approve_email(user.email)
             return Response({'Message':'Tutor Updated'})
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     else:

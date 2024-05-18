@@ -3,6 +3,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils import timezone
+# from rating.models import Feedback
 
 from .managers import CustomUserManager,TutorManager,UserManager
 
@@ -59,10 +60,10 @@ class User(AbstractUser):
     short_bio = models.CharField(max_length=200,blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
-    subjects = models.ForeignKey(Subject, blank=True, on_delete=models.CASCADE, null=True)
+    city = models.ForeignKey(City, on_delete=models.PROTECT, null=True, blank=True)
+    subjects = models.ForeignKey(Subject, blank=True, on_delete=models.PROTECT, null=True)
     user_blocked = models.BooleanField(default=False)
-
+    isDeleted = models.BooleanField(default=False)
 
     objects = CustomUserManager()
     tutorObject = TutorManager()

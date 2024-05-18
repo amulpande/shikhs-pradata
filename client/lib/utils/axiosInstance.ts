@@ -68,15 +68,15 @@ axiosInstance.interceptors.response.use(
 					})
 					.catch((err) => {
 						console.log(err)
-						clearStorage()
+						// clearStorage()
 					})
 			} else {
-				clearStorage()
+				// clearStorage()
 			}
 		} else {
-			clearStorage()
+			// clearStorage()
 		}
-		console.log(error)
+		// console.log(error)
 		return Promise.reject(error)
 	}
 )

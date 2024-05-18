@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { tutorApi } from "../../store/thunk-api/tutor-api";
 import { RooState } from "../../store/store";
-import { TutorType } from "../../types/types";
+import { TutorType } from "@lib/types/types";
 
 interface initialStateType{
     tutor:TutorType[],
     status:string,
-    error:string | null
+    error:string | null | undefined
 }
 
 const initialState:initialStateType = {

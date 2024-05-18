@@ -48,11 +48,12 @@ class TutorManager(models.Manager):
     def get_all_tutor(self,search):
         return super().get_queryset().filter(role='2').filter(first_name__icontains=search).all().order_by('-id')
     
-    def get_approve_tutor(self):
-        return super().get_queryset().filter(tutor_approve=True).filter(role='2').all().order_by('-id')
+    def get_approve_tutor(self,order_by='-id'):
+        return super().get_queryset().filter(tutor_approve=True).filter(user_blocked=False).filter(role='2').all().order_by(order_by)
+        # return super().get_queryset().filter(tutor_approve=True).filter(user_blocked=False).filter(role='2').all()
 
     def get_not_approve_tutor(self):
-        return super().get_queryset().filter(tutor_approve=False).filter(role='2').all().order_by('-id')
+        return super().get_queryset().filter(tutor_approve=False).filter(user_blocked=False).filter(role='2').all().order_by('-id')
     
     def get_tutor_subject(self,search=None,order=None):
         
@@ -68,7 +69,7 @@ class TutorManager(models.Manager):
     
 class UserManager(models.Manager):
     def get_all_user(self):
-        return super().get_queryset().filter(role=3).all()
+        return super().get_queryset().filter(role=3).all().order_by('-id')
     
     def get_user_name(self,search=None,order=None):
         queryset = super().get_queryset().filter(role=3).filter(

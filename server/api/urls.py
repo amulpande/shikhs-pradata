@@ -1,9 +1,9 @@
 from django.contrib import admin 
 from django.urls import path,include
-from api.views import (UserRegisterApiView,UserLoginApiView,UserProfileAndUpdateApiView,
+from api.views import (AdminAllUserDataApiView, AdminNotApprovedTutorApiView, TutorDataByIdApiView, UserRegisterApiView,UserLoginApiView,UserProfileAndUpdateApiView,
                        UserPasswordChangeView,UserPasswordResetEmailView,UserPasswordResetView,
                     TutorRegisterApiView,TutotLoginApiView,TutorProfifeAndUpdateApiView,AdminAllApprovedTutorView,
-                    AdminTutorView,AdminNotApprovedTutorView,approveTutorByAdmin,AdminLoginView,AdminBlockedTutorOrUserView,getBlockedUserTutorApiView
+                    AdminTutorView,AdminNotApprovedTutorView,approveTutorByAdmin,AdminLoginView,AdminBlockedTutorOrUserView, getBlockedTutorApiView,getBlockedUserTutorApiView
                     )
 
 from rest_framework_simplejwt.views import (TokenVerifyView,TokenObtainPairView,TokenRefreshView)
@@ -27,15 +27,27 @@ urlpatterns = [
     
     #Booking Api
     path('booking/',include('booking.urls'),name='user-update-api-view'),
+    
+    #feedback-review api
+    path('rating/',include('rating.urls'),name='user-update-api-view'),
+    
+    #payment
+    path('payment/',include('payment.urls'),name='payment-stripe-api-view'),
      
     #admin tutor
     path('admin/login/',AdminLoginView.as_view(),name='Admin-login-api-view'),
     path('admin/all-tutor/',AdminTutorView.as_view(),name='Admin-All-Tutor-api-view'),
-    path('admin/all-not-approved-tutor/',AdminNotApprovedTutorView.as_view(),name='admin-all-not-approved-tutor-api-view'),
+    # path('admin/all-not-approved-tutor/',AdminNotApprovedTutorView.as_view(),name='admin-all-not-approved-tutor-api-view'),
+    path('admin/all-not-approved-tutor/',AdminNotApprovedTutorApiView.as_view(),name='admin-all-not-approved-tutor-api-view'),
     path('admin/approve-tutor/<pk>',approveTutorByAdmin, name='admin-approve-tutor'),
     path('admin/all-approved-tutor/',AdminAllApprovedTutorView.as_view(), name='all-approved-tutor'),
-    path('admin/all-blocked-ubblocked-tutor-user/',getBlockedUserTutorApiView, name='all-blocked-ubblocked-api-view'),
-    path('admin/all-blocked-ubblocked-tutor-user/<pk>',AdminBlockedTutorOrUserView.as_view(), name='all-blocked-ubblocked-api-view'),
+    # path('admin/all-blocked-tutor/',getBlockedUserTutorApiView, name='all-blocked-ubblocked-api-view'),
+    path('admin/all-blocked-tutor/',getBlockedTutorApiView.as_view(), name='all-blocked-ubblocked-api-view'),
+    path('admin/blocked-unblocked-tutor/<pk>',AdminBlockedTutorOrUserView.as_view(), name='all-blocked-ubblocked-api-view'),
+    path('admin/get-tutor-data/<pk>',TutorDataByIdApiView.as_view(), name='all-get-tutor-data-api-view'),
+
+    # admin user api
+    path('admin/get-all-user/',AdminAllUserDataApiView.as_view(), name='all-get-tutor-data-api-view'),
     
     # Tutor Api
     path('tutor/register/',TutorRegisterApiView.as_view(),name='tutor-register-api-view'),

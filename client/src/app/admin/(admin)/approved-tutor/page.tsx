@@ -1,28 +1,71 @@
 'use client'
 import TableComponent from '@/components/AdminComponents/TableComponent/TableComponent'
-import React, { useEffect, useState } from 'react'
-import { getAllApprovedTutor } from '../../../../../lib/api/allApi'
-import useFetchData from '../../../../../lib/hooks/userFetchData'
-import { TutorType } from '../../../../../lib/types/types'
-import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Box, Button, Modal, Pagination, Typography } from '@mui/material';
+import useTutorFetchData from '@lib/hooks/useTutorFetchData'
+import { getAllApprovedTutorApi } from '@lib/api/allApi';
+import { useState } from 'react';
+import ModelComponent from '@/components/ModalComponent/ModelComponent';
+import Swal from 'sweetalert2'
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 const ApproedTutorPage = () => {
-  const [tutors, setTutors] = useState<TutorType[]>([])
-  const { data: tutor, loading, error } = useFetchData(getAllApprovedTutor)
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
+  const { tutors, loading, blockTutor, totalCount, totalPages } = useTutorFetchData(getAllApprovedTutorApi, currentPage, searchQuery)
+  const handleOpen = (tutorId: number, tutorName: string) => {
+    const isConfirmed = window.confirm(`Are you sure want to block this user ${tutorName}`)
+    if (isConfirmed) {
+      // setOpen(true)
+      blockTutor(tutorId)
+      Swal.fire({
+        title: "Blocked!",
+        text: "Tutor Has been blocked and email has sent to him",
+        icon: "success"
+      });
 
-  useEffect(() => {
-    setTutors(tutor)
-  }, [loading])
-  // console.log('tutor',tutors)
-  const renderCustomActionButtons = (tutorId: number) => (
+    }
+  };
+  const renderCustomActionButtons = (tutorId: number, tutorName: string) => (
     <>
-      <Button variant="contained" color="success" >BLOCK</Button>
+      {/* <Button variant="contained" color="success" onClick={() => { blockTutor(tutorId) }} >BLOCK</Button> */}
+      <Button variant="contained" color="success" onClick={() => handleOpen(tutorId, tutorName)} >BLOCK</Button>
     </>
   );
   return (
     <>
+      <div className='card-header'>
+        <h3 className='card-title'>Approved Tutor List</h3>
+      </div>
+      {/* <div className="form-group col-md-4">
+        <input className="form-control rounded-0 py-2" type="search" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} id="example-search-input"/>
+      </div> */}
+      {/* <div>
 
-      <TableComponent data={tutors} loading={loading} customActionButtons={renderCustomActionButtons} />
+        <input type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='Search' />
+      </div> */}
+      <div className='mt-4 mr-15'>
+
+        <TableComponent data={tutors} loading={loading} customActionButtons={renderCustomActionButtons} />
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={(event, page) => { setCurrentPage(page) }}
+          variant="outlined"
+          shape="rounded"
+        />
+      </div>
+
     </>
   )
 }

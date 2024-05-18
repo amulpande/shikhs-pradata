@@ -1,22 +1,20 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-// import { checkUserLogin } from '../../../../lib/slices/auth-slice/auth-slice';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import { useFormik } from 'formik';
-import { checkUserLogin } from '../../../../lib/store/thunk-api/auth-api';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { authLogin, isErrorUser, isLoginUser } from '../../../../lib/slices/auth-slice/auth-slice';
-import * as api from '../../../../lib/api/allApi';
-import { emptyErrorNotify, errorNotify, successNotify } from '../../../../lib/notification-toastify/notification-toastify';
+import { authLogin,isErrorUser,isLoginUser } from '@lib/slices/auth-slice/auth-slice';
+import * as  api from '@lib/api/allApi';
+import { errorNotify,successNotify } from '@lib/notification-toastify/notification-toastify';
 import Link from 'next/link';
-import { TextField, Button, Grid, Typography,CircularProgress } from '@mui/material';
-import { UserLoginType } from '../../../../lib/types/types';
+import { TextField, Button, Grid, Typography,CircularProgress } from '@mui/material'
+import { UserLoginType } from '@lib/types/types';
+import { useRouter } from 'next/navigation';
 
 const LoginHomePage = () => {
-  const [clicked, setClicked] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch()
+  const router = useRouter()
   const [userLogindata, setUserLoginData] = useState<UserLoginType>({
     email: '',
     password: ''
@@ -35,6 +33,7 @@ const LoginHomePage = () => {
       if (response.data.statuCode === 200) {
         successNotify()
         dispatch(authLogin(response.data))
+        router.push('/profile')
       }
     } catch (error) {
       errorNotify();

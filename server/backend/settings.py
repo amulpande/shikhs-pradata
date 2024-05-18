@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     "corsheaders",
     "api",
     'booking',
+    "rating",
+    "payment",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -76,6 +79,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 TEMPLATES = [
@@ -221,3 +225,10 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
 EMAIL_USE_TLS = True
+
+
+# stripe configurations
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY =os.environ.get('STRIPE_PUBLISHABLE_KEY')
+
+STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')

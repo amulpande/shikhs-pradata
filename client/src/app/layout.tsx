@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-css-tags */
 import { Inter } from "next/font/google";
-// import "./globals.css";
-import StoreProvider from "../../lib/store/StoreProvider";
+import "./globals.css";
+import StoreProvider from "@lib/store/StoreProvider";
 import Script from "next/script";
 
 

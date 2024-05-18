@@ -1,11 +1,20 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-// import styles from './ProfilePage.module.scss';
-import styles from './ProfilePage.module.scss'
-import { userProfileApi } from '../../../../lib/api/allApi';
+import { userProfileApi, userProfileUpdateApi } from '@lib/api/allApi';
+import { CldImage } from 'next-cloudinary';
+import { UserProfileTypes } from '@lib/types/types';
+
 
 const ProfilePage = () => {
-  const [userProfile, setUserProfile] = useState('')
+  const [userProfile, setUserProfile] = useState<UserProfileTypes>({
+    first_name: '',
+    last_name: '',
+    email: '',
+    contact: '',
+    address: '',
+    profile_image: ''
+  })
+  const [updateMode, setUpadateMode] = useState<boolean>(true)
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     userProfileApi()
@@ -19,86 +28,147 @@ const ProfilePage = () => {
         setLoading(false); // Set loading state to false if there's an error
       });
   }, [])
-  console.log('userProfile', userProfile)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setUserProfile((prevState) => ({ ...prevState, [name]: value }))
+  }
 
   return (
-    <div className={`${styles.container} ${styles['emp-profile']}`}>
-      <form method="post">
-        <div className="row">
-          <div className="col-md-4">
-            <div className={styles['profile-img']}>
-              <img
-                src={`${userProfile?.profile_image}`}
-                height="250px"
-                width="350px"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className={styles['profile-head']}>
-              <h5>{userProfile?.first_name + ' ' + userProfile?.last_name}</h5>
-              <h6>{userProfile?.address}</h6>
-              <p className={styles['proile-rating']} />
-              <ul className={`nav nav-tabs ${styles['nav-tabs']}`} id="myTab" role="tablist">
-                <li className="nav-item">
-                  <a
-                    className={`nav-link active ${styles['nav-link']}`}
-                    id="home-tab"
-                    data-toggle="tab"
-                    href="#home"
-                    role="tab"
-                    aria-controls="home"
-                    aria-selected="true"
-                  >
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div>
+    <>
+      <div className="uni-banner">
+        <div className="container">
+          <div className="uni-banner-text">
+            <h1>MY BOOKING</h1>
+            <ul>
+              <li>
+                <a href="index">HOME</a>
+              </li>
+              <li>MY BOOKING</li>
+            </ul>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-4"></div>
-          <div className="col-md-6">
-            <div className={`tab-content ${styles['profile-tab']}`} id="myTabContent">
-              <div
-                className="tab-pane fade show active"
-                id="home"
-                role="tabpanel"
-                aria-labelledby="home-tab"
-              >
-                <div className="row">
-                  <div className="col-md-6">
-                    <label>Email</label>
-                  </div>
-                  <div className="col-md-6">
-                    <p>{userProfile?.email}</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <label>Phone</label>
-                  </div>
-                  <div className="col-md-6">
-                    <p>{userProfile?.contact}</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <label>Address</label>
-                  </div>
-                  <div className="col-md-6">
-                    <p>{userProfile?.address}</p>
+      </div>
+      <section className="card shadow-lg">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12 mb-4 mb-sm-5">
+              <div className="card card-style1 border-0">
+                <div className="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                  <div className="row align-items-center">
+                    <div className="col-lg-4 mb-4 mb-lg-0">
+                      <CldImage className='rounded' src={userProfile?.profile_image || ''} width={300} height={300} alt="..." />
+                    </div>
+                    <div className="col-lg-8" >
+                      <form className="row g-3 " onSubmit={async (e) => {
+                        e.preventDefault()
+                        try {
+                          const { first_name,last_name,address,contact} = userProfile
+                          const data:any = { first_name,last_name,address,contact}
+                          const response = await userProfileUpdateApi(data)
+                          console.log('profile response ', response.data)
+                        } catch (error) {
+                          console.error('Error updating profile', error)
+                        }
+                      }}>
+                        <div className="col-md-12">
+                          <div className="bg-secondary-soft p-4 rounded">
+                            <div className="mb-3">
+                              <h4 className="mb-4">Contact detail</h4>
+                              <div className="row g-3">
+                                {/* First Name */}
+                                <div className="col-md-6">
+                                  <label className="form-label">First Name *</label>
+                                  <input
+                                    type="text"
+                                    name='first_name'
+                                    className="form-control"
+                                    placeholder=""
+                                    aria-label="First name"
+                                    value={userProfile?.first_name}
+                                    disabled={updateMode}
+                                    onChange={handleChange}
+                                  />
+                                </div>
+                                {/* Last name */}
+                                <div className="col-md-6">
+                                  <label className="form-label">Last Name *</label>
+                                  <input
+                                    name='last_name'
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=""
+                                    aria-label="Last name"
+                                    value={userProfile?.last_name}
+                                    disabled={updateMode}
+                                    onChange={handleChange}
+                                  />
+                                </div>
+                                {/* Phone number */}
+                                <div className="col-md-6">
+                                  <label htmlFor="inputEmail4" className="form-label">
+                                    Email *
+                                  </label>
+                                  <input
+                                    type="email"
+                                    className="form-control"
+                                    id="inputEmail4"
+                                    disabled={true}
+                                    value={userProfile?.email}
+                                  />
+
+                                </div>
+                                {/* Mobile number */}
+                                <div className="col-md-6">
+                                  <label className="form-label">Mobile number *</label>
+                                  <input
+                                    name='contact'
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=""
+                                    aria-label="Phone number"
+                                    value={userProfile?.contact}
+                                    disabled={updateMode}
+                                    onChange={handleChange}
+                                  />
+                                </div>
+                                <div className="col-md-6">
+                                  <label htmlFor="inputEmail4" className="form-label">
+                                    Address *
+                                  </label>
+                                  <textarea
+                                    name='address'
+                                    className="form-control"
+                                    id="inputEmail4"
+                                    value={userProfile?.address}
+                                    disabled={updateMode}
+                                    onChange={handleChange}
+
+                                  />
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-end gap-3">
+                                {!updateMode &&
+                                  <button type="submit" className="btn btn-success btn-lg">
+                                    Update
+                                  </button>}
+                                <button type="button" className="btn btn-secondary btn-lg" onClick={() => setUpadateMode(!updateMode)}>
+                                  Edit
+                                </button>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
-      </form>
-    </div>
+      </section>
+    </>
   );
 };
 

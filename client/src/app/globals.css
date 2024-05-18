@@ -1,6 +1,44 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+
+nextjs-portal{
+  display:none
+}
+
+/* .fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
+  }
+  
+  @keyframes fadeInUp {
+  from {
+  opacity: 0;
+  transform: translateY(20px);
+  }
+  to {
+  opacity: 1;
+  transform: translateY(0);
+  }
+  }
+  
+  .fade-in-right {
+  opacity: 0;
+  transform: translateX(50px);
+  animation: fadeInRight 1s ease forwards;
+  }
+  
+  @keyframes fadeInRight {
+  from {
+  opacity: 0;
+  transform: translateX(50px);
+  }
+  to {
+  opacity: 1;
+  transform: translateX(0);
+  }
+  } */
 
 /*
 :root {

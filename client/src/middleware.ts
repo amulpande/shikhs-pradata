@@ -1,29 +1,43 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getAuthCookies } from '../lib/utils/cookieStore'
+import { getAuthCookies } from '@lib/utils/cookieStore'
 
 export function middleware(request: NextRequest) {
 
-  const accessToken= request.cookies.get('token')?.value
+  const accessToken = request.cookies.get('token')?.value
+
   const tokenData = getAuthCookies('token') ? getAuthCookies('token') : null
-  // console.log('middle ware token data', tokenData)
-  // if (tokenData) {
-  //   const { access_token, refresh_token, role } = tokenData
-  //   console.log('access token middleware ', access_token)
-  //   console.log('refresh token middleware ', refresh_token)
-  //   console.log('role token middleware ', role)
+
+  
+  // All admin related routes are here based on role
+  // const LoggedInAdminNotAccessPaths = request.nextUrl.pathname === '/admin/login'
+  
+  // if (LoggedInAdminNotAccessPaths) {
+  //   if (accessToken) {
+  //     if (tokenData.role == 1) {
+  //       return NextResponse.redirect(new URL("/admin/index", request.url))
+  //     }else{
+  //       return 
+  //     }
+  //   }
+  // } 
+  // else {
+  //   return NextResponse.redirect(new URL('/admin/login', request.url))
   // }
+
 
   const LoggedInUserNotAccessPaths = request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register'
   if (LoggedInUserNotAccessPaths) {
     if (accessToken) {
-      return NextResponse.redirect(new URL("/profile", request.url))
+      if (tokenData.role == 3) {
+        return NextResponse.redirect(new URL("/profile", request.url))
+      }
     }
   } else {
     // 
-    if (!accessToken) {
-      return NextResponse.redirect(new URL("/login", request.url))
-    }
+    // if (!accessToken) {
+    //   return NextResponse.redirect(new URL("/login", request.url))
+    // }
   }
 }
 
@@ -34,7 +48,7 @@ export const config = {
     '/login',
     '/register',
     '/tutor-details',
-    // '/admin/!login',// admin/login will excluded from middleware matcher so it won't re direct to login page
-    // '/admin/:path*',
+    '/admin/!login',// admin/login will excluded from middleware matcher so it won't re direct to login page
+    '/admin/:path*',
   ]
 }

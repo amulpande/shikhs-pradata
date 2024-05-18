@@ -11,12 +11,14 @@ interface AuthState {
     isPending: boolean;
     isError: boolean;
     userAccessToken: string | null;
+    tutorApprove:boolean
 }
 const initialState: AuthState = {
     isAuthenticated: false,
     isPending: false,
     isError: false,
-    userAccessToken: null
+    userAccessToken: null,
+    tutorApprove:false
 }
 
 const authSlice = createSlice({
@@ -26,14 +28,18 @@ const authSlice = createSlice({
         authLogin: (state, { type, payload }) => {
             state.isAuthenticated = true
             state.userAccessToken = payload.access
+            // state.tutorApprove = payload.user.tutor_approve
+            // console.log('payload ',payload)
+            // console.log('auth slice role ',payload.user.role)
             let auth = {
                 access_token: payload.access,
                 refresh_token: payload.refresh,
                 role:payload.user.role
             }
             setCookies('token',JSON.stringify(auth))
-            console.log('role of user ', auth)
-            const {access_token,refresh_token} = getAuthCookies('token')
+            
+            // console.log('role of user ', auth)
+            // const {access_token,refresh_token} = getAuthCookies('token')
             localStorage.setItem('access_token', payload.access)
             localStorage.setItem('refresh_token', payload.refresh)
         },
@@ -43,7 +49,7 @@ const authSlice = createSlice({
             localStorage.removeItem('access_token')
             localStorage.removeItem('refresh_token')
             clearCookies('token')
-            clearCookies('role')
+            // clearCookies('role')
         }
     },
     extraReducers: (builder) => {

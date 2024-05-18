@@ -3,13 +3,14 @@ import { useFormik } from 'formik'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { userRegistrationValuesValidationSchema } from './registerSchema';
-import { userRegisterationPostApi } from '../../../../lib/store/thunk-api/user-api';
-import { userRegisterApi } from '../../../../lib/api/allApi';
-import { registeredSuccessfullyNotify, userEmailAlreadyExistNotify } from '../../../../lib/notification-toastify/notification-toastify';
+import { userRegisterationPostApi } from '@lib/store/thunk-api/user-api';
+import { userRegisterApi } from '@lib/api/allApi';
+import { registeredSuccessfullyNotify, userEmailAlreadyExistNotify } from '@lib/notification-toastify/notification-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TextField, Input, Button, Grid, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material';
-import { UserRegisterType } from '../../../../lib/types/types';
+import { UserRegisterType } from '@lib/types/types';
+import { useRouter } from 'next/navigation';
 
 // interface InitialValuesDataType {
 //     email: string;
@@ -36,6 +37,7 @@ const initialValues: UserRegisterType = {
 }
 const RegisterHomePage = () => {
     const [loading, setLoading] = useState<boolean>(false);
+    const router = useRouter()
     // useDispatch()
 
     const formik = useFormik({
@@ -62,7 +64,8 @@ const RegisterHomePage = () => {
             try {
                 const response = await userRegisterApi(formData)
                 registeredSuccessfullyNotify()
-                console.log('register data => ', response.data)
+                router.push('/login')
+                // console.log('register data => ', response.data)
             } catch (error: any) {
                 console.log('register error => ', error.response.data.email[0])
                 if (error.response.data.email[0] == 'user with this email already exists.') {
@@ -243,190 +246,6 @@ const RegisterHomePage = () => {
                             </div>
                         </Grid>
                     </Grid>
-                    {/* <div className="row justify-content-center">
-                        <div className="col-lg-6 col-md-10 col-sm-12 col-12">
-                            <div className="form-area reg-area">
-                                <h3>Create An Account</h3>
-                                <form encType="multipart/form-data" onSubmit={formik.handleSubmit}>
-                                    <div className="form-group">
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            className="form-control"
-                                            placeholder="email"
-                                            value={formik.values.email}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                        />
-                                        {formik.touched.email && formik.errors.email ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.email}</div>
-                                        ) : null}
-                                    </div>{" "}
-                                    <div className="form-group">
-                                        <input
-                                            type="text"
-                                            name="firstName"
-                                            className="form-control"
-                                            placeholder="First Name"
-                                            value={formik.values.firstName}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                        />
-                                        {formik.touched.firstName && formik.errors.firstName ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.firstName}</div>
-                                        ) : null}
-                                    </div>{" "}
-                                    <div className="form-group">
-                                        <input
-                                            type="text"
-                                            name="lastName"
-                                            className="form-control"
-                                            placeholder="Last Name"
-                                            value={formik.values.lastName}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                        />
-                                        {formik.touched.lastName && formik.errors.lastName ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.lastName}</div>
-                                        ) : null}
-                                    </div>{" "}
-                                    <br />
-                                    <div className="form-group ">
-                                        <textarea
-                                            placeholder="Enter Your Address where service provided"
-                                            name="address"
-                                            className="form-control"
-                                            id="result"
-                                            value={formik.values.address}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                        // defaultValue={""}
-                                        />
-                                        {formik.touched.address && formik.errors.address ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.address}</div>
-                                        ) : null}
-                                    </div>
-                                    <br />
-                                    <div className="form-group">
-                                        <label>Gender</label>
-                                        <div style={{ display: 'flex' }}>
-                                            <div style={{ marginRight: '10px' }}>
-                                                <input
-                                                    type="radio"
-                                                    id="male"
-                                                    name="gender"
-                                                    value="male"
-                                                    checked={formik.values.gender === "male"}
-                                                    onChange={formik.handleChange}
-                                                    onBlur={formik.handleBlur}
-                                                />
-                                                <label htmlFor="male">Male</label>
-                                            </div>
-                                            <div style={{ marginRight: '10px' }}>
-                                                <input
-                                                    type="radio"
-                                                    id="female"
-                                                    name="gender"
-                                                    value="female"
-                                                    checked={formik.values.gender === "female"}
-                                                    onChange={formik.handleChange}
-                                                    onBlur={formik.handleBlur}
-                                                />
-                                                <label htmlFor="female">Female</label>
-                                            </div>
-
-                                        </div>
-                                        {formik.touched.gender && formik.errors.gender ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.gender}</div>
-                                        ) : null}
-                                    </div>
-                                    <br></br>
-                                    <div className="form-group">
-                                        <input
-                                            type="text"
-                                            name="contact"
-                                            className="form-control"
-                                            placeholder="Mobile"
-                                            value={formik.values.contact}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-
-                                        />
-                                        {formik.touched.contact && formik.errors.contact ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.contact}</div>
-                                        ) : null}
-                                    </div>
-                                    <div className="form-group"></div>
-                                    <div className="form-group">
-                                        <input
-                                            type="password"
-                                            name="password"
-                                            className="form-control"
-                                            placeholder="Password"
-                                            maxLength={12}
-                                            minLength={5}
-                                            value={formik.values.password}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-
-                                        />
-                                        {formik.touched.password && formik.errors.password ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.password}</div>
-                                        ) : null}
-                                    </div>
-                                    <br />
-                                    <div className="form-group">
-                                        <input
-                                            type="password"
-                                            name="confirmPassword"
-                                            className="form-control"
-                                            placeholder="Password"
-                                            maxLength={12}
-                                            minLength={5}
-                                            value={formik.values.confirmPassword}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-
-                                        />
-                                        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.confirmPassword}</div>
-                                        ) : null}
-                                    </div>
-                                    <br />
-                                    <div className="form-group">
-                                        <label>Profile Picture</label>
-                                        <input
-                                            type="file"
-                                            name="profileImage"
-                                            className="form-control"
-                                            placeholder="Select Profile pic"
-                                            onChange={(event) => {
-                                                const files = event.currentTarget.files;
-                                                if (files && files.length > 0) {
-                                                    // const fileName = files?.[0]
-                                                    formik.setFieldValue('profileImage', event.currentTarget.files?.[0])
-                                                } else {
-
-                                                }
-                                            }}
-                                            onBlur={formik.handleBlur}
-
-                                        />
-                                        {formik.touched.profileImage && formik.errors.profileImage ? (
-                                            <div className="error-message" style={{ color: 'red' }}>{formik.errors.profileImage}</div>
-                                        ) : null}
-                                    </div>
-
-                                    <button type='submit' name="registerbtn" className="submit-btn">
-                                        Register Now
-                                    </button>
-                                    <p>
-                                        Already Have An Account? <Link href="/login">Login</Link>
-                                    </p>
-                                </form>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </div>
             <ToastContainer />

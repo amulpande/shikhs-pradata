@@ -1,5 +1,6 @@
 'use client'
 
+import Image from "next/image";
 import Link from "next/link";
 
 const openNav = () => {
@@ -48,7 +49,8 @@ const HeaderHome = () => {
                     <div className="main-nav">
                         <div className="container">
                             <nav className="navbar navbar-expand-md navbar-light bg-light">
-                                SHIKHSHA-PRADATA LOGO
+                                SHIKHSHA-PRADATA
+                                {/* <Image src="/assets/images/shikhsha.png" height={20} width={20} alt="Logo"/> */}
                                 <div
                                     className="collapse navbar-collapse mean-menu justify-content-center"
                                     id="navbarSupportedContent"
@@ -60,23 +62,9 @@ const HeaderHome = () => {
                                             </Link>
                                         </li>
                                         <li className="nav-item">
-                                            <a href="about" className="nav-link">
+                                            <Link href="about" as="/about" className="nav-link">
                                                 ABOUT
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a href="#" className="nav-link dropdown-toggle">
-                                                SUBJECT <i className="fas fa-sort-down" />
-                                            </a>
-                                            <ul className="dropdown-menu">
-
-                                                <li className="nav-item">
-                                                    <Link href={`tutor-details/${1}`}>
-                                                        ENGLISH
-                                                    </Link>
-                                                </li>
-
-                                            </ul>
+                                            </Link>
                                         </li>
                                         <li className="nav-item">
                                             <Link href="tutor-details" as="/tutor-details" className="nav-link">
@@ -84,24 +72,11 @@ const HeaderHome = () => {
                                             </Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link href="contact-us" as="/contact-us" className="nav-link">
+                                            <Link href="/contact-us" as="/contact-us" className="nav-link">
                                                 CONTACT US
                                             </Link>
                                         </li>
                                     </ul>
-
-                                    <div id="mySidebar" className="sidebar">
-                                        <Link href="#" className="closebtn" onClick={closeNav}>&times;</Link>
-                                        <Link href="profile" as='/profile'>PROFILE</Link>
-                                        <Link href="invoice" as='/my-booking' >MY BOOKING</Link>
-                                        <Link href="view-cart" as="view-cart" >MY CART</Link>
-                                        <Link href="invoices1">MY INVOICE</Link>
-                                        <Link href="login">LOGIN</Link>
-                                        <Link href="register">REGISTER</Link>
-                                    </div>
-                                    <div id="main">
-                                        <button className="openbtn" onClick={handleNavClose}>&#9776;</button>
-                                    </div>
                                 </div>
                             </nav>
                         </div>

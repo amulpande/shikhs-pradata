@@ -20,8 +20,8 @@ export default function AdminMainLayout({
             <AdminHeader />
             <SideNavBarAdmin />
             <div className="p-4 sm:ml-64">
-                <div className="p-4 mt-14">
-                    <div className="grid grid-cols-3 gap-4 mb-4">
+                <div className="p-4 mt-10">
+                    <div className="">
 
                         {children}
                     </div>

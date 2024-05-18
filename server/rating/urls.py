@@ -11,5 +11,9 @@ urlpatterns = [
     #tutor get feedback for his/her
     path('tutor/feedback/', TutorFeedbackGetApi.as_view(), name='feedbacck-tutor'),
     
+    # api for showing comment/reviews in main page
+    path('main/feedback/', MainPageRatingToShowApi.as_view(), name='main-page-api-view'),
+    
+    
     
 ]

@@ -43,10 +43,10 @@ const AdminOrderBookingPage = () => {
                       {row?.booking_time}
                     </TableCell >
                     <TableCell align="center">
-                      {row?.status}
+                      {row?.status == 'Accepted' ? <button className='btn btn-success'>{row?.status}</button> :row?.status == 'Pending'? <button className='btn btn-warning'>{row?.status}</button> : <button className='btn btn-danger'>{row?.status}</button>} 
                     </TableCell >
                     <TableCell align="center">
-                      {row?.payment_status}
+                      {row?.payment_status == 'Unpaid'? <button className='btn btn-secondary'>{row?.payment_status}</button>: <button className='btn btn-success'>{row?.payment_status}</button>}
                     </TableCell >
                   </TableRow>
                 ))

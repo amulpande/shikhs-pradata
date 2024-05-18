@@ -78,9 +78,9 @@ const TopBarHome = () => {
                       aria-labelledby="dropdownMenuButton1"
                     >
                       <li>
-                        <a className="dropdown-item" href="tutor/index">
+                        <Link className="dropdown-item" href="/partner/partner-index">
                           TUTOR PROFILE
-                        </a>
+                        </Link>
                       </li>
 
                       <li>

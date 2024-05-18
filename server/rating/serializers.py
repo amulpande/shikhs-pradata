@@ -28,3 +28,10 @@ class FeedbackForPerticularSeriliazer(serializers.ModelSerializer):
             'star',
             'user_name'
         ]
+        
+class FeedbackSerializer(serializers.ModelSerializer):
+    user_profile = serializers.ImageField(source='user_id.profile_image',read_only=True)
+    user_name = serializers.CharField(source='user_id.get_full_name',read_only=True)
+    class Meta:
+        model = Feedback
+        fields='__all__'

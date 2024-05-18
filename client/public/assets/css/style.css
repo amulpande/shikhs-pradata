@@ -1303,7 +1303,9 @@ Main Banner Area CSS
 =================================================*/
 
 .main-banner {
-    background-image: url(../images/banner/banner-bg.jpg);
+    /* background-image: url(../images/banner/banner-bg.jpg); */
+    /* background-image: url(../images/banner/pexels-olly-3771074.jpg); */
+    background-image: url(../images/banner/pexels-gabby-k-6238038.jpg);
     position: relative;
     overflow: hidden;
     padding: 30px 0 0 30px
@@ -1312,7 +1314,8 @@ Main Banner Area CSS
 .banner-img {
     position: relative;
     bottom: 0;
-    z-index: 9
+    z-index: 9;
+    max-height: 750px;
 }
 
 .banner-text-area {
@@ -3348,7 +3351,7 @@ Why Choose Us area CSS
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../images/why-we/ww1.jpg);
+    background-image: url(../images/about/about-us.png);
     height: 100%;
     border-radius: 10px
 }
@@ -3417,7 +3420,7 @@ Why Choose Us area CSS
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(../images/why-we/ww-2.html);
+    background-image: url(../images/about/about-us.png);
     height: 100%;
     position: relative
 }

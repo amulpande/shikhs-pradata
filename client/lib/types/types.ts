@@ -138,6 +138,16 @@ interface SubjectTypes{
     subject_name:string
 }
 
+
+interface FeedbackMainPageType{
+    id:number,
+    user_id:number,
+    tutor_id:number,
+    user_profile:string 
+    star:number,
+    review:string,
+    user_name:string,
+}
 export type {
     TutorType,
     UserLoginType,
@@ -153,5 +163,6 @@ export type {
     UserProfileTypes,
     UserBookTutortypes,
     AdminFeedbackTypes,
-    SubjectTypes
+    SubjectTypes,
+    FeedbackMainPageType
 };

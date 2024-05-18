@@ -28,7 +28,7 @@ const authSlice = createSlice({
         authLogin: (state, { type, payload }) => {
             state.isAuthenticated = true
             state.userAccessToken = payload.access
-            state.tutorApprove = payload.user.tutor_approve
+            // state.tutorApprove = payload.user.tutor_approve
             // console.log('payload ',payload)
             // console.log('auth slice role ',payload.user.role)
             let auth = {

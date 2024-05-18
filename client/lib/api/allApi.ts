@@ -155,11 +155,15 @@ export const approvedDisapprovedFeedbackByAdmin = (id:number,data:boolean) =>
 export const deleteFeedbackByAdmin = (id:number) =>
     axiosInstance.delete(`rating/admin/tutor-feedback/delete/${id}`)
 
+// Feedback for main page to display
+export const getFeedbackForMainPage = () =>
+    axiosInstance.get('rating/main/feedback/')
+
 
 
 
 // payment api
-export const getPaymentApi = (data) =>
+export const getPaymentApi = (data:any) =>
     axiosInstance.post('payment/create-checkout-session/',data)
 
 export const getWebHookApi = () =>

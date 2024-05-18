@@ -181,11 +181,10 @@ class UserPasswordResetEmailSerializer(serializers.ModelSerializer):
                 + token
                 + "/"
             )
-
             body = "This is your reset password link " + link
             data = {"subject": "Reset Password", "body": body, "to_email": user.email}
 
-            print("reset ", link)
+            # print("reset ", link)
 
             Utils.send_mail(data)
             return attrs

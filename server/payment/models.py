@@ -13,4 +13,4 @@ class Payment(models.Model):
     admin_amount=models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user_id.first_name} - Course ID: {self.booking_id.id} "
+        return f"{self.user_id.first_name} - BookingId: {self.booking_id.id} "

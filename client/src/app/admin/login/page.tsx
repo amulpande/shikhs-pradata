@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 import { UserLoginType } from '../../../../lib/types/types';
+import { setCookies } from '@lib/utils/cookieStore';
 
 // Define a styled container with animations and background
 const AnimatedContainer = styled(Container)({
@@ -37,30 +38,33 @@ const Background = styled('div')({
 });
 
 const AdminLoginPage = () => {
-  const [adminLogin,setAdminLogin] = useState<UserLoginType>({
-    'email':'',
-    'password':''
+  const [adminLogin, setAdminLogin] = useState<UserLoginType>({
+    'email': '',
+    'password': ''
   })
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch()
-  const handleChange = (e) =>{
-    setAdminLogin({...adminLogin,[e.target.name]:e.target.value})
+  const handleChange = (e) => {
+    setAdminLogin({ ...adminLogin, [e.target.name]: e.target.value })
   }
-  const handleLogin = async(e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     // Add your login logic here
     try {
       setLoading(true)
       const response = await api.adminLoginApi(adminLogin)
-      if(response.data.statusCode===200){
-        successNotify()
+      if (response.data.statusCode === 200) {
         dispatch(authLogin(response.data))
-        router.push('/admin/index')
+        
+        setTimeout(() => {
+          successNotify()
+          router.push('/admin/index')
+        }, 1000)
       }
     } catch (error) {
       errorNotify()
-    }finally{
+    } finally {
       setLoading(false)
     }
     // console.log('Logging in with:', adminLogin);
@@ -70,7 +74,7 @@ const AdminLoginPage = () => {
     <>
       <Background />
       <AnimatedContainer maxWidth="xs">
-        <Typography variant="h4" component="h1" gutterBottom style={{marginTop:'200px'}}>
+        <Typography variant="h4" component="h1" gutterBottom style={{ marginTop: '200px' }}>
           Admin Login
         </Typography>
         <form onSubmit={handleLogin}>

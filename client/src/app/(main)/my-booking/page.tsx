@@ -7,13 +7,19 @@ import FeedbackComponent from './FeedbackComponent';
 import LoadingComponent from '@/components/LoadingComponent/LoadingComponent';
 import Link from 'next/link';
 import CheckOut from '@/components/Payment/CheckOut';
+import TutorDetails from './TutorDetails';
+import RejctedOrder from './RejctedOrder';
 
 const MyBookingPage = () => {
     const [myOrderData, setMyOrderData] = useState<any>([])
     const [loading, setLoading] = useState(true)
     const [selectedTutor, setSelectedTutor] = useState<Number>()
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState<boolean>(false)
+    const [showTutor, setShowTutor] = useState<boolean>(false)
+    const [selectedTutorData, setSelectedTutorData] = useState<any>()
+    const [selectedCancelData,setSelectedCanceldData] = useState<any>()
+    const [showCancelModal,setShowCancelModal] = useState<boolean>(false)
 
     useEffect(() => {
         userMyBookingOrderApi().then((response) => {
@@ -25,6 +31,35 @@ const MyBookingPage = () => {
         })
     }, [])
 
+    const handleCancelOrder = (order:BookingType) =>{
+        setShowCancelModal(true)
+        setSelectedCanceldData({
+            tutor_name: order?.tutor_name,
+            tutor_contact: order?.tutor_contact,
+            tutor_email: order?.tutor_email,
+            booking_date:order?.booking_date,
+            booking_time:order?.booking_time,
+            subject_name:order?.subject_name,
+            cancellation_reason:order?.cancellation_reason
+        })
+    } 
+
+    const handleOpenTutor = (order: BookingType) => {
+        setSelectedTutorData({
+            tutor_name: order?.tutor_name,
+            tutor_contact: order?.tutor_contact,
+            tutor_email: order?.tutor_email,
+            booking_date:order?.booking_date,
+            booking_time:order?.booking_time,
+            subject_name:order?.subject_name,
+            cancellation_reason:order?.cancellation_reason
+        });
+        setShowTutor(true)
+    }
+    const handleCloseTutor = () => {
+        setShowTutor(false)
+    }
+
     const handleOpen = (tutorId: number) => {
         setShow(true)
         setSelectedTutor(tutorId)
@@ -32,6 +67,7 @@ const MyBookingPage = () => {
 
     const handleClose = () => {
         setShow(false)
+        setShowCancelModal(false)
     }
     console.log('use state order data', myOrderData)
     return (
@@ -109,42 +145,22 @@ const MyBookingPage = () => {
                                                                 <strong> Payment Status </strong>: {order?.payment_status}
                                                             </Typography>
                                                             {order?.status === 'Accepted' && (
-                                                                <Card variant="outlined" style={{ marginTop: '20px' }}>
-                                                                    <CardContent>
-                                                                        <Typography variant="h6" gutterBottom>
-                                                                            Provider Contact
-                                                                        </Typography>
-                                                                        <Typography variant="body1" gutterBottom>
-                                                                            Provider Name : {order?.tutor_name}
-                                                                        </Typography>
-                                                                        <Typography variant="body1" gutterBottom>
-                                                                            Phone Number : {order?.tutor_contact}
-                                                                        </Typography>
-                                                                        <Typography variant="body1" gutterBottom>
-                                                                            Email : {order?.tutor_email}
-                                                                        </Typography>
-                                                                        <Button variant="contained" color="warning"  onClick={() => handleOpen(order?.tutor_id)}>Feedback</Button>
-                                                                        {/* <Button variant="contained" color="info" >Pay Now</Button>
-                                                                         */}
-
-                                                                         <CheckOut totalPrice={order?.tutor_price} tutorId={order?.tutor_id} bookingId={order?.id} bookingStatus={order?.payment_status}/>
-                                                                         
-
-                                                                    </CardContent>
-                                                                </Card>
+                                                                <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+                                                                    <Button variant='contained' onClick={() => handleOpenTutor(order)} style={{ marginRight: '10px', flex: 1 }}>Tutor</Button>
+                                                                    <Button variant="contained" color="warning" onClick={() => handleOpen(order?.tutor_id)} style={{ marginRight: '10px', flex: 1 }}>Feedback</Button>
+                                                                    <div style={{ flex: 1 }}>
+                                                                        <CheckOut totalPrice={order?.tutor_price} tutorId={order?.tutor_id} bookingId={order?.id} bookingStatus={order?.payment_status} />
+                                                                    </div>
+                                                                </div>
                                                             )}
                                                             {order?.status === 'Rejected' && (
-                                                                <Card variant="outlined" style={{ marginTop: '20px', color: 'red' }}>
-                                                                    <CardContent>
-                                                                        <Typography variant="h6" gutterBottom>
-                                                                            Your order has been Rejected by tutor
-                                                                        </Typography>
-                                                                        <Typography variant="h6" gutterBottom>
-                                                                            Reason : {order?.cancellation_reason}
-                                                                        </Typography>
-                                                                    </CardContent>
-                                                                </Card>
+                                                                <Button variant='contained' style={{backgroundColor:'red'}} onClick={()=>handleCancelOrder(order)}>Cancelled</Button>
                                                             )}
+                                                            {
+                                                                order?.status === 'Pending' && (
+                                                                    <Button variant='contained'  disabled={true}>Pending</Button>
+                                                                )
+                                                            }
                                                         </CardContent>
                                                     </Card>
                                                 </Grid>
@@ -157,9 +173,10 @@ const MyBookingPage = () => {
                     </div>
                 </div>
             }
-            
+            <RejctedOrder show={showCancelModal} onHide={handleClose} order={selectedCancelData}/>
+            <TutorDetails show={showTutor} onHide={handleCloseTutor} order={selectedTutorData} />
             <FeedbackComponent show={show} handleClose={handleClose} tutorId={selectedTutor} />
-            
+
         </>
 
     )

@@ -2,7 +2,7 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 export const successNotify = () => toast.success('LOGIN SUCCESSFULLY', {
     position: "bottom-right",
-    autoClose: 3000,
+    autoClose: 6000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

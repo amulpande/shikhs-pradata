@@ -84,7 +84,7 @@ interface BookingType {
     subject_id: number,
     subject_name: string,
     tutor_price: number,
-    tutor_contact:string
+    tutor_contact: string
 }
 
 
@@ -118,35 +118,52 @@ interface UserBookTutortypes {
     tutor_id: number,
     subject_id: number,
     booking_time: string,
-    booking_date:string
+    booking_date: string
 }
 
-interface AdminFeedbackTypes{
+interface AdminFeedbackTypes {
     id: number,
-    tutor_id:number,
-    user_id:number,
-    user_name:string,
-    tutor_name:string,
-    star:number,
-    review:string,
-    isApproved:boolean,
-    isDeleted:boolean
+    tutor_id: number,
+    user_id: number,
+    user_name: string,
+    tutor_name: string,
+    star: number,
+    review: string,
+    isApproved: boolean,
+    isDeleted: boolean
 }
 
-interface SubjectTypes{
-    id:number,
-    subject_name:string
+interface SubjectTypes {
+    id: number,
+    subject_name: string
 }
 
 
-interface FeedbackMainPageType{
-    id:number,
-    user_id:number,
-    tutor_id:number,
-    user_profile:string 
-    star:number,
-    review:string,
-    user_name:string,
+interface FeedbackMainPageType {
+    id: number,
+    user_id: number,
+    tutor_id: number,
+    user_profile: string
+    star: number,
+    review: string,
+    user_name: string,
+}
+
+
+interface AdminAllTotalTypes {
+    Last_month_earning: number,
+    total_Earning: number,
+    total_approved_tutor: number,
+    total_blocked_tutor: number,
+    total_booking: number,
+    total_user: number
+}
+
+interface TutorAllTotalTypes {
+    total_earning:number,
+    monthly_income:number,
+    pending_request:number,
+    payment_paid:number,
 }
 export type {
     TutorType,
@@ -164,5 +181,7 @@ export type {
     UserBookTutortypes,
     AdminFeedbackTypes,
     SubjectTypes,
-    FeedbackMainPageType
+    FeedbackMainPageType,
+    AdminAllTotalTypes,
+    TutorAllTotalTypes,
 };

@@ -44,7 +44,7 @@ const PartnerLoginPage = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter()
     const dispatch = useDispatch()
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTutorLogin({ ...tutorLogin, [e.target.name]: e.target.value })
     }
     const handleLogin = async (e) => {
@@ -53,19 +53,23 @@ const PartnerLoginPage = () => {
         try {
             setLoading(true)
             const response = await api.tutorLoginApi(tutorLogin)
-            console.log('tutor login response',response)
-            if (response.status==200) {
-                successNotify()
+            console.log('tutor login response', response)
+            if (response.status == 200) {
                 dispatch(authLogin(response.data))
-                router.push('/partner/partner-profile')
+
+                // this will make my middleware to take some time before veryfying tutor role and than it will redirect to profile page
+                setTimeout(() => {
+                    successNotify()
+                    router.push('/partner/partner-profile')
+                }, 1000);
             }
-        } catch (error:any) {
-            console.error('Error login partner ',error.response)
-            if(error.response.status===400){
+        } catch (error: any) {
+            console.error('Error login partner ', error.response)
+            if (error.response.status === 400) {
                 errorNotify()
-            }else if(error.response.status===401){
+            } else if (error.response.status === 401) {
                 customErrorMessageErrorNotify(error.response.data.Message)
-            }else if(error.response.status===403){
+            } else if (error.response.status === 403) {
                 customErrorMessageErrorNotify(error.response.data.Message)
             }
             // errorNotify()

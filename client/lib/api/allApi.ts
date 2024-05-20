@@ -168,3 +168,9 @@ export const getPaymentApi = (data:any) =>
 
 export const getWebHookApi = () =>
     axiosInstance.post('payment/webhook/stripe/')
+
+export const getAdminTotalEarningApi = ()  =>
+    axiosInstance.get('payment/admin/total-earning/')
+
+export const getTutorAllTotalngApi = () =>
+    axiosInstance.get('payment/tutor/total-earning/')

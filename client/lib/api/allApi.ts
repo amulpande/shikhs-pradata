@@ -52,15 +52,15 @@ export const tutorLoginApi = (formData:UserLoginType) =>
 export const tutorProfileApi = ()=>
     axiosInstance.get('tutor/profile')
 
-export const tutorGetAllBooking = () =>
-    axiosInstance.get('booking/tutor/all-booking-order/')
+export const tutorGetAllBooking = ({page=1,order_by='-id'}) =>
+    axiosInstance.get(`booking/tutor/all-booking-order/?page${page}&order_by=${order_by}`)
 
 export const tutorUpdateProfile = (data:TutorProfile)=>
     axiosInstance.patch('tutor/update/',data)
 
 
-export const tutorGetAcceptedAllBooking = () =>
-    axiosInstance.get('booking/tutor/all-accepted-booking-order/')
+export const tutorGetAcceptedAllBooking = ({page=1,order_by='-id',status=''}) =>
+    axiosInstance.get(`booking/tutor/all-accepted-booking-order/?page${page}&order_by=${order_by}&payment_status=${status}`)
 
 export const tutorAcceptRejectBokoing = (id:number,data:{status:string}) =>
     axiosInstance.patch(`booking/tutor/booking-status/${id}`,data)
@@ -69,8 +69,8 @@ export const tutorAcceptRejectWithReasonBokoing = (id:number,data:{status:string
     axiosInstance.patch(`booking/tutor/booking-status/${id}`,data)
 
 // using this api for infinite scroll where user can scroll and get new data rather than going throw pagination
-export const getAllApprovedTutorApi = ({page=1,search='',order_by='-id'}) =>
-    axiosInstance.get(`admin/all-approved-tutor/?page=${page}&subjects=${search}&order_by=${order_by}`)
+export const getAllApprovedTutorApi = ({page=1,search='',order_by='-id',status=''}) =>
+    axiosInstance.get(`admin/all-approved-tutor/?page=${page}&subjects=${search}&order_by=${order_by}&status`)
 
 
 
@@ -103,8 +103,10 @@ export const adminBlockedUnblockedTutor = (id:number,data:{user_blocked:boolean}
 export const getTutorDataByidApi = (id:number) =>
     axiosInstance.get(`admin/get-tutor-data/${id}`)
 
-export const getAllOrderBookingApi = () =>
-    axiosInstance.get('booking/admin/order-booking')
+export const getAllOrderBookingApi = ({page=1,order_by='-id',status=''}:{page?:number,order_by?:string,status:string}) =>
+    axiosInstance.get(`booking/admin/order-booking/?page=${page}&order_by=${order_by}&status=${status}`)
+
+
 
 
 

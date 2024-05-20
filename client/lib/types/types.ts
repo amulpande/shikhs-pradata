@@ -152,7 +152,7 @@ interface FeedbackMainPageType {
 
 interface AdminAllTotalTypes {
     Last_month_earning: number,
-    total_Earning: number,
+    total_earning: number,
     total_approved_tutor: number,
     total_blocked_tutor: number,
     total_booking: number,

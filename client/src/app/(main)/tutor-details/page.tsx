@@ -20,14 +20,14 @@ const TutorDetailsPage = () => {
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [subjects, setSubject] = useState<SubjectTypes[]>([])
     const [tutor, setTutorData] = useState<any>([]);
-    const[rating,setRating] = useState<any[]>([])
-    const [orderBy,setOrderBy] = useState<string>('-id')
+    const [rating, setRating] = useState<any[]>([])
+    const [orderBy, setOrderBy] = useState<string>('-id')
 
     const fetchTutors = useCallback(async () => {
-        const tutors = await fetchTutorData({ page: 1, search: searchQuery,order_by:orderBy });
+        const tutors = await fetchTutorData({ page: 1, search: searchQuery, order_by: orderBy });
         // console.log('tutors ',tutor)
         setTutorData(tutors);
-    }, [searchQuery,orderBy])
+    }, [searchQuery, orderBy])
 
     useEffect(() => {
         const fetchSubjects = async () => {
@@ -45,7 +45,7 @@ const TutorDetailsPage = () => {
                 setRating(response.data)
                 // console.log('response star', response)
             } catch (error) {
-                
+
             }
         }
         fetchTutors();
@@ -54,12 +54,12 @@ const TutorDetailsPage = () => {
     }, [fetchTutors]); // Trigger fetchTutors whenever searchQuery changes
 
     const handleSelectSubject = (e) => {
-        setSearchQuery(e.target.value);   
+        setSearchQuery(e.target.value);
     }
-    const handleOrderByChange = (e)=>{
+    const handleOrderByChange = (e) => {
         setOrderBy(e.target.value)
     }
-    const getTutorAverageRating = (tutorId:number) => {
+    const getTutorAverageRating = (tutorId: number) => {
         const tutorRatings = rating.filter((item) => item.tutor_id === tutorId && !isNaN(parseFloat(item.star)));
         if (tutorRatings.length === 0) {
             return 'No rating available';
@@ -85,35 +85,30 @@ const TutorDetailsPage = () => {
                 </div>
             </div>
             <div className='card-header mt-2'>
-
-                <div style={{ marginTop: 20, display: 'flex', justifyContent: 'flex-end' }}>
-                    <Form.Group controlId="exampleForm.ControlSelect1">
-                        <Form.Control as="select" onChange={handleSelectSubject} value={searchQuery}>
-                            <option value={''}>filter subject</option>
-                            {subjects?.map((subject,index)=>(
+                <div className="d-flex justify-content-end mt-2">
+                    <select className="form-select me-2" onChange={handleSelectSubject} value={searchQuery} style={{ maxWidth: '200px' }}>
+                        <option value={''}>Filter Subject</option>
+                        {subjects?.map((subject, index) => (
                             <option key={index} value={subject?.subject_name}>{subject?.subject_name}</option>
-                            ))}
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId="exampleForm.ControlSelect1">
-                        <Form.Control as="select" onChange={handleOrderByChange} value={orderBy}>
-                            <option value={'-id'}>Sort</option>
-                            <option value={'first_name'}>First Name</option>
-                            <option value={'price'}>Price</option>
-                            <option value={'-experience'}>Experience</option>
-                            {/* <option value={'first_name'}>First Name</option> */}
-                        </Form.Control>
-                    </Form.Group>
+                        ))}
+                    </select>
+
+                    <select className="form-select" onChange={handleOrderByChange} value={orderBy} style={{ maxWidth: '200px' }}>
+                        <option value={'-id'}>Sort</option>
+                        <option value={'first_name'}>First Name</option>
+                        <option value={'price'}>Price</option>
+                        <option value={'-experience'}>Experience</option>
+                    </select>
                 </div>
             </div>
             <div style={{ margin: 30, marginLeft: 50, padding: 10, display: 'flex', flexWrap: 'wrap' }}>
                 {
                     tutor.results?.map((tutor: any, index: any) => (
-                        <TutorCard tutor={tutor} index={index} key={index} rating={getTutorAverageRating(tutor?.id)}/>   
+                        <TutorCard tutor={tutor} index={index} key={index} rating={getTutorAverageRating(tutor?.id)} />
                     ))
                 }
             </div>
-             {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} />) : <h3 className='text-center'><CircularProgress /></h3>) : null}
+            {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} />) : <h3 className='text-center'><CircularProgress /></h3>) : null}
         </>
     )
 }

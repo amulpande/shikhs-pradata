@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 # All Booking serializer
 from booking.serializers import (BookingSerializer,BookingStatusUpdateSerializer,BookingOrderSerializer)
 from rest_framework import generics
+from booking.filters import BookingFilter,TutorBookingFilter
 
 # All api serializer 
 from api.serializers import (TutorSeriliazer,UserSerializer)
@@ -15,6 +16,9 @@ from api.permissions import *
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from api.models import User
+from booking.paginations import AdminBookingOrderPagination
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 class CheckingView (APIView):
     serializer_class = BookingSerializer
@@ -49,32 +53,33 @@ class BookingOrderView(APIView):
   
   
   
-# Tutor can check all the booking of his/hers
-class TutorBookingOrderView(APIView):
-    permission_classes=[IsTutor]
-    def get(self,request,format=None):
-        try:  
-            user = request.user
-            tutor = TutorSeriliazer(user)
-            tutorId = tutor.data['id']
-            booking = Booking.objects.filter(tutor_id=tutorId).filter(status='Pending').order_by('-order_date')
-            serializer = BookingSerializer(booking,many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Booking.DoesNotExist:
-            return Response({'Error':'Not able to fetch data'},status=status.HTTP_404_NOT_FOUND)
-        
-class TutorAllAcceptedBookingOrder(APIView):
+class TutorBookingOrderView(generics.ListAPIView):
     permission_classes = [IsTutor]
-    def get(Self,request):
-        try:
-            user = request.user
-            tutor = TutorSeriliazer(user)
-            tutorId = tutor.data['id']
-            booking = Booking.objects.filter(tutor_id=tutorId).filter(status='Accepted').order_by('-order_date')
-            serializer = BookingSerializer(booking,many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Booking.DoesNotExist:
-            return Response({'Error':'Not able to fetch data'},status=status.HTTP_404_NOT_FOUND)
+    serializer_class = BookingSerializer
+    pagination_class = AdminBookingOrderPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class  = TutorBookingFilter
+    
+    def get_queryset(self):
+        user = self.request.user
+        tutor = TutorSeriliazer(user)
+        tutorId = tutor.data['id']
+        order_by = self.request.query_params.get('order_by', '-id')
+        return Booking.objects.filter(tutor_id=tutorId).filter(status='Pending').order_by(order_by)
+        
+class TutorAllAcceptedBookingOrder(generics.ListAPIView):
+    permission_classes = [IsTutor]
+    serializer_class = BookingSerializer
+    pagination_class = AdminBookingOrderPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class  = TutorBookingFilter
+    
+    def get_queryset(self):
+        user = self.request.user
+        tutor = TutorSeriliazer(user)
+        order_by = self.request.query_params.get('order_by', '-id')
+        tutorId = tutor.data['id']
+        return Booking.objects.filter(tutor_id=tutorId).filter(status='Accepted').order_by(order_by)
     
 # Tutor can Accept-Reject request
 
@@ -133,3 +138,10 @@ class AdminOrderBookingApiView(generics.ListAPIView):
     queryset = Booking.objects.all()
     permission_classes = [IsAdmin]
     serializer_class = BookingSerializer
+    pagination_class = AdminBookingOrderPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class  = BookingFilter
+    
+    def get_queryset(self):
+        order_by = self.request.query_params.get('order_by', '-id')
+        return Booking.objects.all().order_by(order_by)

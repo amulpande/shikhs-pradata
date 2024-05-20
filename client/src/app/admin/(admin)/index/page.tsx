@@ -27,7 +27,7 @@ const AdminIndexPage = () => {
           <div className="card bg-primary text-white mb-4">
             <div className="card-body">Total Earning</div>
             <div className="card-footer d-flex align-items-center justify-content-between">
-              <h3>{allData?.total_Earning}</h3>
+              <h3>{allData?.total_earning}</h3>
               <div className="small text-white"><i className="fas fa-angle-right"></i></div>
             </div>
           </div>

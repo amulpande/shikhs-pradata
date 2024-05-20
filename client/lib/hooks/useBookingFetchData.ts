@@ -2,24 +2,31 @@ import { tutorAcceptRejectBokoing, tutorAcceptRejectWithReasonBokoing } from "@l
 import { BookingType } from "@lib/types/types";
 import { useCallback, useEffect, useState } from "react";
 
-const useBookingFetchData = (api: { (): Promise<any>; }) => {
+const useBookingFetchData = (api: { ({ page, order_by,status }:{ page: number, order_by: string, status:string }): Promise<any>; }, page: number, order_by: string,status:string) => {
     const [data, setData] = useState<BookingType[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState('')
     // const [timestamp, setTimestamp] = useState(Date.now())
+    const [totalCount, setTotalCount] = useState<number>(0)
+    const [totalPages, setTotalPages] = useState(1)
 
     const fetchBookingData = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await api()
-            console.log('console response ', response)
-            setData(response.data)
+            const response = await api({ page, order_by,status })
+            // console.log('console response ', response)
+            console.log('respinse ',response.data)
+            setTotalCount(response.count)
+            const calculatedTotalPages = Math.ceil(response.data.count / 10); // Assuming 10 items per page
+            setTotalPages(calculatedTotalPages)
+            setData(response.data.results)
+
         } catch (error: any) {
             setError(error)
         } finally {
             setLoading(false)
         }
-    }, [api])
+    }, [api,page,order_by,status])
 
     useEffect(() => {
         fetchBookingData()
@@ -52,7 +59,7 @@ const useBookingFetchData = (api: { (): Promise<any>; }) => {
             setLoading(false)
         }
     }
-    return { data, loading, error, acceptRequest, rejectRequest }
+    return { data, loading, error, totalCount,totalPages,acceptRequest, rejectRequest }
 }
 
 export default useBookingFetchData

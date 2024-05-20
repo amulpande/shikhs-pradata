@@ -1,13 +1,30 @@
 'use client'
 import { getAllOrderBookingApi } from '@lib/api/allApi'
 import useBookingFetchData from '@lib/hooks/useBookingFetchData'
-import React, { useEffect } from 'react'
-import { Table, Button, TableBody, TableCell, TableHead, TableRow, Avatar, TableContainer, Grid, makeStyles } from '@mui/material';
-import { BookingType } from '@lib/types/types';
+import React, { useEffect, useState } from 'react'
+import { Table, Button, TableBody, TableCell, TableHead, TableRow, Avatar, TableContainer, Grid, makeStyles, Pagination } from '@mui/material';
 const AdminOrderBookingPage = () => {
-  const { data } = useBookingFetchData(getAllOrderBookingApi)
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [sort, setSort] = useState<string>('-id')
+  const [status, setStatus] = useState<string>('')
+  console.log('sort ', sort)
+  const { data, totalCount, totalPages } = useBookingFetchData(getAllOrderBookingApi, currentPage, sort, status)
   return (
     <>
+      <div className="d-flex justify-content-end mt-2">
+        <select className="form-select me-2" value={sort} onChange={(e) => setSort(e.target.value)} style={{ maxWidth: '200px' }}>
+          <option value={'-id'}>Sort</option>
+          <option value={'payment_status'}>Paid</option>
+          <option value={'-payment_status'}>Unpaid</option>
+        </select>
+
+        <select className="form-select" value={status} onChange={(e) => setStatus(e.target.value)} style={{ maxWidth: '200px' }}>
+          <option value={''}>Filter</option>
+          <option value={'Accepted'}>Accepted</option>
+          <option value={'Rejected'}>Rejected</option>
+          <option value={'Pending'}>Pending</option>
+        </select>
+      </div>
       <div className='mt-4'>
         <Grid container spacing={2} >
           <Table>
@@ -43,10 +60,10 @@ const AdminOrderBookingPage = () => {
                       {row?.booking_time}
                     </TableCell >
                     <TableCell align="center">
-                      {row?.status == 'Accepted' ? <button className='btn btn-success'>{row?.status}</button> :row?.status == 'Pending'? <button className='btn btn-warning'>{row?.status}</button> : <button className='btn btn-danger'>{row?.status}</button>} 
+                      {row?.status == 'Accepted' ? <button className='btn btn-success'>{row?.status}</button> : row?.status == 'Pending' ? <button className='btn btn-warning'>{row?.status}</button> : <button className='btn btn-danger'>{row?.status}</button>}
                     </TableCell >
                     <TableCell align="center">
-                      {row?.payment_status == 'Unpaid'? <button className='btn btn-secondary'>{row?.payment_status}</button>: <button className='btn btn-success'>{row?.payment_status}</button>}
+                      {row?.payment_status == 'Unpaid' ? <button className='btn btn-secondary'>{row?.payment_status}</button> : <button className='btn btn-success'>{row?.payment_status}</button>}
                     </TableCell >
                   </TableRow>
                 ))
@@ -54,6 +71,13 @@ const AdminOrderBookingPage = () => {
             </TableBody>
           </Table>
         </Grid>
+        <div className='mt-2 d-flex justify-content-center'>
+          <Pagination
+            count={totalPages}
+            siblingCount={0}
+            onChange={(event, page) => setCurrentPage(page)}
+          />
+        </div>
       </div>
     </>
   )

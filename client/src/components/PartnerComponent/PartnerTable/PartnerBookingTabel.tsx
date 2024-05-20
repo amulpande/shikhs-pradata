@@ -4,7 +4,7 @@ import React from 'react'
 interface PropsType {
     data: BookingType[]
     loading: boolean
-    customActionButtons: (id: number) => React.ReactNode
+    customActionButtons: (booking:any) => React.ReactNode
 }
 
 const PartnerBookingTabel = ({ data, loading, customActionButtons }: PropsType) => {
@@ -30,7 +30,7 @@ const PartnerBookingTabel = ({ data, loading, customActionButtons }: PropsType) 
                                 <td>{booking?.booking_time}</td>
                                 <td>{booking?.booking_date}</td>
                                 <td >
-                                    {customActionButtons(booking?.id)}
+                                    {customActionButtons(booking)}
                                 </td>
                             </tr>
                         )))

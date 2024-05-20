@@ -8,6 +8,7 @@ export async function middleware(request: NextRequest) {
 
   const tokenData = getAuthCookies('token') ? getAuthCookies('token') : null
   const { pathname } = request.nextUrl
+  // console.log('token in middleware ',tokenData)
 
   const adminPaths = pathname.startsWith('/admin')
   const tutorPaths = pathname.startsWith('/partner')

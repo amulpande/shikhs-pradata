@@ -46,14 +46,14 @@ function CheckOut({ totalPrice, tutorId, bookingId, bookingStatus }: { totalPric
         <button
 
           style={{
-            backgroundColor: 'purple', color: 'white', 
+            backgroundColor: '#778899', color: 'white', 
             cursor: bookingStatus === 'Paid' ? 'not-allowed' : 'pointer',
             filter: bookingStatus === 'Paid' ? 'blur(0.5px)' : 'none',
           }}
           onClick={handleCheckout}
           disabled={bookingStatus == 'Paid'}
         >
-          Pay Rs. {totalPrice}
+         {totalPrice}
         </button>
       )}
     </div>

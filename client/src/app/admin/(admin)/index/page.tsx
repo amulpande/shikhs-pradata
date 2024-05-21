@@ -3,22 +3,51 @@ import { getAdminTotalEarningApi } from '@lib/api/allApi'
 import { AdminAllTotalTypes } from '@lib/types/types'
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react'
-import { Line } from 'react-chartjs-2';
+import { Pie, Line, Bar } from 'react-chartjs-2';
+import PaymentDashboard from '../my-payment/PaymentDashboard';
+import { Chart, ArcElement, BarElement, CategoryScale, LinearScale, LineElement, PointElement, Tooltip, Legend } from 'chart.js';
+Chart.register(ArcElement, BarElement, CategoryScale, LinearScale, LineElement, PointElement, Tooltip, Legend);
 
 const AdminIndexPage = () => {
   const [allData, setAlldata] = useState<AdminAllTotalTypes>()
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAdminTotalEarningApi()
         // console.log('response ',response.data)
         setAlldata(response.data)
+
       } catch (error) {
         console.error('Error fetching data', error)
       }
     }
     fetchData()
   }, [])
+
+  const pieData = {
+    labels: ['Total Users', 'Approved Tutors', 'Blocked Tutors'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [allData?.total_user, allData?.total_approved_tutor, allData?.total_blocked_tutor],
+        backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+        hoverBackgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
+      }
+    ]
+  };
+  
+
+  const barData = {
+    labels: ['Total Bookings'],
+    datasets: [
+      {
+        label: '# of Bookings',
+        data: [allData?.total_booking],
+        backgroundColor: ['#36A2EB']
+      }
+    ]
+  };
 
   return (
     <>
@@ -89,6 +118,34 @@ const AdminIndexPage = () => {
               <div className="small text-white"><i className="fas fa-angle-right"></i></div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-xl-6">
+          <div className="card mb-4">
+            <div className="card-header">
+              <i className="fas fa-chart-bar me-1"></i>
+              Total Bookings
+            </div>
+            <div className="card-body">
+              <Bar data={barData} />
+            </div>
+          </div>
+        </div>
+        <div className="col-xl-6">
+
+
+          <div className="card mb-4">
+            <div className="card-header">
+              <i className="fas fa-chart-bar me-1"></i>
+              Total User/Tutor
+            </div>
+            <div className="card-body">
+              <Pie data={pieData} />
+            </div>
+          </div>
+
         </div>
       </div>
     </>

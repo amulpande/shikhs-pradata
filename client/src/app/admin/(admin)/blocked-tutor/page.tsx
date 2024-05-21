@@ -27,7 +27,7 @@ const BlockedTutoAdminPage = () => {
         return (
             <>
                 {/* <Button variant="contained" color="inherit" onClick={() => unBlockTutor(tutorId)}>UNBLOCK</Button> */}
-                <Button variant="contained" color="success" onClick={() => handleOpen(tutorId, tutorName)}>UNBLOCK</Button>
+                <Button variant="contained" color="success" onClick={() => handleOpen(tutorId, tutorName)}><i className="fa fa-check" aria-hidden="true"></i></Button>
                 {/* <ModelComponent block={()=>unBlockTutor(tutorId)} handleOpen={handleOpen} handleClose={handleClose} open={open} tutorId={tutorId} tutorName={tutorName}/> */}
             </>
         )

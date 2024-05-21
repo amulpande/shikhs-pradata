@@ -96,6 +96,9 @@ export const getAdminAllBlockedTutorApi = () =>
 export const adminBlockedUnblockedTutor = (id:number,data:{user_blocked:boolean}) =>
     axiosInstance.patch(`admin/blocked-unblocked-tutor/${id}`,data)
 
+export const adminDeleteUserApi = (id:number,data:{isDeleted:boolean})=>
+    axiosInstance.patch(`admin/delete-user/${id}`,data)
+
 
 
 
@@ -176,3 +179,9 @@ export const getAdminTotalEarningApi = ()  =>
 
 export const getTutorAllTotalngApi = () =>
     axiosInstance.get('payment/tutor/total-earning/')
+
+export const getAllPaymentDataForTutor = () =>
+    axiosInstance.get('payment/tutor/all-payment/')
+
+export const getAllPaymentDataForAdmin = ({page}:{page:number}) =>
+    axiosInstance.get(`payment/admin/all-payment/?page=${page}`)

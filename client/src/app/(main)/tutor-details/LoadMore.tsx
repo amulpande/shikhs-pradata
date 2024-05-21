@@ -8,13 +8,13 @@ import { ratingTutorApi } from '@lib/api/allApi';
 
 // let page = 2
 
-const LoadMore = ({ subjects,order_by }: { subjects: string,order_by:string },) => {
+const LoadMore = ({ subjects, order_by }: { subjects: string, order_by: string },) => {
     // console.log('subject in load more',subjects)
     const [page, setPage] = useState(2)
     const { ref, inView } = useInView()
     const [tutor, setTutor] = useState<any[]>([])
     const [rating, setRating] = useState<any[]>([])
-    console.log('order_by from loadmore',order_by)
+    console.log('order_by from loadmore', order_by)
     useEffect(() => {
         // reseting data if subjects and order_by are changed
         setTutor([]);
@@ -26,26 +26,39 @@ const LoadMore = ({ subjects,order_by }: { subjects: string,order_by:string },) 
         if (inView) {
             const fetchData = async () => {
                 try {
-                    const response = await fetchTutorData({ page: page, search: subjects ,order_by:order_by});
+                    const response = await fetchTutorData({ page: page, search: subjects, order_by: order_by });
                     setTutor([...tutor, ...response.results]);
                     setPage((p) => p += 1)
                 } catch (error) {
                     console.error('Error fetching tutor data:', error);
                 }
             };
-            const fetchRating = async () => {
-                try {
-                    const response = await ratingTutorApi()
-                    setRating(response.data)
-                    // console.log('response star', response)
-                } catch (error) {
+            // const fetchRating = async () => {
+            //     try {
+            //         const response = await ratingTutorApi()
+            //         setRating(response.data)
+            //         // console.log('response star', response)
+            //     } catch (error) {
 
-                }
-            }
+            //     }
+            // }
             fetchData();
-            fetchRating()
+            // fetchRating()
         }
-    }, [inView, tutor, page, subjects,order_by])
+    }, [inView, tutor, page, subjects, order_by])
+
+    useEffect(() => {
+        const fetchRating = async () => {
+            try {
+                const response = await ratingTutorApi();
+                setRating(response.data);
+            } catch (error) {
+                console.error('Error fetching tutor rating data:', error);
+            }
+        };
+
+        fetchRating();
+    }, [])
 
     // tutors average rating will be sent
     const getTutorAverageRating = (tutorId: number) => {
@@ -59,6 +72,7 @@ const LoadMore = ({ subjects,order_by }: { subjects: string,order_by:string },) 
     };
     return (
         <>
+
             <div style={{ margin: 30, marginLeft: 50, padding: 10, display: 'flex', flexWrap: 'wrap' }}>
                 {
                     tutor?.map((tutor, index) => (
@@ -66,18 +80,19 @@ const LoadMore = ({ subjects,order_by }: { subjects: string,order_by:string },) 
                     ))
                 }
             </div>
-                <div style={{ margin: 30, marginLeft: 50 }}>
 
-                    <div ref={ref} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Image
-                            src="./spinner.svg"
-                            alt="spinner"
-                            width={56}
-                            height={56}
-                            className="object-contain"
-                        />
-                    </div>
+            <div style={{ margin: 30, marginLeft: 50 }}>
+
+                <div ref={ref} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Image
+                        src="./spinner.svg"
+                        alt="spinner"
+                        width={56}
+                        height={56}
+                        className="object-contain"
+                    />
                 </div>
+            </div>
         </>
     )
 }

@@ -12,6 +12,7 @@ from api.serializers import (
     TutorApproveByAdminSerializer,
     TutorApprovedSerializer,
     TutorUserBlockedByAdminSerializer,
+    UserDeleteByAdminSerializer,
 )
 from rest_framework.views import APIView
 from rest_framework import generics
@@ -29,6 +30,7 @@ from api.paginations import UserPagination,TutorPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import TurorFilter
 from api.utils import Utils
+from django.db.models import Q
 # from rest_framework import DjangoFilterBackend
 
 from api.models import User
@@ -502,7 +504,7 @@ class AdminAllUserDataApiView(generics.ListAPIView):
         query = self.request.query_params.get('search')
         if query:
             queryset = queryset.filter(
-                first_name__icontains=query 
+                Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(email__icontains=query) | Q(address__icontains=query) 
                 # Add more fields to search here
             )
         return queryset
@@ -519,4 +521,15 @@ class TutorDataByIdApiView(APIView):
         serializer = self.serializer_class(user)
         return Response(serializer.data,status=status.HTTP_200_OK)
     
-
+class DeleteUserOrTutorApi(APIView):
+    permission_classes = [IsAuthenticated,IsAdmin]
+    serializer_class = UserDeleteByAdminSerializer
+    def patch(self,request,pk):
+        try:
+            user = User.objects.get(pk=pk)
+            serializer = self.serializer_class(user,data=request.data,partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'Message':'User has been deleted'},status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'Error':'User does not exist'},status=status.HTTP_404_NOT_FOUND)

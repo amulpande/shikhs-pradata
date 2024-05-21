@@ -426,3 +426,8 @@ class TutorUserBlockedByAdminSerializer(serializers.ModelSerializer):
         fields = [
             'user_blocked'
         ]
+        
+class UserDeleteByAdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['isDeleted']

@@ -25,3 +25,4 @@ class TutorPaymentSerializer(serializers.ModelSerializer):
             'tutor_amount',
             'payment_date'
         ]
+        

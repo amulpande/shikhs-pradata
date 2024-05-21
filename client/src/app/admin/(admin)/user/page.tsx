@@ -1,60 +1,79 @@
 'use client'
-import { getAllUserDataApi } from '@lib/api/allApi'
+import { adminDeleteUserApi, getAllUserDataApi } from '@lib/api/allApi'
 import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Button, Grid, Pagination } from "@mui/material";
 import { UserDataTypes } from '@lib/types/types';
+import useTutorFetchData from '@lib/hooks/useTutorFetchData';
+import useUserFetch from '@lib/hooks/useUserFetch';
+import { CldImage } from 'next-cloudinary';
 
 const AdminUserDataPage = () => {
-  const [usersData, setUsersData] = useState<UserDataTypes[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [currentPage, setCurrentPage] = useState<number>();
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
-  const [totalPages, setTotalPages] = useState<number>(1);
-  useEffect(() => {
-    setLoading(true)
-    getAllUserDataApi({ page: currentPage, search: searchQuery }).then((response) => {
 
-      const data = response.data.results
-      const total = response.data.count
-      setUsersData(data)
-      setLoading(false)
-      setTotalPages(Math.ceil(total / 10)) // this will provide total page according to data which will fetch
-    }).catch(() => {
-      console.error('Error while fetching users data')
-      setLoading(false)
-    })
-  }, [currentPage, searchQuery])
+  const { data: usersData, loading, totalCount, totalPages, deleteUser } = useUserFetch(getAllUserDataApi, currentPage, searchQuery)
   // console.log('user ', usersData)
+  const handleDelete = async (id: number) => {
+    const isConfirmed = window.confirm('Are you about deleting this user?')
+    if (isConfirmed) {
+      try {
+        await deleteUser(id)
+      } catch (error) {
+        console.error('Not abe to delete ', error)
+      }
+    }
+  }
 
   return (
     <div>
       <div className="container full-width" style={{ width: '100%', marginTop: -25 }}>
         <div className="row">
           <div className="col-md-12">
-            <Grid container spacing={2}>
-              <Grid item xs={10}>
-                <TextField
-                  label="Search"
-                  variant="outlined"
-                  value={tempSearchQuery}
-                  onChange={(e) => setTempSearchQuery(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    // setTempSearchQuery(searchQuery)
-                    setSearchQuery(tempSearchQuery)
-                    setCurrentPage(1)
-                  }}
-                >
-                  Search
-                </Button>
-              </Grid>
-            </Grid>
+            {/* <div className="d-flex justify-content-end mt-2">
+              <TextField
+                label="Search"
+                variant="outlined"
+                value={tempSearchQuery}
+                onChange={(e) => setTempSearchQuery(e.target.value)}
+              />
+            {'  '}
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  // setTempSearchQuery(searchQuery)
+                  setSearchQuery(tempSearchQuery)
+                  setCurrentPage(1)
+                }}
+              >
+                Search
+              </Button>
+            </div> */}
+            <div className="container mt-2">
+              <div className="row justify-content-center">
+                <div className="col-auto">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search"
+                    value={tempSearchQuery}
+                    onChange={(e) => setTempSearchQuery(e.target.value)}
+                  />
+                </div>
+                <div className="col-auto">
+                  <button
+                    className="btn btn-success"
+                    onClick={() => {
+                      setSearchQuery(tempSearchQuery);
+                      setCurrentPage(1);
+                    }}
+                  >
+                    <i className='fa fa-search'></i>
+                  </button>
+                </div>
+              </div>
+            </div>
             <div className="card mt-2">
               <div className="card-header">
                 <h4>USER</h4>
@@ -65,45 +84,55 @@ const AdminUserDataPage = () => {
                   <Table aria-label="user data table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>ID</TableCell>
+                        <TableCell>Profile</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Email</TableCell>
                         <TableCell>Address</TableCell>
                         <TableCell>Contact</TableCell>
-                        <TableCell>Gnder</TableCell>
+                        <TableCell>Gender</TableCell>
+                        <TableCell>Action</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {loading ?
-                        <TableCell>Loading </TableCell>
+                        <TableRow>
+                          <TableCell>Loading </TableCell>
+                        </TableRow>
                         : usersData && usersData.map((user) => (
                           <TableRow key={user.id}>
-                            <TableCell>{user?.id}</TableCell>
+                            <TableCell><CldImage src={user?.profile_image || ''} width={50} height={50} alt='profile'/></TableCell>
                             <TableCell>{user?.first_name + ' ' + user?.last_name}</TableCell>
                             <TableCell>{user?.email}</TableCell>
                             <TableCell>{user?.address}</TableCell>
                             <TableCell>{user?.contact}</TableCell>
                             <TableCell>{user?.gender}</TableCell>
-                            <TableCell>{user?.address}</TableCell>
+                            <TableCell><Button variant='contained' onClick={() => handleDelete(user?.id)}><i className='fa fa-trash'></i></Button></TableCell>
+
                           </TableRow>
                         ))}
                     </TableBody>
                   </Table>
                 </div>
-
-
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Pagination
+      <div className='mt-2 d-flex justify-content-center'>
+        <Pagination
+          count={totalPages}
+          siblingCount={0}
+          page={currentPage}
+          onChange={(event, page) => setCurrentPage(page)}
+        />
+      </div>
+      {/* <Pagination
         count={totalPages}
         page={currentPage}
         onChange={(event, page) => { setCurrentPage(page) }}
         variant="outlined"
         shape="rounded"
-      />
+      /> */}
 
     </div>
   )

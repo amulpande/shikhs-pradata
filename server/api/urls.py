@@ -3,7 +3,8 @@ from django.urls import path,include
 from api.views import (AdminAllUserDataApiView, AdminNotApprovedTutorApiView, TutorDataByIdApiView, UserRegisterApiView,UserLoginApiView,UserProfileAndUpdateApiView,
                        UserPasswordChangeView,UserPasswordResetEmailView,UserPasswordResetView,
                     TutorRegisterApiView,TutotLoginApiView,TutorProfifeAndUpdateApiView,AdminAllApprovedTutorView,
-                    AdminTutorView,AdminNotApprovedTutorView,approveTutorByAdmin,AdminLoginView,AdminBlockedTutorOrUserView, getBlockedTutorApiView,getBlockedUserTutorApiView
+                    AdminTutorView,AdminNotApprovedTutorView,approveTutorByAdmin,AdminLoginView,AdminBlockedTutorOrUserView, getBlockedTutorApiView,getBlockedUserTutorApiView,
+                    DeleteUserOrTutorApi
                     )
 
 from rest_framework_simplejwt.views import (TokenVerifyView,TokenObtainPairView,TokenRefreshView)
@@ -45,6 +46,7 @@ urlpatterns = [
     path('admin/all-blocked-tutor/',getBlockedTutorApiView.as_view(), name='all-blocked-ubblocked-api-view'),
     path('admin/blocked-unblocked-tutor/<pk>',AdminBlockedTutorOrUserView.as_view(), name='all-blocked-ubblocked-api-view'),
     path('admin/get-tutor-data/<pk>',TutorDataByIdApiView.as_view(), name='all-get-tutor-data-api-view'),
+    path('admin/delete-user/<pk>',DeleteUserOrTutorApi.as_view(), name='all-get-tutor-data-api-view'),
 
     # admin user api
     path('admin/get-all-user/',AdminAllUserDataApiView.as_view(), name='all-get-tutor-data-api-view'),

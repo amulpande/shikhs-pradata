@@ -53,7 +53,7 @@ const TableComponent = ({ data, loading, customActionButtons }:PropsType) => {
 
                     <Button variant="contained" color="inherit" onClick={() => {
 
-                    }}>VIEW</Button>
+                    }}><i className="fa fa-eye" aria-hidden="true"></i></Button>
                   </Link>
                 </TableCell>
                 <TableCell align="center" sx={{ gap: '8px', padding: '5px' }}>

@@ -53,9 +53,12 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor, index,rating }) => {
                     <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
                         {tutor?.subjects_name}
                     </Typography>
-                    {/* <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                        {tutor?.experience}
-                    </Typography> */}
+                    <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+                    <i className="fas fa-clock"></i> {tutor?.experience} Year
+                    </Typography>
+                    <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+                    <i className="fas fa-rupee-sign"></i> {tutor?.price}
+                    </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {tutor?.short_bio.slice(0, 100)}...
                     </Typography>

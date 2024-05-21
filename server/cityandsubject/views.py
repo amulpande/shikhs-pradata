@@ -27,12 +27,12 @@ class CityRetrieveUpdateDeleteApiView(RetrieveUpdateDestroyAPIView):
 
 # Subject api view
 class SubjectListCreateApiView(ListCreateAPIView):
-    queryset = Subject.objects.all()
+    queryset = Subject.objects.all().order_by('-id')
     serializer_class = SubjectSerializer
     authentication_classes = []
 
 class SubjectRetrieveUpdateDeleteApiView(RetrieveUpdateDestroyAPIView):
-    queryset = Subject.objects.all()
+    queryset = Subject.objects.all().order_by('-id')
     serializer_class = SubjectSerializer
     authentication_classes = []
     

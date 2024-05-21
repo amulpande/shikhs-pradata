@@ -39,7 +39,7 @@ const ApproedTutorPage = () => {
   const renderCustomActionButtons = (tutorId: number, tutorName: string) => (
     <>
       {/* <Button variant="contained" color="success" onClick={() => { blockTutor(tutorId) }} >BLOCK</Button> */}
-      <Button variant="contained" color="success" onClick={() => handleOpen(tutorId, tutorName)} >BLOCK</Button>
+      <Button variant="contained" color="error" onClick={() => handleOpen(tutorId, tutorName)} ><i className="fa fa-ban"></i></Button>
     </>
   );
   return (

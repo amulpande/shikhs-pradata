@@ -188,7 +188,7 @@ class AdminTotalEarningApi(APIView):
             total_earning_30_days = payments["total"]
 
             # total user
-            total_user = User.objects.filter(role=3).count()
+            total_user = User.objects.filter(role=3).filter(isDeleted=False).count()
 
             # total approved tutor
             totat_approved_tutor = (
@@ -217,7 +217,7 @@ class AdminTotalEarningApi(APIView):
             )
         except Exception as e:
             return Response(
-                {"Earning": "Something went wrong while fetching the total earnings."},
+                {"Error": "Something went wrong while fetching the total earnings."},
                 status=500,
             )
 
@@ -263,6 +263,22 @@ class TutorTotalEarningApi(APIView):
                 }, status=200)
         except Exception as e:
             return Response(
-                {"Earning": "Something went wrong while fetching the total earnings."},
+                {"Error": "Something went wrong while fetching the total earnings."},
                 status=500,
             )
+            
+
+class PaymentDataOfTutorApi(ListAPIView):
+    permission_classes = [IsAuthenticated, IsTutor]
+    serializer_class = TutorPaymentSerializer
+    pagination_class = PaymentPaginationLimited
+    
+    def get_queryset(self):
+        return Payment.objects.filter(tutor_id=self.request.user.id).all()
+    
+class PaymentDataOfAdminApi(ListAPIView):
+    permission_classes = [IsAuthenticated, IsAdmin]
+    serializer_class = AdminPaymentSerializer
+    pagination_class = PaymentPaginationLimited
+    queryset = Payment.objects.all()
+    

@@ -20,7 +20,6 @@ const PartnerRejectedBookingPage = () => {
 
     const renderButton = (booking:BookingType) => (
         <button className='btn btn-success' onClick={() => renderInvoice()}> {booking?.payment_status} </button>
-        // <button className='btn btn-success'> INVOICE </button>
     )
     return (
         <>

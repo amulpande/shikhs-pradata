@@ -10,7 +10,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject_id }: any) => {
-    const time = ['08:00-09:00', '09:00-10:00', '10:00:11:00', '11:00-12:00', '12:00-01:00', '01:00-02:00', '02:00-03:00']
+    const time = ['08:00AM-09:00AM', '09:00AM-10:00AM',
+        '10:00AM:11:00AM', '11:00AM-12:00AM',
+        '12:00PM-01:00PM', '01:00PM-02:00PM',
+        '02:00PM-03:00PM', '03:00PM-04:00PM',
+        '04:00PM-05:00PM', '05:00PM-06:00PM',
+        '06:00PM-07:00PM', '07:00PM-08:00PM',
+    ]
 
     const [bookingData, setBookingData] = useState({
         booking_date: '',
@@ -19,7 +25,7 @@ const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject
         subject_id: subject_id
     })
     // console.log('tutorid model ', bookingData)
-    const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e) => {
         const { name, value } = e.target
         setBookingData({ ...bookingData, [name]: value })
     }
@@ -61,7 +67,6 @@ const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject
                         type='submit'
                         variant="success"
                         onClick={async () => {
-                            console.log(bookingData)
                             try {
                                 const response = await userBookTutorApi(bookingData)
                                 if (response) {

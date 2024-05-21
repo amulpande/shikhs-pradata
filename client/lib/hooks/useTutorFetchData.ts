@@ -17,7 +17,7 @@ function useTutorFetchData(api: { ({ page, search }: { page: number, search: str
             const response = await api({ page, search });
             setTutors(response.data.results);
             setTotalCount(response.count)
-            const calculatedTotalPages = Math.ceil(response.data.count / 6); // Assuming 10 items per page
+            const calculatedTotalPages = Math.ceil(response.data.count / 6); // Assuming 6 items per page
             setTotalPages(calculatedTotalPages);
         } catch (error:any) {
             // Handle error

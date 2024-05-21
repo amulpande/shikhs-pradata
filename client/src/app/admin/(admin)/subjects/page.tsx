@@ -20,11 +20,18 @@ const AdminSubjectPage = () => {
   
   useEffect(() => {
     const fetchSubjectData = async () => {
-      const response = await getSubjectsApi()
-      setSubjectData(response.data)
+      
+      try {
+        const response = await getSubjectsApi()
+        setSubjectData(response.data)
+      } catch (error) {
+        console.error('Error fetching subject')
+      }finally{
+        setUpdated(true)
+      }
     }
     fetchSubjectData()
-  }, [showUpdateModal,subjectData])
+  }, [showUpdateModal])
 
   const handleOpenUpdateModal = (subject_name:any,id:any) => {
     setSelectedSubject({id:id,subject_name:subject_name})
@@ -72,7 +79,7 @@ const AdminSubjectPage = () => {
         <table className="table">
           <thead className="thead-dark text-center">
             <tr>
-              <th scope="col">#</th>
+              {/* <th scope="col">#</th> */}
               <th scope="col">SUBJECT</th>
               <th scope='col'>Edit</th>
             </tr>
@@ -80,7 +87,7 @@ const AdminSubjectPage = () => {
           <tbody className='text-center'>
             {subjectData?.map((subject, index) => (
               <tr key={index}>
-                <th scope="row">{subject?.id}</th>
+                {/* <th scope="row">{index+1}</th> */}
                 <td>{subject?.subject_name}</td>
                 <td>
                   <button className='btn btn-warning' onClick={()=>handleOpenUpdateModal(subject?.subject_name,subject?.id)}>UPDATE</button>

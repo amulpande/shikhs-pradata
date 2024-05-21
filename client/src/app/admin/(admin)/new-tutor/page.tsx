@@ -40,8 +40,10 @@ const NewTutorJoinPage = () => {
     // Defined button to use in TableComponent
     const renderCustomActionButtons = (tutorId: number) => (
         <>
-            <Button variant="contained" color="success" onClick={() => handleAccept(tutorId)}>ACCEPT</Button>
-            <Button variant="contained" color="error" onClick={() => handleReject(tutorId)}>BLOCK</Button>
+            <div className='d-flex'>
+                <Button className="me-2" variant="contained" color="success" onClick={() => handleAccept(tutorId)}><i className="fa fa-check" aria-hidden="true"></i></Button>
+                <Button className="me-2" variant="contained" color="error" onClick={() => handleReject(tutorId)}><i className="fa fa-ban" aria-hidden="true"></i></Button>
+            </div>
         </>
     );
     return (

@@ -130,7 +130,9 @@ interface AdminFeedbackTypes {
     star: number,
     review: string,
     isApproved: boolean,
-    isDeleted: boolean
+    isDeleted: boolean,
+    user_profile:string,
+    tutor_profile:string
 }
 
 interface SubjectTypes {
@@ -160,11 +162,21 @@ interface AdminAllTotalTypes {
 }
 
 interface TutorAllTotalTypes {
-    total_earning:number,
-    monthly_income:number,
-    pending_request:number,
-    payment_paid:number,
+    total_earning: number,
+    monthly_income: number,
+    pending_request: number,
+    payment_paid: number,
 }
+
+interface PyamentType {
+    user_id:number,
+    tutor_id:number,
+    booking_id:number,
+    tutor_amount:number,
+    payment_date:Date,
+    admin_amount:number
+}
+
 export type {
     TutorType,
     UserLoginType,
@@ -184,4 +196,5 @@ export type {
     FeedbackMainPageType,
     AdminAllTotalTypes,
     TutorAllTotalTypes,
+    PyamentType
 };

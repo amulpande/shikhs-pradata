@@ -69,11 +69,11 @@ class TutorManager(models.Manager):
     
 class UserManager(models.Manager):
     def get_all_user(self):
-        return super().get_queryset().filter(role=3).all().order_by('-id')
+        return super().get_queryset().filter(role=3).filter(isDeleted=False).all().order_by('-id')
     
     def get_user_name(self,search=None,order=None):
-        queryset = super().get_queryset().filter(role=3).filter(
-            Q(last__icontains=search) | Q(first_name__icontains=search)
+        queryset = super().get_queryset().filter(role=3).filter(isDeleted=False).filter(
+            Q(last_name__icontains=search) | Q(first_name__icontains=search) | Q(email__icontaine=search) | Q(address__icontained=search)
         ).all().order_by(order)
         return queryset
 

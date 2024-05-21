@@ -10,8 +10,10 @@ urlpatterns = [
     # admin payment
     path('admin/payment/', AdminPaymentDetailsApi.as_view(), name='admin-check-his-earning'),
     path('admin/total-earning/', AdminTotalEarningApi.as_view(), name='admin-check-his-earning'),
+    path('admin/all-payment/', PaymentDataOfAdminApi.as_view(), name='tutor-get-all-payment'),
     
     # tutor payment
     path('tutor/payment/', TutorPaymentDetailsApi.as_view(), name='admin-check-his-earning'),
     path('tutor/total-earning/', TutorTotalEarningApi.as_view(), name='admin-check-his-earning'),
+    path('tutor/all-payment/', PaymentDataOfTutorApi.as_view(), name='tutor-get-all-payment'),
 ]

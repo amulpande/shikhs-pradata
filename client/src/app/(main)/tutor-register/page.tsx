@@ -372,7 +372,7 @@ const TutorRegisterPage = () => {
                       value={formik.values.subjects}
                       className="form-control"
                     >
-                      <option value="">Select a city</option>
+                      <option value="">Select a Subject</option>
                       {subjectData && subjectData?.map((subject:any) => (
                         <option key={subject.id} value={subject.id}>{subject.subject_name}</option>
                       ))}

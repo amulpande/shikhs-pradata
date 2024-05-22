@@ -14,8 +14,6 @@ const useBookingFetchData = (api: { ({ page, order_by,status }:{ page: number, o
         setLoading(true);
         try {
             const response = await api({ page, order_by,status })
-            // console.log('console response ', response)
-            console.log('respinse ',response.data)
             setTotalCount(response.count)
             const calculatedTotalPages = Math.ceil(response.data.count / 10); // Assuming 10 items per page
             setTotalPages(calculatedTotalPages)
@@ -38,7 +36,6 @@ const useBookingFetchData = (api: { ({ page, order_by,status }:{ page: number, o
             await tutorAcceptRejectBokoing(bookindId, { status: 'Accepted' })
 
             fetchBookingData()
-            console.log('data from custom hook', data)
             // setData(data.data)
         } catch (error: any) {
             setError(error)
@@ -51,7 +48,6 @@ const useBookingFetchData = (api: { ({ page, order_by,status }:{ page: number, o
         setLoading(true)
         try {
             await tutorAcceptRejectWithReasonBokoing(bookngId, { status: 'Rejected', cancellation_reason: reason })
-            console.log('object')
             await fetchBookingData()
         } catch (error: any) {
             setError(error)

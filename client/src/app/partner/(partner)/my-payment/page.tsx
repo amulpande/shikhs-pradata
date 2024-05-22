@@ -1,12 +1,12 @@
 'use client'
-import { getAllPaymentDataForAdmin } from '@lib/api/allApi'
+import { getAllPaymentDataForTutor } from '@lib/api/allApi'
 import usePaymentFetch from '@lib/hooks/usePaymentFetch'
 import { CldImage } from 'next-cloudinary'
 import React, { useState } from 'react'
 
-const PaymentDashboard = () => {
+const PartnerMeetingPage = () => {
     const [currentPage, setCurrentPage] = useState<number>(1)
-    const { data: paymentData, loading } = usePaymentFetch(getAllPaymentDataForAdmin, currentPage)
+    const { data: paymentData, loading } = usePaymentFetch(getAllPaymentDataForTutor, currentPage)
     const formatDate = (timestamp: any) => {
         const date = new Date(timestamp);
         return date.toISOString().split('T')[0];; // Change date to desired format
@@ -17,16 +17,15 @@ const PaymentDashboard = () => {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="card mt-2">
-                            
+
                             <div className='card'>
                                 <div style={{ overflowX: 'auto' }}>
                                     <table className="table">
                                         <thead className='card-header'>
                                             <tr>
                                                 <th>User</th>
-                                                <th>Tutor</th>
-                                                <th>Tutor Amount</th>
                                                 <th>Payment Date</th>
+                                                <th>Admin Amount</th>
                                                 <th>My Amount</th>
                                             </tr>
                                         </thead>
@@ -41,13 +40,9 @@ const PaymentDashboard = () => {
                                                             <CldImage src={payment?.user_profile || ''} height={100} width={100} alt='user profile' />
                                                             {payment?.user_name}
                                                         </td>
-                                                        <td>
-                                                            <CldImage src={payment?.tutor_profile || ''} height={100} width={100} alt='tutor profile' />
-                                                        {payment?.tutor_name}
-                                                        </td>
-                                                        <td>{payment?.tutor_amount}</td>
                                                         <td>{formatDate(payment?.payment_date)}</td>
                                                         <td>{payment?.admin_amount}</td>
+                                                        <td>{payment?.tutor_amount}</td>
                                                     </tr>
                                                 ))}
                                         </tbody>
@@ -58,8 +53,9 @@ const PaymentDashboard = () => {
                     </div>
                 </div>
             </div>
+
         </>
     )
 }
 
-export default PaymentDashboard
+export default PartnerMeetingPage

@@ -9,6 +9,5 @@ type FetchTutorDataProps = {
 
 export const fetchTutorData = async({page,search,order_by}:FetchTutorDataProps) =>{
     const response = await getAllApprovedTutorApi({page,search,order_by})
-    // console.log('data', response.data)
     return response.data
 }

@@ -53,7 +53,6 @@ const PartnerLoginPage = () => {
         try {
             setLoading(true)
             const response = await api.tutorLoginApi(tutorLogin)
-            console.log('tutor login response', response)
             if (response.status == 200) {
                 dispatch(authLogin(response.data))
 
@@ -61,7 +60,7 @@ const PartnerLoginPage = () => {
                 setTimeout(() => {
                     successNotify()
                     router.push('/partner/partner-profile')
-                }, 1000);
+                }, 300);
             }
         } catch (error: any) {
             console.error('Error login partner ', error.response)
@@ -76,7 +75,6 @@ const PartnerLoginPage = () => {
         } finally {
             setLoading(false)
         }
-        // console.log('Logging in with:', adminLogin);
     };
     return (
         <>

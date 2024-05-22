@@ -84,7 +84,11 @@ interface BookingType {
     subject_id: number,
     subject_name: string,
     tutor_price: number,
-    tutor_contact: string
+    tutor_contact: string,
+    user_profile:string,
+    tutor_profile:string,
+    user_contact:number,
+    user_address:string
 }
 
 
@@ -132,7 +136,8 @@ interface AdminFeedbackTypes {
     isApproved: boolean,
     isDeleted: boolean,
     user_profile:string,
-    tutor_profile:string
+    tutor_profile:string,
+    user_email:string
 }
 
 interface SubjectTypes {
@@ -166,15 +171,23 @@ interface TutorAllTotalTypes {
     monthly_income: number,
     pending_request: number,
     payment_paid: number,
+    accpted_request:number,
+    rejected_request:number,
+    total_request:number,
 }
 
 interface PyamentType {
+    id:number
     user_id:number,
     tutor_id:number,
     booking_id:number,
     tutor_amount:number,
-    payment_date:Date,
-    admin_amount:number
+    payment_date:string,
+    admin_amount:number,
+    user_profile:string,
+    tutor_profile:string,
+    user_name:string,
+    tutor_name:string,
 }
 
 export type {

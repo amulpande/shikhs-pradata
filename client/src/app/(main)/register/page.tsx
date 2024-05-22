@@ -3,7 +3,6 @@ import { useFormik } from 'formik'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { userRegistrationValuesValidationSchema } from './registerSchema';
-import { userRegisterationPostApi } from '@lib/store/thunk-api/user-api';
 import { userRegisterApi } from '@lib/api/allApi';
 import { registeredSuccessfullyNotify, userEmailAlreadyExistNotify } from '@lib/notification-toastify/notification-toastify';
 import { ToastContainer } from 'react-toastify';
@@ -12,17 +11,6 @@ import { TextField, Input, Button, Grid, Typography, Radio, RadioGroup, FormCont
 import { UserRegisterType } from '@lib/types/types';
 import { useRouter } from 'next/navigation';
 
-// interface InitialValuesDataType {
-//     email: string;
-//     firstName: string;
-//     lastName: string;
-//     contact: string;
-//     gender: string;
-//     address: string;
-//     password: string;
-//     confirmPassword: string;
-//     profileImage: File | null;
-// }
 
 const initialValues: UserRegisterType = {
     email: '',
@@ -38,16 +26,12 @@ const initialValues: UserRegisterType = {
 const RegisterHomePage = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter()
-    // useDispatch()
 
     const formik = useFormik({
-        // console.log('aa')
         initialValues,
         validationSchema: userRegistrationValuesValidationSchema,
         onSubmit: async (values) => {
             const formData = new FormData()
-            // console.log('register data ',values)
-            // alert(JSON.stringify(values, null, 2));
             formData.append('email', values.email)
             formData.append('first_name', values.firstName)
             formData.append('last_name', values.lastName)
@@ -57,17 +41,15 @@ const RegisterHomePage = () => {
             formData.append('password', values.password)
             formData.append('password2', values.confirmPassword)
             formData.append('profile_image', values.profileImage as File)
-            console.log('formdata coming ')
-            console.log([...formData.entries()])
+
+            setLoading(true)
 
             // sending user data  
             try {
                 const response = await userRegisterApi(formData)
                 registeredSuccessfullyNotify()
                 router.push('/login')
-                // console.log('register data => ', response.data)
             } catch (error: any) {
-                console.log('register error => ', error.response.data.email[0])
                 if (error.response.data.email[0] == 'user with this email already exists.') {
                     userEmailAlreadyExistNotify()
                 }
@@ -84,7 +66,7 @@ const RegisterHomePage = () => {
                         <h1>REGISTER</h1>
                         <ul>
                             <li>
-                                <a href="index">HOME</a>
+                                <a href="/index">HOME</a>
                             </li>
                             <li>REGISTER</li>
                         </ul>
@@ -97,9 +79,9 @@ const RegisterHomePage = () => {
                         <Grid item xs={12} sm={8} md={6}>
                             <div className="form-area reg-area">
                                 <Typography variant="h3">Create An Account</Typography>
-                                <form encType="multipart/form-data" onSubmit={formik.handleSubmit}>
+                                <form className='mt-2' encType="multipart/form-data" onSubmit={formik.handleSubmit}>
                                     <Grid container spacing={2}>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 fullWidth
                                                 id="email"
@@ -114,8 +96,9 @@ const RegisterHomePage = () => {
 
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
+                                                size="small"
                                                 fullWidth
                                                 id="firstName"
                                                 name="firstName"
@@ -128,9 +111,10 @@ const RegisterHomePage = () => {
                                                 helperText={formik.touched.firstName && formik.errors.firstName}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 fullWidth
+                                                size="small"
                                                 id="lastName"
                                                 name="lastName"
                                                 label="Last Name"
@@ -142,9 +126,10 @@ const RegisterHomePage = () => {
                                                 helperText={formik.touched.lastName && formik.errors.lastName}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 fullWidth
+                                                size="small"
                                                 id="address"
                                                 name="address"
                                                 label="Address"
@@ -158,9 +143,10 @@ const RegisterHomePage = () => {
                                                 helperText={formik.touched.address && formik.errors.address}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 fullWidth
+                                                size="small"
                                                 id="contact"
                                                 name="contact"
                                                 label="Contact"
@@ -172,9 +158,10 @@ const RegisterHomePage = () => {
                                                 helperText={formik.touched.contact && formik.errors.contact}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 fullWidth
+                                                size="small"
                                                 id="password"
                                                 name="password"
                                                 label="Password"
@@ -186,9 +173,10 @@ const RegisterHomePage = () => {
                                                 helperText={formik.touched.password && formik.errors.password}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
                                             <TextField
                                                 fullWidth
+                                                size="small"
                                                 id="confirmPassword"
                                                 name="confirmPassword"
                                                 label="Confirm Password"
@@ -202,7 +190,7 @@ const RegisterHomePage = () => {
                                         </Grid>
                                         {/* Other form fields */}
                                         {/* Radio Buttons for Gender */}
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} >
                                             <RadioGroup
                                                 row
                                                 aria-label="gender"
@@ -233,7 +221,9 @@ const RegisterHomePage = () => {
                                         {/* Submit Button */}
                                         {/* <Grid container spacing={2} justifyContent="center"> */}
                                         <Grid container item xs={12} justifyContent="center">
-                                            <Button type="submit" variant="contained" color="primary">
+                                            <Button type="submit" variant="contained" color="primary"
+                                                disabled={loading || !formik.dirty || !formik.isValid}
+                                            >
                                                 Register Now
                                             </Button>
                                         </Grid>

@@ -10,22 +10,17 @@ import Link from 'next/link'
 
 const ViewTutorByIdPage: React.FC<ParamIdType> = ({ params }) => {
   const id = params.id
-  console.log('id ', id)
   const [tutorData, setTutorData] = useState<TutorType>()
   const [loading, setLoading] = useState<boolean>(true)
   // useEffect
   useEffect(() => {
     getTutorDataByidApi(id).then((response) => {
-      console.log('response ', response.data)
       setTutorData(response.data)
       setLoading(false)
     }).catch((error) => {
       setLoading(false)
     })
   }, [id])
-  // getTutorDataByidApi(id)
-  // useTutorFetchData()
-  console.log(tutorData)
   return (
     <div>
       <Paper elevation={10} sx={{ padding: 2, maxWidth: 900, margin: 'auto', marginTop: 4 }}>
@@ -49,7 +44,6 @@ const ViewTutorByIdPage: React.FC<ParamIdType> = ({ params }) => {
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-              {/* <Button variant="contained" color="primary" sx={{ marginRight: 1 }}>Approve</Button> */}
               <Link href={"/admin/approved-tutor"}>
                 <Button variant="contained" color="error">Back</Button>
               </Link>

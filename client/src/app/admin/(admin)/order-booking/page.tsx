@@ -7,7 +7,6 @@ const AdminOrderBookingPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [sort, setSort] = useState<string>('-id')
   const [status, setStatus] = useState<string>('')
-  console.log('sort ', sort)
   const { data, totalCount, totalPages } = useBookingFetchData(getAllOrderBookingApi, currentPage, sort, status)
   return (
     <>

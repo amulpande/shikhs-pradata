@@ -25,7 +25,6 @@ const TutorDetailsPage = () => {
 
     const fetchTutors = useCallback(async () => {
         const tutors = await fetchTutorData({ page: 1, search: searchQuery, order_by: orderBy });
-        // console.log('tutors ',tutor)
         setTutorData(tutors);
     }, [searchQuery, orderBy])
 
@@ -43,7 +42,6 @@ const TutorDetailsPage = () => {
             try {
                 const response = await ratingTutorApi()
                 setRating(response.data)
-                // console.log('response star', response)
             } catch (error) {
 
             }
@@ -68,7 +66,7 @@ const TutorDetailsPage = () => {
         const averageRating = totalRating / tutorRatings.length;
         return averageRating.toFixed(2); // rounding to 2 decimal places
     };
-    // console.log('subjecttctcsdsdsd', subjects)
+
     return (
         <>
             <div className="uni-banner">
@@ -108,7 +106,8 @@ const TutorDetailsPage = () => {
                     ))
                 }
             </div>
-            {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} />) : <h3 className='text-center'><CircularProgress /></h3>) : null}
+            {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} />)
+                : <h3 className='text-center'><CircularProgress /></h3>) : 'NO DATA FOUND...'}
         </>
     )
 }

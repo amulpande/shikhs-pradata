@@ -14,7 +14,6 @@ const ResetpasswordPage = () => {
         <div>
             <form onSubmit={(e)=>{
                 e.preventDefault();
-                console.log(resetPassword);
             }}>
                 <input type='text'
                     name='password'

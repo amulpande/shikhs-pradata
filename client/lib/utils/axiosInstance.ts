@@ -1,13 +1,6 @@
 import axios from "axios";
-import { store } from "../store/store";
 import { setCookies } from "./cookieStore";
 
-const clearStorage = () => {
-	localStorage.removeItem('access_token')
-	localStorage.removeItem('refresh_token')
-	axiosInstance.defaults.headers['Authorization'] = null
-	// window.location.href = '/'
-}
 
 
 const axiosInstance = axios.create({
@@ -22,7 +15,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
 	(config) => {
 		const access_token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;;
-		// console.log(access_token)
 		if (access_token) {
 			config.headers['Authorization'] = `Bearer ${access_token}`;
 		}
@@ -41,7 +33,6 @@ axiosInstance.interceptors.response.use(
 	(error) => {
 		const originalRequest = error.config;
 
-		// Preventing infinte loop
 		if (error?.response?.status === 401 && originalRequest.url === 'user/login/token/verify/') {
 			localStorage.removeItem('access_token')
 			localStorage.removeItem('refresh_token')
@@ -67,16 +58,10 @@ axiosInstance.interceptors.response.use(
 						return axiosInstance(originalRequest)
 					})
 					.catch((err) => {
-						console.log(err)
-						// clearStorage()
+
 					})
-			} else {
-				// clearStorage()
-			}
-		} else {
-			// clearStorage()
-		}
-		// console.log(error)
+			} 
+		} 
 		return Promise.reject(error)
 	}
 )

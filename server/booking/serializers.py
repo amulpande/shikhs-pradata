@@ -11,6 +11,10 @@ class BookingSerializer(serializers.ModelSerializer):
     subject_name = serializers.CharField(source ='subject_id.subject_name',read_only=True)
     tutor_price = serializers.CharField(source="tutor_id.price",read_only=True)
     tutor_contact = serializers.CharField(source="tutor_id.contact",read_only=True)
+    tutor_profile = serializers.CharField(source="tutor_id.profile_image",read_only=True)
+    user_profile = serializers.CharField(source="user_id.profile_image",read_only=True)
+    user_contact = serializers.CharField(source="user_id.contact",read_only=True)
+    user_address = serializers.CharField(source="user_id.address",read_only=True)
     
     # print(user_id)
     class Meta:

@@ -420,7 +420,7 @@ p:last-child {
 }
 
 .topbar .topbar-content {
-    padding-top: 10px;
+    padding-top: 1px;
     padding-bottom: 10px;
     border-bottom: 1px solid #eee
 }
@@ -1887,7 +1887,7 @@ About area CSS
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../images/about/a1.jpg);
+    background-image: url(../images/about/about-us.png);
     height: 100%
 }
 

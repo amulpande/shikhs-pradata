@@ -1,7 +1,6 @@
 import React from 'react'
 
 const InvoiceCompoent = () => {
-    console.log('component called')
     return (
         <div>
             <div className="container">

@@ -2,6 +2,7 @@
 import { getFeedbackForMainPage } from '@lib/api/allApi'
 import { FeedbackMainPageType } from '@lib/types/types'
 import { Rating } from '@mui/material'
+import { CldImage } from 'next-cloudinary'
 import React, { useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
 import { Carousel, Container, Row, Col } from 'react-bootstrap'
@@ -23,7 +24,6 @@ const WhatPeopleSayComponent = () => {
         }
         fetchReview()
     }, [])
-    console.log(userFeedbacks)
     return (
         <div className="testimonial ptb-50">
             <Container>
@@ -55,7 +55,7 @@ const WhatPeopleSayComponent = () => {
                                                     </div>
                                                     <p>{feedback.review}</p>
                                                     <div className="testimonial-intro">
-                                                        <Image src={feedback?.user_profile} alt="User Profile" width={30} height={0} roundedCircle />
+                                                        <CldImage src={feedback?.user_profile || ''} alt="User Profile" width={300} height={300}  />
                                                         <div className="testimonial-intro-text">
                                                             <h4>{feedback?.user_name}</h4>
                                                         </div>

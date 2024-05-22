@@ -2,12 +2,14 @@
 import { authLogout } from '@lib/slices/auth-slice/auth-slice';
 import { RooState } from '@lib/store/store';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PartnerHeader = () => {
   const isAuthenticated = useSelector((state: RooState) => state.authData.isAuthenticated)
-  // console.log('auth',isAuthenticated)
+  const router = useRouter()
+
 
   const dispatch = useDispatch()
 
@@ -25,7 +27,7 @@ const PartnerHeader = () => {
               </button>
               {/* <a href="https://flowbite.com" className="flex ms-2 md:me-24"> */}
 
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Tutor Dashboard</span>
+              <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Tutor Dashboard</span>
               {/* </a> */}
             </div>
             <div className="flex items-center">
@@ -37,7 +39,10 @@ const PartnerHeader = () => {
                       <button type="button"
                         className="btn btn-danger"
                         aria-expanded="false"
-                        onClick={() => dispatch(authLogout())}
+                        onClick={() => {
+                          dispatch(authLogout())
+                          router.push('/partner/partner-login')
+                        }}
                       >
                         LOGOUT
                       </button>

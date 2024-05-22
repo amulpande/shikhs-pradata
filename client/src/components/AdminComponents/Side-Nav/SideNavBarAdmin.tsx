@@ -29,13 +29,13 @@ const SideNavBarAdmin = ({ children }: any) => {
             </li>
             <li>
               <Link href="/admin/subjects" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <i className="fa fa-user w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                <i className="fa fa-book w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                 <span className="ms-3">Subject</span>
               </Link>
             </li>
             <li>
               <Link href="/admin/order-booking" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <i className="fa fa-book w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                <i className="fa fa-shopping-cart w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                 <span className="ms-3">Booking</span>
               </Link>
             </li>
@@ -43,6 +43,12 @@ const SideNavBarAdmin = ({ children }: any) => {
               <Link href="/admin/tutor-feedback" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <i className="fa fa-comments w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                 <span className="ms-3">FeedBack</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/my-payment" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <i className="fa fa-credit-card w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                <span className="ms-3">Payment</span>
               </Link>
             </li>
 

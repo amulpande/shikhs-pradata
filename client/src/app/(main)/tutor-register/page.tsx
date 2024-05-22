@@ -13,25 +13,20 @@ import { customErrorMessageErrorNotify, registeredSuccessfullyNotify, successNot
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
+import { AppDispatch, RooState } from '@lib/store/store';
 
 const TutorRegisterPage = () => {
-  // const data = async()=>{
-  //   const response = await axiosInstance.get('user/profile/')
-  //   console.log('geting data',response)
-  // }
-  // data()
 
   const router = useRouter()
-  const dispatch = useDispatch();
-  const cityHai = useSelector((state) => state.cityData.cityData)
-  const subjectData = useSelector((state) => state.subjectData.subjects)
-  // console.log(subjectData)
+  const dispatch = useDispatch<AppDispatch>();
+  const cityHai = useSelector((state:RooState )=> state.cityData.cityData)
+  const subjectData = useSelector((state:RooState) => state.subjectData.subjects)
   useEffect(() => {
-    dispatch(fetchCityDataApi() as any)
-    dispatch(fetchSubjectApi() as any)
+    dispatch(fetchCityDataApi())
+    dispatch(fetchSubjectApi())
   }, [dispatch]);
 
-  // console.log('cityData From Register',cityHai)
+
 
   interface TutorRegisterDataType {
     email: string,
@@ -68,12 +63,10 @@ const TutorRegisterPage = () => {
     price: '',
   }
   const formik = useFormik({
-    // console.log('aa')
     initialValues,
     validationSchema: tutorRegistrationValidationSchema,
     onSubmit: async (values) => {
-      // console.log('register data ',values)
-      // alert(JSON.stringify(values, null, 2));
+
       const formData = new FormData()
       formData.append('email', values.email)
       formData.append('first_name', values.firstName)
@@ -90,8 +83,6 @@ const TutorRegisterPage = () => {
       formData.append('experience', values.experience)
       formData.append('dob', values.dob)
       formData.append('price', values.price)
-      console.log('Tutor Form Data')
-      // console.log([...formData.entries()])
 
       try {
         
@@ -101,7 +92,6 @@ const TutorRegisterPage = () => {
           router.push('/partner/partner-login')
           
         }
-        console.log('response on ths page',response.data)
       } catch (error:any) {
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.email[0];
@@ -112,7 +102,6 @@ const TutorRegisterPage = () => {
     }
   })
 
-  // console.log(formik.errors)
   return (
 
     <>
@@ -417,16 +406,16 @@ const TutorRegisterPage = () => {
                       onBlur={formik.handleBlur}
                       className={`form-control ${formik.touched.dob && formik.errors.dob ? 'is-invalid' : ''}`}
                       max={new Date().toISOString().split('T')[0]} // Set maximum date to today
-                    // You can also set min and max attributes to restrict the date range if needed
-                    // min="YYYY-MM-DD"
-                    // max="YYYY-MM-DD"
+
                     />
                     {formik.touched.dob && formik.errors.dob && (
                       <div className="invalid-feedback">{formik.errors.dob}</div>
                     )}
                   </div>
 
-                  <button type='submit' name="registerbtn" className="submit-btn">
+                  <button type='submit' name="registerbtn" className="submit-btn"
+                  disabled={!formik.isValid || !formik.dirty}
+                  >
                     Register Now
                   </button>
                   <p>

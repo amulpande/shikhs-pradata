@@ -28,16 +28,17 @@ const PartnerNewBookingRequestPage = () => {
             }
         }
     }
+
     const renderButton = (booking:BookingType) => {
         return (
             <>
-                <button className='btn btn-success' onClick={() => handleAccept(booking?.id)}>ACCEPT</button>
-                <button className='btn btn-danger' onClick={() => handleReject(booking?.id)}>REJECT</button>
+                <button className='btn btn-success mr-2' onClick={() => handleAccept(booking?.id)}><i className='fa fa-thumbs-up'></i></button>
+                <button className='btn btn-danger' onClick={() => handleReject(booking?.id)}><i className='fa fa-thumbs-down'></i></button>
             </>
         )
     }
 
-    console.log('data from page ', data)
+
     return (
         <>
             <div className="d-flex justify-content-end mt-2">

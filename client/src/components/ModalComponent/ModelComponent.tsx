@@ -24,12 +24,12 @@ const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject
         tutor_id: tutorId,
         subject_id: subject_id
     })
-    // console.log('tutorid model ', bookingData)
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setBookingData({ ...bookingData, [name]: value })
     }
-    console.log(bookingData);
+
 
     return (
         <>

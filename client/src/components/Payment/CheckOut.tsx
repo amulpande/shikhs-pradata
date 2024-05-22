@@ -38,13 +38,13 @@ function CheckOut({ totalPrice, tutorId, bookingId, bookingStatus }: { totalPric
       setError(error.message);
     }
   };
-  // console.log(totalPrice);
+
 
   return (
     <div>
       {totalPrice !== 0 && (
         <button
-
+        className="rounded"
           style={{
             backgroundColor: '#778899', color: 'white', 
             cursor: bookingStatus === 'Paid' ? 'not-allowed' : 'pointer',

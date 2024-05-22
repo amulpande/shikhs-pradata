@@ -60,14 +60,13 @@ const AdminLoginPage = () => {
         setTimeout(() => {
           successNotify()
           router.push('/admin/index')
-        }, 1000)
+        }, 300)
       }
     } catch (error) {
       errorNotify()
     } finally {
       setLoading(false)
     }
-    // console.log('Logging in with:', adminLogin);
   };
 
   return (

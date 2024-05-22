@@ -8,7 +8,6 @@ export async function middleware(request: NextRequest) {
 
   const tokenData = getAuthCookies('token') ? getAuthCookies('token') : null
   const { pathname } = request.nextUrl
-  // console.log('token in middleware ',tokenData)
 
   const adminPaths = pathname.startsWith('/admin')
   const tutorPaths = pathname.startsWith('/partner')
@@ -56,9 +55,7 @@ export async function middleware(request: NextRequest) {
   const LoggedInUserNotAccessPaths = request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register'
   if (LoggedInUserNotAccessPaths) {
     if (accessToken) {
-      console.log('accesstoken aaya', tokenData.role)
       if (tokenData.role == 3) {
-        console.log('role aya')
         return NextResponse.redirect(new URL("/profile", request.url))
       }
     }

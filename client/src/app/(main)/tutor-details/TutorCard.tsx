@@ -7,8 +7,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'; import Link from 'next/link';
 import { MotionDiv } from './MotionDiv';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@lib/store/store';
 import { TutorType } from '@lib/types/types';
 import { Rating } from '@mui/material';
 ;
@@ -20,11 +18,10 @@ const variant = {
 interface TutorCardProps {
     tutor: TutorType;
     index: any;
-    rating:any
+    rating: any
 }
 
-const TutorCard: React.FC<TutorCardProps> = ({ tutor, index,rating }) => {
-    // console.log('rating from tutor card',rating)
+const TutorCard: React.FC<TutorCardProps> = ({ tutor, index, rating }) => {
     return (
         <MotionDiv
             initial="hidden"
@@ -40,25 +37,32 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor, index,rating }) => {
                 amount: 0
             }}
         >
+
             <Card sx={{ maxWidth: 322, margin: '50px', boxShadow: 20 }} key={index}>
                 <CardMedia
-                    sx={{ height: 140 }}
+                    sx={{ height: 220 }}
+
                     image={tutor.profile_image}
                     title="green iguana"
                 />
-                <CardContent sx={{textAlign:'center'}}>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                        {tutor.first_name + ' ' + tutor.last_name}
-                    </Typography>
-                    <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                        {tutor?.subjects_name}
-                    </Typography>
-                    <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                    <i className="fas fa-clock"></i> {tutor?.experience} Year
-                    </Typography>
-                    <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                    <i className="fas fa-rupee-sign"></i> {tutor?.price}
-                    </Typography>
+                <CardContent sx={{ textAlign: 'center' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                        <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', marginBottom: '10px' }}>
+                            {tutor.first_name + ' ' + tutor.last_name}
+                        </Typography>
+                        <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold', marginBottom: '5px' }}>
+                            <i className='fa fa-book'></i> {tutor?.subjects_name}
+                        </Typography>
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                            <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold', marginRight: '5px' }}>
+                                <i className="fas fa-clock"></i> {tutor?.experience} Year  
+                            </Typography>
+                            {" "}
+                            <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+                                 <i className="fas fa-rupee-sign"></i> {tutor?.price}
+                            </Typography>
+                        </div>
+                    </div>
                     <Typography variant="body2" color="text.secondary">
                         {tutor?.short_bio.slice(0, 100)}...
                     </Typography>

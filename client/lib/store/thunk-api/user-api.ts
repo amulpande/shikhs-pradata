@@ -11,7 +11,6 @@ export const fetchUserProfileApi = createAsyncThunk('user/profile',async(access:
     try {
         
         const response = await api.userProfileApi()
-        console.log('profile api data here ',response.data)
         return response.data
     } catch (error) {
         
@@ -27,11 +26,8 @@ export const fetchUserDataUsingToken = createAsyncThunk('fetchUserDataUsingToken
             },
         }
     );
-        // console.log('inside fetchuserwithtoken',response.data.user)
         return response.data.user;
     } catch (error:any) {
-        // console.error('Failed to fetch user data:', error);
-        // throw error; 
         return rejectWithValue(error.response.data);
     }
 });
@@ -39,7 +35,6 @@ export const fetchUserDataUsingToken = createAsyncThunk('fetchUserDataUsingToken
 export const userRegisterationPostApi = async(data:any)=>{
     try {
         const responce = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}user/register/`,data)
-        // console.log('user post data',responce)
         return responce
     } catch (error) {
         return 

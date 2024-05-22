@@ -9,12 +9,10 @@ import { ratingTutorApi } from '@lib/api/allApi';
 // let page = 2
 
 const LoadMore = ({ subjects, order_by }: { subjects: string, order_by: string },) => {
-    // console.log('subject in load more',subjects)
     const [page, setPage] = useState(2)
     const { ref, inView } = useInView()
     const [tutor, setTutor] = useState<any[]>([])
     const [rating, setRating] = useState<any[]>([])
-    console.log('order_by from loadmore', order_by)
     useEffect(() => {
         // reseting data if subjects and order_by are changed
         setTutor([]);
@@ -33,17 +31,8 @@ const LoadMore = ({ subjects, order_by }: { subjects: string, order_by: string }
                     console.error('Error fetching tutor data:', error);
                 }
             };
-            // const fetchRating = async () => {
-            //     try {
-            //         const response = await ratingTutorApi()
-            //         setRating(response.data)
-            //         // console.log('response star', response)
-            //     } catch (error) {
 
-            //     }
-            // }
             fetchData();
-            // fetchRating()
         }
     }, [inView, tutor, page, subjects, order_by])
 

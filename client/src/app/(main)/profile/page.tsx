@@ -65,7 +65,6 @@ const ProfilePage = () => {
                           const { first_name,last_name,address,contact} = userProfile
                           const data:any = { first_name,last_name,address,contact}
                           const response = await userProfileUpdateApi(data)
-                          console.log('profile response ', response.data)
                         } catch (error) {
                           console.error('Error updating profile', error)
                         }

@@ -250,15 +250,25 @@ class TutorTotalEarningApi(APIView):
             # print(payments)
             monthly_income = payments['total'] or 0
             
-            pending = Booking.objects.filter(tutor_id=user.id).filter(status='Pending').count()
+            
+            total_request = Booking.objects.filter(tutor_id=user.id).count() or 0
+            
+            pending = Booking.objects.filter(tutor_id=user.id).filter(status='Pending').count() or 0
+            
+            accepted = Booking.objects.filter(tutor_id=user.id).filter(status='Accepted').count() or 0
+            
+            rejected = Booking.objects.filter(tutor_id=user.id).filter(status='Rejected').count() or 0
 
-            paid = Booking.objects.filter(tutor_id=user.id).filter(payment_status='Paid').count()
+            paid = Booking.objects.filter(tutor_id=user.id).filter(payment_status='Paid').count() or 0
             
 
             return Response({
                 "total_earning": total_earning_value,
                 'monthly_income':monthly_income,
                 'pending_request':pending,
+                'accpted_request':accepted,
+                'rejected_request':rejected,
+                'total_request':total_request,
                 'payment_paid':paid,
                 }, status=200)
         except Exception as e:

@@ -16,8 +16,9 @@ from api.permissions import *
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from api.models import User
-from booking.paginations import AdminBookingOrderPagination
+from booking.paginations import AdminBookingOrderPagination,UserBookingOrderPagination
 from django_filters.rest_framework import DjangoFilterBackend
+from api.utils import Utils
 
 
 class CheckingView (APIView):
@@ -36,7 +37,6 @@ class BookingOrderView(APIView):
     # permission_classes=[IsAuthenticated,IsUser]
     def post(self,request,format=None):
         user = request.user.id
-        # print(user)
         tutor_id = request.data.get('tutor_id')
         try:
             tutor_data = User.objects.get(pk=tutor_id)
@@ -86,15 +86,11 @@ class TutorAllAcceptedBookingOrder(generics.ListAPIView):
 @api_view(['PATCH'])   
 @permission_classes([IsTutor]) 
 def updateBookingStatus(request,pk):
-    print('request',request)
     try:
         booking = Booking.objects.get(pk=pk)
-        print('booking',booking)
         tutor = TutorSeriliazer(request.user)
         tutorId = tutor.data['email']
-        print('tutorid',tutorId)
         if str(booking.tutor_id) == str(tutorId):
-            print('updated')
             serializer = BookingStatusUpdateSerializer(booking,data = request.data,partial=True)
             if serializer.is_valid():
                 serializer.save()
@@ -117,23 +113,20 @@ def deleteBookingByTutor(request,pk,format=None):
     
 
 # User check order confirm or not
-class UserCheckOrderApproval(APIView):
+class UserCheckOrderApproval(generics.ListAPIView):
     permission_classes=[IsAuthenticated,IsUser]
-    def get(self, request, format=None):
-        try:
-            user = request.user
-            userserializer = UserSerializer(user)
+    pagination_class = UserBookingOrderPagination
+    serializer_class = BookingSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class  = BookingFilter
     
-            booking = Booking.objects.filter(user_id = userserializer.data['id']).order_by('-id')
-
-            if not booking:
-                return Response({'You have not yet ordered anything'})
-            booking_serializer = BookingSerializer(booking, many=True)
-            return Response(booking_serializer.data ,status=status.HTTP_200_OK) 
-        except Booking.DoesNotExist:
-            return Response({'Error':'No data found'},status=status.HTTP_404_NOT_FOUND)
+    def get_queryset(self):
+        user = self.request.user
+        userserializer = UserSerializer(user)
+        order_by = self.request.query_params.get('order_by', '-id')
+        return Booking.objects.filter(user_id = userserializer.data['id']).order_by(order_by)
         
-        
+    
 class AdminOrderBookingApiView(generics.ListAPIView):
     queryset = Booking.objects.all()
     permission_classes = [IsAdmin]
@@ -145,3 +138,21 @@ class AdminOrderBookingApiView(generics.ListAPIView):
     def get_queryset(self):
         order_by = self.request.query_params.get('order_by', '-id')
         return Booking.objects.all().order_by(order_by)
+    
+# Tutor will send meeting link to user 
+class SendMailForMeetingToUserApiView(APIView):
+    permission_classes = [IsAuthenticated,IsTutor] 
+    def post(self,request):
+        print('not working right now')
+        try:
+            user_id = request.data.get('user_id')
+            tutor_email = request.user.email
+            user_email = User.objects.get(pk=user_id)
+            meeting_link = request.data.get('meeting_link')
+            
+            data = {'meeting':meeting_link,'tutor':'pande.amul.dcs24@vnsgu.ac.in','user':user_email}
+            Utils.send_meeting_email_to_user(data=data)
+            return Response({'Message':'Email has been sent to the user'},status=status.HTTP_200_OK)
+            
+        except:
+            return Response({'Error':'Something went wrong'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

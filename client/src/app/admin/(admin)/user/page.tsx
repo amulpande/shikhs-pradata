@@ -13,7 +13,6 @@ const AdminUserDataPage = () => {
   const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
 
   const { data: usersData, loading, totalCount, totalPages, deleteUser } = useUserFetch(getAllUserDataApi, currentPage, searchQuery)
-  // console.log('user ', usersData)
   const handleDelete = async (id: number) => {
     const isConfirmed = window.confirm('Are you about deleting this user?')
     if (isConfirmed) {

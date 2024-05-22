@@ -15,7 +15,6 @@ const AdminIndexPage = () => {
     const fetchData = async () => {
       try {
         const response = await getAdminTotalEarningApi()
-        // console.log('response ',response.data)
         setAlldata(response.data)
 
       } catch (error) {
@@ -36,7 +35,7 @@ const AdminIndexPage = () => {
       }
     ]
   };
-  
+
 
   const barData = {
     labels: ['Total Bookings'],
@@ -56,7 +55,9 @@ const AdminIndexPage = () => {
           <div className="card bg-primary text-white mb-4">
             <div className="card-body">Total Earning</div>
             <div className="card-footer d-flex align-items-center justify-content-between">
-              <h3>{allData?.total_earning}</h3>
+              <Link href='/admin/my-payment'>
+                <h3 className='text-white'>{allData?.total_earning}</h3>
+              </Link>
               <div className="small text-white"><i className="fas fa-angle-right"></i></div>
             </div>
           </div>
@@ -66,7 +67,9 @@ const AdminIndexPage = () => {
           <div className="card bg-secondary text-white mb-4">
             <div className="card-body">Last 30 Days Income</div>
             <div className="card-footer d-flex align-items-center justify-content-between">
-              <h3> {allData?.Last_month_earning}</h3>
+              <Link href='/admin/my-payment'>
+                <h3 className='text-white'> {allData?.Last_month_earning}</h3>
+              </Link>
               <div className="small text-white"><i className="fas fa-angle-right"></i></div>
             </div>
           </div>

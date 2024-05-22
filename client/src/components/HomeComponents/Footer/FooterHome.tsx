@@ -12,7 +12,10 @@ const FooterHome = () => {
                             <div className="footer-logo-area">
                                 <Link href='#'>
                                     {/* need to add shikhs pradata logo image */}
-                                    <img src="" alt="logo" />
+                                    {/* <img src="" alt="logo" /> */}
+                                    <h3 className="text-white">
+                                        SHIKHSHA PRADATA
+                                    </h3>
                                 </Link>
                                 <p>
                                     We are here to help you learn better and get good Marks

@@ -20,7 +20,6 @@ const PartnerProfilePage = () => {
             try {
                 const response = await tutorProfileApi()
                 setTutorProfile(response.data.user)
-                console.log(response)
             } catch (error) {
 
             }
@@ -35,7 +34,6 @@ const PartnerProfilePage = () => {
             [name]: value
         }));
     };
-    console.log('profile ', tutorProfile)
     return (
         <>
             <div className="container">
@@ -52,7 +50,6 @@ const PartnerProfilePage = () => {
                             const { first_name, last_name, contact, address, price } = tutorProfile
                             const data:any = { first_name, last_name, contact, address, price }
                             tutorUpdateProfile(data)
-                            // console.log('profileeeeee', data)
                         }}>
                             {/* Contact detail */}
                             <div className="col-md-8">
@@ -128,6 +125,7 @@ const PartnerProfilePage = () => {
                                                     id="inputEmail4"
                                                     value={tutorProfile?.address}
                                                     onChange={handleChange}
+                                                    disabled={updateMode}
                                                 />
                                             </div>
                                             {/* Skype */}
@@ -154,9 +152,9 @@ const PartnerProfilePage = () => {
                                 <div className="bg-secondary-soft p-4 rounded">
                                     <div className="mb-3">
                                         <div className="text-center">
-                                            <div className="card-header square position-relative display-2 mb-3">
+                                            <div className="square position-relative display-2 mb-3">
 
-                                                {tutorProfile?.profile_image ? <CldImage src={tutorProfile?.profile_image || '' } width={500} height={500} alt='...' />
+                                                {tutorProfile?.profile_image ? <CldImage src={tutorProfile?.profile_image || '' } width={500} height={500} className='rounded-circle' alt='...' />
                                                     :
                                                     <i className="fas fa-fw fa-user position-absolute top-150 start-150 translate-middle text-secondary" />
                                                 }

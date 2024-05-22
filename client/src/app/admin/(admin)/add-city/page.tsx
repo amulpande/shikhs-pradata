@@ -63,12 +63,9 @@ const AddCityPage = () => {
             adminAddCityApi({ city_name: selectedCity.toUpperCase(), city_state: selectedState.toUpperCase() })
               .then((response) => {
                 // if()
-                console.log(response.data)
               })
               .catch((error) => {
-                console.log('error wale me aaya hai')
                 cityAlreadyExistError(error.response.data.city_name[0])
-                console.log(error.response.data.city_name[0])
               })
           }}>Submit</Button>
         </Grid>

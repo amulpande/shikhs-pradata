@@ -5,10 +5,8 @@ import { Modal, Button } from 'react-bootstrap'
 const SubjectUpdateComponent = ({ show, handleClose, subject }:any) => {
     const [updatedSubjectName, setUpdatedSubjectName] = useState(subject ? subject.subject_name : '');
     const handleSave = async() => {
-        // console.log('Saving updated subject:', updatedSubjectName);
         try {
             const response = await updateSubjectApi(subject.id,updatedSubjectName.toUpperCase())
-            console.log('object',response)
         } catch (error) {
             console.error('Error updating subject ',error)
         }

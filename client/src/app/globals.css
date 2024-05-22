@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities; */
 
-/* nextjs-portal{
+nextjs-portal{
   display:none
-} */
+}
 
 /* .fade-in-up {
   opacity: 0;

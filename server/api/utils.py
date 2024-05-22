@@ -33,3 +33,13 @@ class Utils:
             to=[data]
         )
         email.send()
+        
+    @staticmethod
+    def send_meeting_email_to_user(data):
+        email = EmailMessage(
+            subject='Class Meeting Link',
+            body=data['meeting'],
+            from_email=data['tutor'],
+            to=[data['user']]
+        )
+        email.send()

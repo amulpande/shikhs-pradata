@@ -1,13 +1,13 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { authLogin,isErrorUser,isLoginUser } from '@lib/slices/auth-slice/auth-slice';
+import { authLogin, isErrorUser, isLoginUser } from '@lib/slices/auth-slice/auth-slice';
 import * as  api from '@lib/api/allApi';
-import { errorNotify,successNotify } from '@lib/notification-toastify/notification-toastify';
+import { errorNotify, successNotify } from '@lib/notification-toastify/notification-toastify';
 import Link from 'next/link';
-import { TextField, Button, Grid, Typography,CircularProgress } from '@mui/material'
+import { TextField, Button, Grid, Typography, CircularProgress } from '@mui/material'
 import { UserLoginType } from '@lib/types/types';
 import { useRouter } from 'next/navigation';
 
@@ -19,10 +19,15 @@ const LoginHomePage = () => {
     email: '',
     password: ''
   })
+  const [isFormValid, setIsFormValid] = useState<boolean>(false)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserLoginData({ ...userLogindata, [e.target.name]: e.target.value })
   }
- 
+  useEffect(() => {
+    // Check if both email and password fields are non-empty
+    const isValid = userLogindata.email !== '' && userLogindata.password !== '';
+    setIsFormValid(isValid);
+  }, [userLogindata]);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -37,7 +42,7 @@ const LoginHomePage = () => {
       }
     } catch (error) {
       errorNotify();
-    } finally{
+    } finally {
       setLoading(false);
     }
   }
@@ -63,8 +68,8 @@ const LoginHomePage = () => {
             <Grid item xs={12} sm={8} md={6}>
               <div className="form-area">
                 <Typography variant="h3">Log In To Your Account</Typography>
-                
-                <form onSubmit={handleSubmit} style={{marginTop:20}}>
+
+                <form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
@@ -100,9 +105,9 @@ const LoginHomePage = () => {
                         type="submit"
                         variant="contained"
                         color="primary"
-                        disabled={loading}
+                        disabled={!isFormValid}
                       >
-                        {loading ?  <CircularProgress size={24} /> : 'Login'}
+                        {loading ? <CircularProgress size={24} /> : 'Login'}
                       </Button>
                     </Grid>
                   </Grid>

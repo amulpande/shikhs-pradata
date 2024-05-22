@@ -37,7 +37,6 @@ const tutorSlice = createSlice({
     }
 })
 export const selectTutorById = (state:RooState, tutorId:number) => {
-    console.log('selevt tutor',state.tutorData.tutor.filter(tutor => tutor.id == tutorId))
     return state.tutorData.tutor.filter(tutor => tutor.id == tutorId)[0];
 };
 export default tutorSlice.reducer

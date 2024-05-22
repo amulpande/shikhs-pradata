@@ -16,7 +16,6 @@ const TutorDetailsByIdPage = ({ params }:any) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getTutorDataByidApi(params.tutorId)
-      console.log('response -> ', response.data)
       setData(response.data)
     }
     fetchData()

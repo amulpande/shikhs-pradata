@@ -6,6 +6,7 @@ import { AppDispatch, RooState } from '@lib/store/store'
 import { fetchCityDataApi } from '@lib/slices/city-slice/city-slice'
 import { deleteCityApi } from '@lib/api/allApi';
 import { errorNotify, successNotify } from '@lib/notification-toastify/notification-toastify';
+import { CityFetchType } from '@lib/types/types';
 
 const ViewAllCityPage = () => {
   const city = useSelector((state:RooState)=>state.cityData.cityData)
@@ -15,7 +16,6 @@ const ViewAllCityPage = () => {
     // const cityFetchData = getCityApi()
     dispatch(fetchCityDataApi())
   },[dispatch,updated])
-  // console.log('city',city)
   return (
     <>
      
@@ -25,33 +25,14 @@ const ViewAllCityPage = () => {
             <TableCell>City ID</TableCell>
             <TableCell>City Name</TableCell>
             <TableCell>State Name</TableCell>
-            {/* <TableCell>Delete</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* {city?.map((city)=>(
-
-          ))} */}
-          {city && city?.map(city => (
+          {city && city?.map((city : CityFetchType) => (
             <TableRow key={city?.id}>
               <TableCell>{city?.id}</TableCell>
               <TableCell>{city?.city_name}</TableCell>
               <TableCell>{city?.city_state}</TableCell>
-              {/* <TableCell><Button variant="contained" color="error" onClick={()=>{
-
-                // Delete city by id
-                // console.log('city id ',city?.id)
-                deleteCityApi(city?.id).then((response)=>{
-                  successNotify()
-                  console.log(response)
-                  setUpdated(true)
-                }).catch((error)=>{
-                  console.error(error)
-                  errorNotify()
-                  setUpdated(false)
-                })
-                
-              }}>Delete</Button></TableCell> */}
             </TableRow>
           ))}
         </TableBody>

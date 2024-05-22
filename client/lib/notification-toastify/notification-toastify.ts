@@ -124,6 +124,18 @@ export const customErrorMessageErrorNotify = (message: string) => toast.error(me
     transition: Bounce,
 })
 
+export const customSuccessMessageErrorNotify = (message: string) => toast.success(message, {
+    position: "bottom-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Bounce,
+})
+
 
 
 // Order booking related toastify messages

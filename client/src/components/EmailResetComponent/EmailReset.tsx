@@ -17,13 +17,11 @@ const PasswordResetForm = () => {
         setLoading(true);
         
         const response = await api.userResetEmailPasswordApi(email);
-        console.log('reset email -> ',response)
         if(response.status===200){
 
         }
         // End loading state
         setLoading(false);
-        console.log('Password reset initiated for email:', email);
     };
 
     return (

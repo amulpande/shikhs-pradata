@@ -10,7 +10,6 @@ const initialState:any = {
 export const fetchCityDataApi = createAsyncThunk('admin/city', async () => {
     try {
         const responce = await getCityApi()
-        // console.log('city data', responce.data)
         return responce.data
     } catch (error) {
 

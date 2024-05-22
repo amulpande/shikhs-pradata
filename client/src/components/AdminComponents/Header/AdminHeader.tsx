@@ -2,11 +2,13 @@
 import { authLogout } from '@lib/slices/auth-slice/auth-slice';
 import { RooState } from '@lib/store/store';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const AdminHeader = () => {
   const dispatch = useDispatch()
+  const router = useRouter()
   const isAuthenticated = useSelector((state: RooState) => state.authData.isAuthenticated)
   return (
     <>
@@ -37,7 +39,10 @@ const AdminHeader = () => {
                         type="button"
                         className="btn btn-danger"
                         aria-expanded="false"
-                        onClick={()=>dispatch(authLogout())}
+                        onClick={() => {
+                          dispatch(authLogout())
+                          router.push('/admin/login')
+                        }}
                       >
                         <span className="sr-only">Open user menu</span>
                         LOGOUT

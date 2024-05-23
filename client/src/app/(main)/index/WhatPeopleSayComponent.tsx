@@ -38,7 +38,7 @@ const WhatPeopleSayComponent = () => {
 
                                 <div className="testimonial-card-area">
 
-                                    <Carousel>
+                                    <Carousel  data-bs-theme="dark">
                                         {userFeedbacks?.map((feedback, index) => (
                                             <Carousel.Item key={index}>
                                                 <div className="testimonial-card">

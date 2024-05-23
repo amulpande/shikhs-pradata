@@ -16,7 +16,7 @@ class BookingSerializer(serializers.ModelSerializer):
     user_contact = serializers.CharField(source="user_id.contact",read_only=True)
     user_address = serializers.CharField(source="user_id.address",read_only=True)
     
-    # print(user_id)
+
     class Meta:
         model = Booking
         fields = '__all__'
@@ -32,9 +32,6 @@ class BookingStatusUpdateSerializer(serializers.ModelSerializer):
         
         
 class BookingOrderSerializer(serializers.ModelSerializer):
-    
-    print('sereializer working or not')
-    # user=serializers.CharField(source="user.first_name",read_only=True)
     class Meta:
         model = Booking
         fields = [

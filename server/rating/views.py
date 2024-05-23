@@ -13,12 +13,10 @@ from api.permissions import IsAdmin,IsTutor
 class UserFeedbackTutorApi(generics.ListCreateAPIView):
     queryset = Feedback.objects.all()
     serializer_class = TutorFeedBackSerializer
-    # permiss = [IsAuthenticated]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         user = request.user.id
-        # tutor_id = request.data.get('tutor_id')
         serializer = self.get_serializer(data={**request.data,'user_id':user})
         if serializer.is_valid():
             serializer.save()
@@ -59,7 +57,6 @@ class TutorFeedbackGetApi(APIView):
         try:
             tutor = request.user.id
             feedback = Feedback.objects.filter(tutor_id=tutor,isDeleted=False).filter(isApproved=True).all().order_by('-id')
-            print('feedback',feedback)
             serializer = FeedbackForPerticularSeriliazer(feedback,many=True)
             return Response(serializer.data,status=status.HTTP_200_OK)
         except :

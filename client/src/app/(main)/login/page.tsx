@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { authLogin, isErrorUser, isLoginUser } from '@lib/slices/auth-slice/auth-slice';
 import * as  api from '@lib/api/allApi';
-import { errorNotify, successNotify } from '@lib/notification-toastify/notification-toastify';
+import { customErrorMessageErrorNotify, errorNotify, successNotify } from '@lib/notification-toastify/notification-toastify';
 import Link from 'next/link';
 import { TextField, Button, Grid, Typography, CircularProgress } from '@mui/material'
 import { UserLoginType } from '@lib/types/types';
@@ -40,7 +40,13 @@ const LoginHomePage = () => {
         dispatch(authLogin(response.data))
         router.push('/profile')
       }
-    } catch (error) {
+      if(response.data.Error){
+        customErrorMessageErrorNotify('You are not a user')
+      }
+    } catch (error:any) {
+      // if(error.status==401){
+      //   customErrorMessageErrorNotify('You are not a user')
+      // }
       errorNotify();
     } finally {
       setLoading(false);

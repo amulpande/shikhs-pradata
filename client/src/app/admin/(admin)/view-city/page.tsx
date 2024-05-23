@@ -20,9 +20,9 @@ const ViewAllCityPage = () => {
     <>
      
       <Table>
-        <TableHead>
+        <TableHead className='card-header'>
           <TableRow>
-            <TableCell>City ID</TableCell>
+            {/* <TableCell>City ID</TableCell> */}
             <TableCell>City Name</TableCell>
             <TableCell>State Name</TableCell>
           </TableRow>
@@ -30,7 +30,7 @@ const ViewAllCityPage = () => {
         <TableBody>
           {city && city?.map((city : CityFetchType) => (
             <TableRow key={city?.id}>
-              <TableCell>{city?.id}</TableCell>
+              {/* <TableCell>{city?.id}</TableCell> */}
               <TableCell>{city?.city_name}</TableCell>
               <TableCell>{city?.city_state}</TableCell>
             </TableRow>

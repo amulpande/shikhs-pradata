@@ -10,6 +10,7 @@ import CheckOut from '@/components/Payment/CheckOut';
 import TutorDetails from './TutorDetails';
 import RejctedOrder from './RejctedOrder';
 import useBookingFetchData from '@lib/hooks/useBookingFetchData';
+import { CldImage } from 'next-cloudinary';
 
 const MyBookingPage = () => {
     const [selectedTutor, setSelectedTutor] = useState<Number>()
@@ -87,7 +88,7 @@ const MyBookingPage = () => {
                         <div className="row">
                             <div className="col-md-12 col-md-offset-1">
                                 <div className="reg-items">
-                                    <div className="col-md-8 reg-form default-padding-bottom">
+                                    <div className="col-md-4 reg-form default-padding-bottom">
                                         <div className="site-heading text-left">
                                             <h3><strong>Payment and Policy Related Terms</strong></h3>
                                             <hr />
@@ -123,17 +124,26 @@ const MyBookingPage = () => {
                                                             <Typography variant="h5" component="div" gutterBottom className='card-header'>
                                                                 Order Details
                                                             </Typography>
+                                                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', width: '200px', margin: '0 auto' }}>
+                                                                <CldImage
+                                                                    src={order?.tutor_profile}
+                                                                    height={200}
+                                                                    width={200}
+                                                                    alt='tutor profile'
+                                                                    crop="fill"
+                                                                />
+                                                            </div>
                                                             <Typography variant="body1" gutterBottom>
-                                                                <strong>Tutor Name :</strong> {order?.tutor_name}
+                                                                <strong><i className="fas fa-user-circle"></i></strong> : {order?.tutor_name}
                                                             </Typography>
                                                             <Typography variant="body1" gutterBottom>
-                                                                <strong>Date </strong>: {order?.booking_date}
+                                                                <strong><i className="fa fa-calendar" aria-hidden="true"></i></strong> : {order?.booking_date}
                                                             </Typography>
                                                             <Typography variant="body1" gutterBottom>
-                                                                <strong>Appointment Time</strong> : {order?.booking_time}
+                                                                <strong><i className="fas fa-hourglass-half"></i></strong> : {order?.booking_time}
                                                             </Typography>
                                                             <Typography variant="body1" gutterBottom>
-                                                                <strong>   Subject name </strong>: {order?.subject_name}
+                                                                <strong> <i className='fa fa-book'></i> </strong>: {order?.subject_name}
                                                             </Typography>
                                                             <Typography variant="body1" gutterBottom>
                                                                 <strong>Booking Status </strong>: {order?.status}

@@ -5,12 +5,13 @@ import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import SubjectUpdateComponent from './SubjectUpdateComponent';
+import { SubjectTypes } from '@lib/types/types';
 
 
 
 const AdminSubjectPage = () => {
   const [subjectName, setSubjectName] = useState('')
-  const [subjectData, setSubjectData] = useState<any[]>([])
+  const [subjectData, setSubjectData] = useState<SubjectTypes[]>([])
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedSubject,setSelectedSubject] = useState({
     id:'',
@@ -27,11 +28,11 @@ const AdminSubjectPage = () => {
       } catch (error) {
         console.error('Error fetching subject')
       }finally{
-        setUpdated(true)
+        // setUpdated(true)
       }
     }
     fetchSubjectData()
-  }, [showUpdateModal])
+  }, [showUpdateModal,updated])
 
   const handleOpenUpdateModal = (subject_name:any,id:any) => {
     setSelectedSubject({id:id,subject_name:subject_name})

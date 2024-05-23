@@ -409,7 +409,7 @@ p:last-child {
 /*==================================================
   02. Header
   ==================================================*/
-.topbar{
+.topbar {
     background-color: #F5F5F5;
 }
 
@@ -811,7 +811,7 @@ a.meanmenu-reveal {
     position: relative
 }
 
-.btn-check:focus + .btn-primary,
+.btn-check:focus+.btn-primary,
 .btn-primary:focus {
     background-color: var(--whiteColor);
     color: var(--blackColor)
@@ -1315,7 +1315,7 @@ Main Banner Area CSS
     position: relative;
     bottom: 0;
     z-index: 9;
-    max-height: 750px;
+    /* max-height: 750px; */
 }
 
 .banner-text-area {
@@ -2728,8 +2728,12 @@ Testimonial area CSS
 =================================================*/
 
 .testimonial-card {
-    margin: 25px 0;
-    position: relative
+    /* margin: 25px 0;
+    position: relative */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .testimonial-card .stars {
@@ -2764,13 +2768,16 @@ Testimonial area CSS
 }
 
 .testimonial-card .testimonial-intro {
-    display: -webkit-box;
+    /* display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-top: 20px
+    margin-top: 20px */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .testimonial-card .testimonial-intro img {
@@ -4180,7 +4187,7 @@ Blog Area CSS
 .blog-section {
     position: relative;
     margin-top: -345px;
-    margin-bottom:100px
+    margin-bottom: 100px
 }
 
 .blog-with-sidebar .blog-card {
@@ -5732,100 +5739,119 @@ Authentication Area CSS
 .default-padding {
     padding-top: 50px;
     padding-bottom: 50px;
-  }
-  
-  .default-padding-top {
+}
+
+.default-padding-top {
     padding-top: 50px;
-  }
-  
-  .default-padding-bottom {
+}
+
+.default-padding-bottom {
     padding-bottom: 80px;
-  }
-  
-  .default-padding.bottom-less {
+}
+
+.default-padding.bottom-less {
     padding-top: 40px;
     padding-bottom: 40px;
-  }
-  
-  .default-padding.bottom-30 {
+}
+
+.default-padding.bottom-30 {
     padding-top: 80px;
     padding-bottom: 30px;
-  }
-  
-  .default-padding.bottom-20 {
+}
+
+.default-padding.bottom-20 {
     padding-top: 80px;
     padding-bottom: 20px;
-  }
-  
-  .padding-xl {
+}
+
+.padding-xl {
     padding-top: 120px;
     padding-bottom: 120px;
-  }
+}
+
 /* ============================================================== 
      # Registration & Faq
 =================================================================== */
 
 
-.reg-area .reg-items .reg-form, 
+.reg-area .reg-items .reg-form,
 .reg-area .reg-items .thumb {
-  display: table-cell;
-  float: none;
-  vertical-align: middle;
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
 }
 
 .reg-area .site-heading h2 {
-  font-size: 24px;
-  text-transform: uppercase;
+    font-size: 24px;
+    text-transform: uppercase;
 }
 
 .reg-area .acd-items .panel-body p {
-  margin: 0;
+    margin: 0;
 }
 
 .reg-area .reg-items .panel-group {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .reg-area.inc-faq .reg-items .reg-form {
-  display: inherit;
-  float: left;
+    display: inherit;
+    float: left;
 }
 
 .reg-area .site-heading {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
-.reg-area .reg-form input, 
+.reg-area .reg-form input,
 .reg-area .reg-form select {
-  border: 1px solid #e7e7e7;
-  border-radius: inherit;
-  box-shadow: inherit;
-  color: #666666;
-  min-height: 50px;
+    border: 1px solid #e7e7e7;
+    border-radius: inherit;
+    box-shadow: inherit;
+    color: #666666;
+    min-height: 50px;
 }
 
 .reg-area .reg-form select option {
-  padding: 5px 15px;
+    padding: 5px 15px;
 }
 
 .reg-area .reg-form button {
-  background: #ffb606 none repeat scroll 0 0;
-  border: medium none;
-  box-shadow: inherit;
-  font-family: "Poppins",sans-serif;
-  font-weight: 600;
-  margin-top: 15px;
-  padding: 10px 40px;
-  text-transform: uppercase;
+    background: #ffb606 none repeat scroll 0 0;
+    border: medium none;
+    box-shadow: inherit;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    margin-top: 15px;
+    padding: 10px 40px;
+    text-transform: uppercase;
 }
 
 .reg-area .reg-box {
-  background: #002147 none repeat scroll 0 0;
-  padding: 50px;
+    background: #002147 none repeat scroll 0 0;
+    padding: 50px;
 }
 
 .reg-box h3 {
-  font-weight: 600;
-  margin-bottom: 30px;
-  text-transform: capitalize;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-transform: capitalize;
+}
+
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 30px;
+  height: 30px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.carousel-control-prev-icon {
+  background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="%23000" viewBox="0 0 16 16"%3E%3Cpath fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L6.707 7l4.647 4.646a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z"/%3E%3C/svg%3E');
+}
+
+.carousel-control-next-icon {
+  background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="%23000" viewBox="0 0 16 16"%3E%3Cpath fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L9.293 8 4.646 3.354a.5.5 0 0 1 0-.708z"/%3E%3C/svg%3E');
 }

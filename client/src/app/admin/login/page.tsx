@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { Container, Typography, TextField, Button } from '@mui/material';
+import { Container, Typography, TextField, Button, Grid, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import * as api from '../../../../lib/api/allApi';
 import { useDispatch } from 'react-redux';
@@ -56,7 +56,7 @@ const AdminLoginPage = () => {
       const response = await api.adminLoginApi(adminLogin)
       if (response.data.statusCode === 200) {
         dispatch(authLogin(response.data))
-        
+
         setTimeout(() => {
           successNotify()
           router.push('/admin/index')
@@ -106,6 +106,11 @@ const AdminLoginPage = () => {
           >
             Login
           </Button>
+          <Grid item xs={12}>
+            <div className="acc-login-footer">
+              <Link href="/forgot-password">Forgot password?</Link>
+            </div>
+          </Grid>
         </form>
       </AnimatedContainer>
       <ToastContainer />

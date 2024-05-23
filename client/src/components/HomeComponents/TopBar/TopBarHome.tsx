@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { authLogout } from '../../../../lib/slices/auth-slice/auth-slice'
 import { AppBar, Toolbar, Grid, Button, IconButton } from '@mui/material';
 import { RooState } from '../../../../lib/store/store'
+import { useRouter } from 'next/navigation'
 
 const TopBarHome = () => {
   const dispatch = useDispatch()
   const isAuth = useSelector((state: RooState) => state.authData.isAuthenticated)
+  const router = useRouter()
   // useEffect(()=>{
 
   // },[dispatch])
@@ -102,6 +104,7 @@ const TopBarHome = () => {
                         id="dropdownMenuButton1"
                         onClick={() => {
                           dispatch(authLogout())
+                          router.push('/login')
                         }}
                       >
                         <i className="fa fa-sign-out"></i>

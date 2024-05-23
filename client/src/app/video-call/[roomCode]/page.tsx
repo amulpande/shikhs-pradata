@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { useSearchParams } from 'next/navigation';
 
-// const VideoCallPage = ({ params }: any) => {
 const VideoCallPage = ({  params  }: any) => {
   const meetingRef = useRef(null);
   const [reload, setReload] = useState<boolean>(false);
@@ -15,8 +14,6 @@ const VideoCallPage = ({  params  }: any) => {
     const myMeeting = async (element: any) => {
       const appId = Number(process.env.NEXT_PUBLIC_ZEGOCLOUD_APP_ID)
       const userID = Date.now().toString();
-      // const appId = 1114224422
-      // const serverSecret = 'b110dd738cdc4afad593c58e4f957505'
       const serverSecret = process.env.NEXT_PUBLIC_ZEGOCLOUD_SERVER_SECRETE!
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appId, serverSecret, roomCode, userID, 'User')
 

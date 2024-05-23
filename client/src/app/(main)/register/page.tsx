@@ -85,21 +85,6 @@ const RegisterHomePage = () => {
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} sm={6}>
                                             <TextField
-                                                fullWidth
-                                                id="email"
-                                                name="email"
-                                                label="Email"
-                                                variant="outlined"
-                                                value={formik.values.email}
-                                                onChange={formik.handleChange}
-                                                onBlur={formik.handleBlur}
-                                                error={formik.touched.email && Boolean(formik.errors.email)}
-                                                helperText={formik.touched.email && formik.errors.email}
-
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} sm={6}>
-                                            <TextField
                                                 size="small"
                                                 fullWidth
                                                 id="firstName"
@@ -128,7 +113,22 @@ const RegisterHomePage = () => {
                                                 helperText={formik.touched.lastName && formik.errors.lastName}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                fullWidth
+                                                id="email"
+                                                name="email"
+                                                label="Email"
+                                                variant="outlined"
+                                                value={formik.values.email}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                                helperText={formik.touched.email && formik.errors.email}
+
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
                                             <TextField
                                                 fullWidth
                                                 size="small"
@@ -145,21 +145,7 @@ const RegisterHomePage = () => {
                                                 helperText={formik.touched.address && formik.errors.address}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} sm={6}>
-                                            <TextField
-                                                fullWidth
-                                                size="small"
-                                                id="contact"
-                                                name="contact"
-                                                label="Contact"
-                                                variant="outlined"
-                                                value={formik.values.contact}
-                                                onChange={formik.handleChange}
-                                                onBlur={formik.handleBlur}
-                                                error={formik.touched.contact && Boolean(formik.errors.contact)}
-                                                helperText={formik.touched.contact && formik.errors.contact}
-                                            />
-                                        </Grid>
+                                        
                                         <Grid item xs={12} sm={6}>
                                             <TextField
                                                 fullWidth
@@ -188,6 +174,21 @@ const RegisterHomePage = () => {
                                                 onBlur={formik.handleBlur}
                                                 error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                                                 helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                fullWidth
+                                                size="small"
+                                                id="contact"
+                                                name="contact"
+                                                label="Contact"
+                                                variant="outlined"
+                                                value={formik.values.contact}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                error={formik.touched.contact && Boolean(formik.errors.contact)}
+                                                helperText={formik.touched.contact && formik.errors.contact}
                                             />
                                         </Grid>
                                         {/* Other form fields */}

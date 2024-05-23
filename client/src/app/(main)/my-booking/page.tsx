@@ -23,7 +23,8 @@ const MyBookingPage = () => {
     const [orderBy, setOrderBy] = useState('-id')
     const [status, setStatus] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
-    const { data: myOrderData, loading, totalPages } = useBookingFetchData(userMyBookingOrderApi, currentPage, orderBy, status)
+
+    const { data: myOrderData, loading, totalPages } = useBookingFetchData(userMyBookingOrderApi, currentPage, orderBy, status, 9)
 
     const handleCancelOrder = (order: BookingType) => {
         setShowCancelModal(true)
@@ -80,6 +81,7 @@ const MyBookingPage = () => {
                 </div>
             </div>
 
+
             {loading ?
                 <LoadingComponent />
                 :
@@ -101,13 +103,19 @@ const MyBookingPage = () => {
                                             <hr />
                                             <h3>Booking Status</h3>
                                             <div className="d-flex justify-content-end">
-                                                <select className="form-select me-2" value={orderBy} onChange={(e) => setOrderBy(e.target.value)} style={{ maxWidth: '200px' }}>
+                                                <select className="form-select me-2" value={orderBy} onChange={(e) => {
+                                                    setOrderBy(e.target.value)
+                                                    setCurrentPage(1)
+                                                }} style={{ maxWidth: '200px' }}>
                                                     <option value={'-id'}>Sort</option>
                                                     <option value={'payment_status'}>Paid</option>
                                                     <option value={'-payment_status'}>Unpaid</option>
                                                 </select>
 
-                                                <select className="form-select" value={status} onChange={(e) => setStatus(e.target.value)} style={{ maxWidth: '200px' }}>
+                                                <select className="form-select" value={status} onChange={(e) => {
+                                                    setStatus(e.target.value)
+                                                    setCurrentPage(1)
+                                                }} style={{ maxWidth: '200px' }}>
                                                     <option value={''}>Filter</option>
                                                     <option value={'Accepted'}>Accepted</option>
                                                     <option value={'Rejected'}>Rejected</option>

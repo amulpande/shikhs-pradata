@@ -3,6 +3,7 @@ from api.models import City,Subject
 from rest_framework.generics import CreateAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from cityandsubject.serializers import (CitySerializer,SubjectSerializer)
+from rest_framework import generics
 from rest_framework import status
 # Create your views here.
 
@@ -27,6 +28,12 @@ class CityRetrieveUpdateDeleteApiView(RetrieveUpdateDestroyAPIView):
 
 # Subject api view
 class SubjectListCreateApiView(ListCreateAPIView):
+    queryset = Subject.objects.all().filter(isDisabled=False).order_by('subject_name')
+    serializer_class = SubjectSerializer
+    authentication_classes = []
+
+#subject api view for admin
+class SubjectAdminView(ListCreateAPIView):
     queryset = Subject.objects.all().order_by('-id')
     serializer_class = SubjectSerializer
     authentication_classes = []
@@ -44,3 +51,26 @@ class SubjectRetrieveUpdateDeleteApiView(RetrieveUpdateDestroyAPIView):
         except:
             return Response({"response": "Subject does not exist",'success':False}, status=status.HTTP_404_NOT_FOUND)
     
+    
+class SubjectDetailView(generics.RetrieveUpdateAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+    def put(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.user_set.exists():
+            return Response({'error': 'Cannot disable subject. It is associated with users.'}, status=status.HTTP_400_BAD_REQUEST)
+        instance.isDisabled = True
+        instance.save()
+        return Response({'message': 'Subject disabled successfully.'}, status=status.HTTP_200_OK)
+    
+class SubjectEnableView(generics.RetrieveUpdateAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+    def put(self, request, *args, **kwargs):
+        instace = self.get_object()
+        
+        instace.isDisabled = False
+        instace.save()
+        return Response({'message': 'Subject Enabled successfully.'}, status=status.HTTP_200_OK)

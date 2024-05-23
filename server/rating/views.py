@@ -13,7 +13,7 @@ from api.permissions import IsAdmin,IsTutor
 class UserFeedbackTutorApi(generics.ListCreateAPIView):
     queryset = Feedback.objects.all()
     serializer_class = TutorFeedBackSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         user = request.user.id

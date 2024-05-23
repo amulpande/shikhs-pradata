@@ -1,13 +1,11 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import axiosInstance from '../../../../lib/utils/axiosInstance'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { tutorRegisterApi, userRegisterApi } from '../../../../lib/api/allApi';
 import { tutorRegistrationValidationSchema } from './tutorRegistrationSchema';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCityDataApi } from '../../../../lib/slices/city-slice/city-slice';
-import { fetchUserDataUsingToken } from '../../../../lib/store/thunk-api/user-api';
 import { fetchSubjectApi } from '../../../../lib/slices/subject-slice/subject-slice';
 import { customErrorMessageErrorNotify, registeredSuccessfullyNotify, successNotify } from '@lib/notification-toastify/notification-toastify';
 import { ToastContainer } from 'react-toastify'
@@ -419,7 +417,7 @@ const TutorRegisterPage = () => {
                     Register Now
                   </button>
                   <p>
-                    Already Have An Account? <Link href="/login">Login</Link>
+                    Already Have An Account? <Link href="/partner/partner-login">Login</Link>
                   </p>
                 </form>
               </div>

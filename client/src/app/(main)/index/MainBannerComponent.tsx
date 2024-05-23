@@ -1,7 +1,11 @@
-'use client'
 import Link from 'next/link'
 import React from 'react'
 import { Image } from 'react-bootstrap';
+import { MotionDiv } from '../tutor-details/MotionDiv';
+const variant = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
+}
 const MainBannerComponent = () => {
     return (
         <div className="main-banner bg-f9fbfe">
@@ -16,7 +20,22 @@ const MainBannerComponent = () => {
                     </div>
                     <div className="col-lg-6">
                         <div className="banner-img">
-                            <Image src="assets/images/banner/tutor-png.png" alt="image" />
+                            {/* <MotionDiv
+                                initial="hidden"
+                                animate="visible"
+                                variants={variant}
+                                transition={{
+                                    // delay:1,
+                                    delay: 0.5,
+                                    ease: 'easeInOut',
+                                    duration: 0.5
+                                }}
+                                viewport={{
+                                    amount: 0
+                                }}
+                            > */}
+                                <Image src="assets/images/banner/tutor-png.png" alt="image" />
+                            {/* </MotionDiv> */}
                         </div>
                     </div>
                 </div>

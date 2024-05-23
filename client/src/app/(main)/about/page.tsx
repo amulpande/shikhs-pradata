@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import { Image } from 'react-bootstrap'
 
@@ -11,7 +12,7 @@ const page = () => {
               <h1>About Us</h1>
               <ul>
                 <li>
-                  <a href="index.html">Home</a>
+                  <Link href="/index">Home</Link>
                 </li>
                 <li>About Us</li>
               </ul>

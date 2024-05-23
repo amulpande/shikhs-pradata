@@ -7,10 +7,27 @@ const AdminOrderBookingPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [sort, setSort] = useState<string>('-id')
   const [status, setStatus] = useState<string>('')
-  const { data, totalCount, totalPages } = useBookingFetchData(getAllOrderBookingApi, currentPage, sort, status)
+  const [pageSize, setPageSize] = useState<number>(10);
+  const { data, totalCount, totalPages } = useBookingFetchData(getAllOrderBookingApi, currentPage, sort, status,pageSize)
   return (
     <>
       <div className="d-flex justify-content-end mt-2">
+        <div className="d-flex justify-content-end mr-2">
+          <select
+            className="form-select"
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setCurrentPage(1); // Reset to first page when changing page size
+            }}
+            style={{ maxWidth: '200px' }}
+          >
+            <option value={10}>10 per page</option>
+            <option value={20}>20 per page</option>
+            <option value={50}>50 per page</option>
+            {/* Add more options if needed */}
+          </select>
+        </div>
         <select className="form-select me-2" value={sort} onChange={(e) => setSort(e.target.value)} style={{ maxWidth: '200px' }}>
           <option value={'-id'}>Sort</option>
           <option value={'payment_status'}>Paid</option>

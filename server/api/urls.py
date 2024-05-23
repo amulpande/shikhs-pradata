@@ -34,6 +34,9 @@ urlpatterns = [
     
     #payment
     path('payment/',include('payment.urls'),name='payment-stripe-api-view'),
+    
+    #contact us
+    path('contact/',include('contact.urls'),name='contact-api-view'),
      
     #admin tutor
     path('admin/login/',AdminLoginView.as_view(),name='Admin-login-api-view'),

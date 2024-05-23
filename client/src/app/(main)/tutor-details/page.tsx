@@ -29,6 +29,11 @@ const TutorDetailsPage = () => {
     }, [searchQuery, orderBy])
 
     useEffect(() => {
+
+
+        fetchTutors()
+    }, [fetchTutors]); // Trigger fetchTutors whenever searchQuery changes
+    useEffect(() => {
         const fetchSubjects = async () => {
 
             try {
@@ -38,6 +43,9 @@ const TutorDetailsPage = () => {
                 console.error("Error fetchig subject", error)
             }
         }
+        fetchSubjects()
+    }, [])
+    useEffect(() => {
         const fetchRating = async () => {
             try {
                 const response = await ratingTutorApi()
@@ -46,10 +54,8 @@ const TutorDetailsPage = () => {
 
             }
         }
-        fetchTutors();
-        fetchSubjects()
         fetchRating()
-    }, [fetchTutors]); // Trigger fetchTutors whenever searchQuery changes
+    }, [])
 
     const handleSelectSubject = (e) => {
         setSearchQuery(e.target.value);

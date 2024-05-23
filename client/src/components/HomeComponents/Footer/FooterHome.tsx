@@ -1,6 +1,4 @@
 import Link from "next/link"
-import Script from "next/script"
-
 const FooterHome = () => {
 
     return (
@@ -11,8 +9,6 @@ const FooterHome = () => {
                         <div className="col-lg-3 col-md-6 col-sm-6 col-12">
                             <div className="footer-logo-area">
                                 <Link href='#'>
-                                    {/* need to add shikhs pradata logo image */}
-                                    {/* <img src="" alt="logo" /> */}
                                     <h3 className="text-white">
                                         SHIKHSHA PRADATA
                                     </h3>
@@ -59,7 +55,7 @@ const FooterHome = () => {
                                     <li>
                                         <i className="fas fa-envelope" />
                                         <p>Email:</p>
-                                        <Link href="#">homeservice@gmail.com</Link>
+                                        <Link href="#">shikhshapradata@example.com</Link>
                                     </li>
                                     <li>
                                         <i className="fas fa-phone-alt" />
@@ -84,13 +80,13 @@ const FooterHome = () => {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/service">
-                                            <i className="fas fa-long-arrow-alt-right" /> Subject{" "}
+                                        <Link href="/tutor-details">
+                                            <i className="fas fa-long-arrow-alt-right" /> Tutor{" "}
                                         </Link>
                                     </li>
 
                                     <li>
-                                        <Link href="/contact">
+                                        <Link href="/contact-us">
                                             <i className="fas fa-long-arrow-alt-right" /> Contact{" "}
                                         </Link>
                                     </li>
@@ -121,23 +117,11 @@ const FooterHome = () => {
             <div className="copyright">
                 <div className="container">
                     <p>
-                        © Copyright 2022, All Rights Reserved.{" "}
+                        © Copyright 2024, All Rights Reserved.{" "}
                         <Link href="#">SHIKHA PRADATA</Link>
                     </p>
                 </div>
             </div>
-            {/* <Script src="assets/js/jquery-3.5.1.min.js" />
-            <Script src="assets/js/bootstrap.bundle.min.js" />
-            <Script src="assets/js/meanmenu.js" />
-            <Script src="assets/js/owl.carousel.min.js" />
-            <Script src="assets/js/jquery.magnific-popup.min.js" />
-            <Script src="assets/js/jquery.nice-number.js" />
-            <Script src="assets/js/jquery.nice-select.min.js" />
-            <Script src="assets/js/appear.min.js" />
-            <Script src="assets/js/progress-bar.js" />
-            <Script src="assets/js/odometer.min.js" />
-            <Script src="assets/js/custom.js" /> */}
-
         </>
     )
 }

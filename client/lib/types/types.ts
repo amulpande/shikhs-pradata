@@ -142,7 +142,8 @@ interface AdminFeedbackTypes {
 
 interface SubjectTypes {
     id: number,
-    subject_name: string
+    subject_name: string,
+    isDisabled:boolean,
 }
 
 
@@ -190,6 +191,18 @@ interface PyamentType {
     tutor_name:string,
 }
 
+interface ContactUsType{
+    name: string;
+    email: string;
+    contact: string;
+    subject: string;
+    message: string;
+}
+interface ContactUsTypes extends ContactUsType {
+    id:number;
+};
+
+
 export type {
     TutorType,
     UserLoginType,
@@ -209,5 +222,7 @@ export type {
     FeedbackMainPageType,
     AdminAllTotalTypes,
     TutorAllTotalTypes,
-    PyamentType
+    PyamentType,
+    ContactUsTypes,
+    ContactUsType
 };

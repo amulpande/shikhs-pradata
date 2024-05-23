@@ -3,15 +3,15 @@
 import { useState } from 'react';
 import { Container, Typography, TextField, Button, Grid, Link } from '@mui/material';
 import { styled } from '@mui/system';
-import * as api from '../../../../lib/api/allApi';
+import * as api from '@lib/api/allApi';
 import { useDispatch } from 'react-redux';
-import { errorNotify, successNotify } from '../../../../lib/notification-toastify/notification-toastify';
-import { authLogin } from '../../../../lib/slices/auth-slice/auth-slice';
+import { errorNotify, successNotify } from '@lib/notification-toastify/notification-toastify';
+import { authLogin } from '@lib/slices/auth-slice/auth-slice';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
-import { UserLoginType } from '../../../../lib/types/types';
-import { setCookies } from '@lib/utils/cookieStore';
+import { UserLoginType } from '@lib/types/types';
+
 
 // Define a styled container with animations and background
 const AnimatedContainer = styled(Container)({
@@ -45,7 +45,7 @@ const AdminLoginPage = () => {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch()
-  const handleChange = (e) => {
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLInputElement>) => {
     setAdminLogin({ ...adminLogin, [e.target.name]: e.target.value })
   }
   const handleLogin = async (e) => {

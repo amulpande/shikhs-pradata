@@ -1,11 +1,15 @@
 'use client'
 import { tutorProfileApi, tutorUpdateProfile } from '@lib/api/allApi'
+import { customErrorMessageErrorNotify, customSuccessMessageErrorNotify } from '@lib/notification-toastify/notification-toastify'
 import { TutorProfile, TutorType } from '@lib/types/types'
 import { CldImage } from 'next-cloudinary'
 import React, { useEffect, useState } from 'react'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const PartnerProfilePage = () => {
     const [updateMode, setUpadateMode] = useState<boolean>(true)
+    const [profileUpdated,setProfileUpdated] = useState<boolean>(false)
     const [tutorProfile, setTutorProfile] = useState<TutorProfile>({
         first_name: '',
         last_name: '',
@@ -25,7 +29,7 @@ const PartnerProfilePage = () => {
             }
         }
         fetchTutorProfile()
-    }, [])
+    }, [profileUpdated])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -45,11 +49,23 @@ const PartnerProfilePage = () => {
                             <hr />
                         </div>
                         {/* Form START */}
-                        <form className="row g-3" onSubmit={(e) => {
+                        <form className="row g-3" onSubmit={async(e) => {
                             e.preventDefault()
+                            setProfileUpdated(false)
                             const { first_name, last_name, contact, address, price } = tutorProfile
                             const data:any = { first_name, last_name, contact, address, price }
-                            tutorUpdateProfile(data)
+                            try {
+                                const response = await tutorUpdateProfile(data)
+                                if(response){
+                                    customSuccessMessageErrorNotify('Profile Updated')
+                                }
+                                
+                            } catch (error) {
+                                console.error('Error updating profile ')
+                                customErrorMessageErrorNotify('Something went wrong try again latter')
+                            } finally{
+                                setProfileUpdated(true)
+                            }
                         }}>
                             {/* Contact detail */}
                             <div className="col-md-8">
@@ -167,12 +183,12 @@ const PartnerProfilePage = () => {
                             <div className="d-flex justify-content-end gap-3">
                                 {!updateMode &&
 
-                                    <button type="submit" className="btn btn-success btn-lg" onClick={()=>setUpadateMode(true)}>
+                                    <button type="submit" className="btn btn-success btn-lg">
                                         Update
                                     </button>
                                 }
                                 <button type="button" className="btn btn-secondary btn-lg" onClick={() => setUpadateMode(!updateMode)}>
-                                    Edit
+                                    <i className='fa fa-edit'></i>
                                 </button>
                             </div>
                         </form>
@@ -180,7 +196,7 @@ const PartnerProfilePage = () => {
                     {/* Form END */}
                 </div>
             </div>
-
+            <ToastContainer/>
 
         </>
     )

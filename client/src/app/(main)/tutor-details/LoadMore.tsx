@@ -35,21 +35,33 @@ const LoadMore = ({ subjects, order_by }: { subjects: string, order_by: string }
             };
 
             fetchData();
+            // const fetchRating = async () => {
+            //     try {
+            //         const response = await ratingTutorApi();
+            //         setRating(response.data);
+            //     } catch (error) {
+            //         console.error('Error fetching tutor rating data:', error);
+            //     }
+            // };
+
+            // fetchRating();
         }
     }, [inView, tutor, page, subjects, order_by])
 
     useEffect(() => {
-        const fetchRating = async () => {
-            try {
-                const response = await ratingTutorApi();
-                setRating(response.data);
-            } catch (error) {
-                console.error('Error fetching tutor rating data:', error);
-            }
-        };
+        if (inView) {
+            const fetchRating = async () => {
+                try {
+                    const response = await ratingTutorApi();
+                    setRating(response.data);
+                } catch (error) {
+                    console.error('Error fetching tutor rating data:', error);
+                }
+            };
 
-        fetchRating();
-    }, [])
+            fetchRating();
+        }
+    }, [inView])
 
     // tutors average rating will be sent
     const getTutorAverageRating = (tutorId: number) => {

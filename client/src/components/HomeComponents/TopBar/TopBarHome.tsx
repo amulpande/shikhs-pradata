@@ -72,8 +72,9 @@ const TopBarHome = () => {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <i className="fas fa-user"></i>
-                      TUTOR
+                      {/* <i className="fas fa-user"></i> */}
+                      <i className="fas fa-chalkboard-teacher"></i>
+                      <strong> TUTOR</strong>
                     </button>
                     <ul
                       className="dropdown-menu"
@@ -107,8 +108,9 @@ const TopBarHome = () => {
                           router.push('/login')
                         }}
                       >
-                        <i className="fa fa-sign-out"></i>
-                        LOGOUT
+                        {/* <i className="fa fa-sign"></i> */}
+                        {/* <i className="far fa-sign-out"></i> */}
+                        <strong>LOGOUT</strong>
                       </button>
                       : " "}
                   </div>
@@ -122,7 +124,7 @@ const TopBarHome = () => {
                       aria-expanded="false"
                     >
                       <i className="fas fa-user"></i>
-                      USER
+                      <strong>USER</strong>
                     </button>
                     <ul
                       className="dropdown-menu"

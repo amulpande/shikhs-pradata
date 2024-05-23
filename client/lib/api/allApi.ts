@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BookingType, CityStateType, FetchTutorDataProps, PasswordReseType, TutorProfile, UserBookTutortypes, UserLoginType, UserProfileTypes } from "../types/types";
+import { BookingType, CityStateType, ContactUsType, ContactUsTypes, FetchTutorDataProps, PasswordReseType, TutorProfile, UserBookTutortypes, UserLoginType, UserProfileTypes } from "../types/types";
 import axiosInstance from "../utils/axiosInstance";
 
 
@@ -22,8 +22,8 @@ export const userResetEmailPasswordApi = (email: string) =>
 export const userPasswordResetApi = (uid: string, token: string, data:PasswordReseType) =>
     axiosInstance.post(`user/reset-password/${uid}/${token}/`, data)
 
-export const userMyBookingOrderApi = ({page=1,order_by='-id',status=''}) =>
-    axiosInstance.get(`booking/user/my-order/?page=${page}&order_by=${order_by}&status=${status}`)
+export const userMyBookingOrderApi = ({page=1,order_by='-id',status='',page_size=10}) =>
+    axiosInstance.get(`booking/user/my-order/?page=${page}&order_by=${order_by}&status=${status}&page_size=${page_size}`)
 
 export const userBookTutorApi = (data:UserBookTutortypes) =>
     axiosInstance.post('booking/user/book-tutor/',data=data,{
@@ -109,8 +109,8 @@ export const adminDeleteUserApi = (id:number,data:{isDeleted:boolean})=>
 export const getTutorDataByidApi = (id:number) =>
     axiosInstance.get(`admin/get-tutor-data/${id}`)
 
-export const getAllOrderBookingApi = ({page=1,order_by='-id',status=''}:{page?:number,order_by?:string,status:string}) =>
-    axiosInstance.get(`booking/admin/order-booking/?page=${page}&order_by=${order_by}&status=${status}`)
+export const getAllOrderBookingApi = ({page=1,order_by='-id',status='',page_size=10}:{page?:number,order_by?:string,status:string,page_size:number}) =>
+    axiosInstance.get(`booking/admin/order-booking/?page=${page}&order_by=${order_by}&status=${status}&page_size=${page_size}`)
 
 
 
@@ -120,9 +120,14 @@ export const getAllOrderBookingApi = ({page=1,order_by='-id',status=''}:{page?:n
 // admin user apis
 export const getAllUserDataApi = ({page=1,search=''}: { page?: number, search?: string }) =>
     axiosInstance.get(`admin/get-all-user/?page=${page}&search=${search}`)
+
+
 // Getting all Subject data 
 export const getSubjectsApi = () =>
     axiosInstance.get('admin/subject/')
+
+export const getAdminSubjectsApi = () =>
+    axiosInstance.get('admin/subject/admin')
 
 export const postSubjectApi = (data:string) =>
     axiosInstance.post('admin/subject/',{'subject_name':data})
@@ -134,6 +139,11 @@ export const updateSubjectApi = (id:number,data:string) =>
         }
     })
 
+export const disableSubjectByAdminApi = (id:number)=>
+    axiosInstance.put(`admin/subject/disable/${id}`)
+
+export const enableSubjectByAdminApi = (id:number)=>
+    axiosInstance.put(`admin/subject/enable/${id}`)
 
 // Getting all city data
 export const getCityApi = () =>
@@ -188,3 +198,20 @@ export const getAllPaymentDataForTutor = ({page}:{page:number}) =>
 
 export const getAllPaymentDataForAdmin = ({page}:{page:number}) =>
     axiosInstance.get(`payment/admin/all-payment/?page=${page}`)
+
+
+
+// contact us apis
+export const postContactUsApi = (data:ContactUsType) =>
+    axiosInstance.post('contact/create-contact-us/',data,{
+        headers:{
+            'Content-Type':'application/json'
+        }
+    })
+
+
+export const getContactUsApi = ({page}:{page:number}) =>
+    axiosInstance.get(`contact/create-contact-us/?page=${page}`)
+
+export const deleteContactUsByAdminApi = (id:number) => 
+    axiosInstance.delete(`contact/contact-us-details/${id}`)

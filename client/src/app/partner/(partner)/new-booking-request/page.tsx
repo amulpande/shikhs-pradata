@@ -9,8 +9,7 @@ import { useState } from 'react'
 const PartnerNewBookingRequestPage = () => {
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [sort, setSort] = useState<string>('-id')
-    const [status, setStatus] = useState<string>('')
-    const { data, loading,totalPages, acceptRequest, rejectRequest } = useBookingFetchData(api.tutorGetAllBooking, currentPage, sort, status)
+    const { data, loading,totalPages, acceptRequest, rejectRequest } = useBookingFetchData(api.tutorGetAllBooking, currentPage, sort)
 
     const handleAccept = (id: number) => {
         const isConfirmed = window.confirm('Are you sure')

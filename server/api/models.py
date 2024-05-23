@@ -22,6 +22,7 @@ class City(models.Model):
 
 class Subject(models.Model):
     subject_name = models.CharField(unique=True, max_length=20)
+    isDisabled = models.BooleanField(default=False)
     
     def __str__(self) -> str:
         return self.subject_name

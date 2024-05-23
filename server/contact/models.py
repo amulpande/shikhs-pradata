@@ -7,6 +7,7 @@ class ContactUs(models.Model):
     contact = models.CharField(max_length=12)
     subject = models.CharField(max_length=50)
     message = models.CharField(max_length=500)
+    isDeleted = models.BooleanField(default=False)
     
     def __str__(self) -> str:
         return self.name

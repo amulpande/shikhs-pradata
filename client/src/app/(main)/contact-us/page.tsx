@@ -1,5 +1,28 @@
-import React from 'react'
+'use client'
+import { postContactUsApi } from '@lib/api/allApi'
+import { customErrorMessageErrorNotify, customSuccessMessageErrorNotify } from '@lib/notification-toastify/notification-toastify'
+import { ContactUsType } from '@lib/types/types';
+import React, { useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const MainContactUsPage = () => {
+    const [contactUs, setContactUs] = useState<ContactUsType>({
+        'name': '',
+        'email': '',
+        'contact': '',
+        'subject': '',
+        'message': ''
+    })
+    const [isFormValid, setIsFormValid] = useState(false);
+    useEffect(() => {
+        const isValid = contactUs.name !== '' && contactUs.email !== '' && contactUs.contact !== '' && contactUs.subject !== '' && contactUs.message !== '';
+        setIsFormValid(isValid);
+    }, [contactUs]);
+
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setContactUs({ ...contactUs, [e.target.name]: e.target.value })
+    }
     return (
         <>
 
@@ -9,7 +32,7 @@ const MainContactUsPage = () => {
                         <h1>Contact Us</h1>
                         <ul>
                             <li>
-                                <a href="index.html">Home</a>
+                                <a href="/index">Home</a>
                             </li>
                             <li>Contact Us</li>
                         </ul>
@@ -65,8 +88,19 @@ const MainContactUsPage = () => {
                                 <div className="contact-form-area">
                                     <form
                                         className="contact__form"
-                                        method="post"
-                                        action="https://excellencetheme.com/templates/azar/assets/php/mail.php"
+                                        onSubmit={async (e) => {
+                                            e.preventDefault()
+                                            try {
+                                                const response = await postContactUsApi(contactUs)
+                                                if (response.status === 201) {
+                                                    customSuccessMessageErrorNotify('We will contact you soon')
+                                                }
+                                                console.log('log ', response)
+                                            } catch (error) {
+                                                console.error('Something went wrong in contact', error)
+                                                customErrorMessageErrorNotify('Something went wrong try again later')
+                                            }
+                                        }}
                                     >
                                         {/* form message */}
                                         <div className="row">
@@ -85,57 +119,70 @@ const MainContactUsPage = () => {
                                         <div className="row">
                                             <div className="col-md-6 col-sm-6 col-12">
                                                 <input
-                                                    name="name"
+                                                    name='name'
                                                     type="text"
                                                     className="form-control"
                                                     placeholder="Name*"
-
+                                                    value={contactUs.name}
+                                                    onChange={handleChange}
                                                 />
                                             </div>
                                             <div className="col-md-6 col-sm-6 col-12">
                                                 <input
-                                                    name="email"
+                                                    name='email'
                                                     type="email"
                                                     className="form-control"
                                                     placeholder="Email*"
+                                                    value={contactUs.email}
+                                                    onChange={handleChange}
 
                                                 />
                                             </div>
                                             <div className="col-md-6 col-sm-6 col-12">
                                                 <input
-                                                    name="phone"
+                                                    name='contact'
+                                                    value={contactUs.contact}
                                                     type="text"
                                                     className="form-control"
                                                     placeholder="Phone*"
+                                                    onChange={handleChange}
 
                                                 />
                                             </div>
                                             <div className="col-md-6 col-sm-6 col-12">
                                                 <input
-                                                    name="subject"
+                                                    name='subject'
+                                                    value={contactUs.subject}
                                                     type="text"
                                                     className="form-control"
                                                     placeholder="Subject*"
+                                                    onChange={handleChange}
 
                                                 />
                                             </div>
                                             <div className="col-md-12 col-sm-12 col-12">
                                                 <textarea
-                                                    name="message"
+                                                    name='message'
+                                                    value={contactUs.message}
                                                     rows={5}
                                                     className="form-control"
                                                     placeholder="Message*"
 
                                                     defaultValue={""}
+                                                    onChange={handleChange}
                                                 />
                                             </div>
                                             <div className="col-md-12 col-sm-12 col-12">
-                                                <input
-                                                    name="submit"
+                                                <Button
+                                                variant='contained'
+                                                // color=''
+                                                className='btn btn-warning'
                                                     type="submit"
-                                                    className="default-button default-button-2 btn-success"
-                                                    defaultValue="Send Message"
-                                                />
+                                                    disabled={!isFormValid}
+                                                    
+                                                >
+                                                    Submit
+                                                </Button>
                                             </div>
                                         </div>
                                         {/* end form element */}
@@ -146,6 +193,7 @@ const MainContactUsPage = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
 
 
         </>

@@ -84,6 +84,7 @@ class UserLoginSeriliazer(serializers.Serializer):
     contact = serializers.CharField(read_only=True)
     gender = serializers.CharField(read_only=True)
     id = serializers.CharField(read_only=True)
+    isDeleted = serializers.CharField(read_only=True)
 
     class Meta:
         model = User
@@ -114,6 +115,7 @@ class UserLoginSeriliazer(serializers.Serializer):
                 "gender": user.gender,
                 "profile_image": user.profile_image,
                 "role": user.role,
+                "isDeleted":user.isDeleted,
             }
             return validation
         except User.DoesNotExist:
@@ -184,7 +186,7 @@ class UserPasswordResetEmailSerializer(serializers.ModelSerializer):
             body = "This is your reset password link " + link
             data = {"subject": "Reset Password", "body": body, "to_email": user.email}
 
-            # print("reset ", link)
+
 
             Utils.send_mail(data)
             return attrs
@@ -211,17 +213,13 @@ class UserPasswordResetSerializer(serializers.Serializer):
         uid = self.context.get("uid")
         token = self.context.get("token")
 
-        # print("uid ", uid)
-        # print("token ", token)
-
         if password != password2:
             raise serializers.ValidationError(
                 "Password and Confirm Password are not same"
             )
         id = int(smart_str(urlsafe_base64_decode(uid)))
-        # print("id ", type(id))
         user = User.objects.get(id=id)
-        print("User ", user)
+
         if not PasswordResetTokenGenerator().check_token(user, token):
             raise serializers.ValidationError("Token is either invalid or expired")
         user.set_password(password)

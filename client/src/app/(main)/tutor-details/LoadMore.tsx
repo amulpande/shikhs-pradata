@@ -5,14 +5,16 @@ import Image from 'next/image'
 import { fetchTutorData } from '@lib/utils/action';
 import TutorCard from './TutorCard';
 import { ratingTutorApi } from '@lib/api/allApi';
+import { FeedbackMainPageType, TutorType } from '@lib/types/types';
+import { FeedbackType } from 'react-bootstrap/esm/Feedback';
 
 // let page = 2
 
 const LoadMore = ({ subjects, order_by }: { subjects: string, order_by: string },) => {
     const [page, setPage] = useState(2)
     const { ref, inView } = useInView()
-    const [tutor, setTutor] = useState<any[]>([])
-    const [rating, setRating] = useState<any[]>([])
+    const [tutor, setTutor] = useState<TutorType[]>([])
+    const [rating, setRating] = useState<FeedbackMainPageType[]>([])
     useEffect(() => {
         // reseting data if subjects and order_by are changed
         setTutor([]);

@@ -143,10 +143,8 @@ class AdminOrderBookingApiView(generics.ListAPIView):
 class SendMailForMeetingToUserApiView(APIView):
     permission_classes = [IsAuthenticated,IsTutor] 
     def post(self,request):
-        print('not working right now')
         try:
             user_id = request.data.get('user_id')
-            tutor_email = request.user.email
             user_email = User.objects.get(pk=user_id)
             meeting_link = request.data.get('meeting_link')
             

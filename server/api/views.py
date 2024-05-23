@@ -42,7 +42,7 @@ class UserRegisterApiView(APIView):
     serializer_class = UserRegisterSerializer
 
     def post(self, request, format=None):
-        print("working or not")
+
         try:
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
@@ -66,7 +66,6 @@ class UserRegisterApiView(APIView):
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:  # Catch generic exception for logging or debugging
-            print(f"Error during registration: {e}")
             return Response(
                 {"Message": "Registration failed"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -77,7 +76,6 @@ class UserRegisterApiView(APIView):
 class UserLoginApiView(APIView):
     serializer_class = UserLoginSeriliazer
 
-    # permission_classes
     def post(self, request, format=None):
         try:
             serializer = self.serializer_class(data=request.data)
@@ -90,9 +88,10 @@ class UserLoginApiView(APIView):
                 "errors": "Invalid Credentials",
             }
             if valid:
-                print("seriliazer valid")
                 if serializer.data["role"] == "3":
                     status_code = status.HTTP_200_OK
+                    if serializer.data["isDeleted"] == True:
+                        return Response({'Error':'Invalid User'},status=status.HTTP_401_UNAUTHORIZED)
 
                     response = {
                         "success": True,
@@ -111,9 +110,6 @@ class UserLoginApiView(APIView):
                             "contact": serializer.data["contact"],
                         },
                     }
-                #     return Response(response,status=status.HTTP_200_OK)
-                # else:
-                #     return Response({'Message':'You are not Valid User'},status=status.HTTP_404_NOT_FOUND)
                 return Response(response, status=status_code)
             return Response(response, status=status_code)
         except Exception as e:
@@ -140,9 +136,6 @@ class UserPasswordChangeView(APIView):
 class UserPasswordResetEmailView(APIView):
     # permission_classes=[IsAuthenticated,IsUser]
     def post(self, request, format=None):
-        # print("email reset -> ", request.data)
-        # print("os email", os.environ.get("EMAIL_USER"))
-
         serializer = UserPasswordResetEmailSerializer(data=request.data)
         if serializer.is_valid():
             return Response(
@@ -208,13 +201,11 @@ class TutorRegisterApiView(APIView):
     serializer_class = TutorRegistrationSerializer
 
     def post(self, request, format=None):
-        # print(request.data)
         try:
             serilaizer = self.serializer_class(data=request.data)
             if serilaizer.is_valid():
                 user = serilaizer.save()
                 refresh = RefreshToken.for_user(user)
-                print("view error")
                 response_data = {
                     "refresh": str(refresh),
                     "access": str(refresh.access_token),
@@ -261,7 +252,6 @@ class TutotLoginApiView(APIView):
             "errors": "Invalid credentials",
         }
         if valid:
-            print("serializer data -> ", serializer.data)
             if serializer.data["role"] == "2":
                 tutor = User.objects.get(email=serializer.data['email'])
                 if tutor.tutor_approve == False:
@@ -312,7 +302,6 @@ class TutorProfifeAndUpdateApiView(APIView):
             "errors": "Authentication credentials were not provided.",
         }
         try:
-            print("user data -> ", request.user)
             status_code = status.HTTP_200_OK
             serializer = self.serializer_class(request.user)
             response = {
@@ -421,7 +410,6 @@ class  AdminBlockedTutorOrUserView(APIView):
         if serializer.is_valid():
             data = user.email
             serializer.save()
-            print('blocked hua kya',serializer.data['user_blocked'])
             approved = serializer.data['user_blocked']
             if approved == True:
                 Utils.send_blocked_email(data)
@@ -447,12 +435,8 @@ class getBlockedTutorApiView(generics.ListAPIView):
 def getBlockedUserTutorApiView(request):
     try:
         user = User.tutorObject.get_all_blocked_tutor()
-        # print(user)
         serializer = TutorSeriliazer(user,many=True)
-        # if serializer.is_valid():
         return Response(serializer.data,status=status.HTTP_200_OK)
-        
-        # return Response({'h':'users'})
     except User.DoesNotExist:
         return Response({'Message':'User does not exist'},status=status.HTTP_404_NOT_FOUND)
      

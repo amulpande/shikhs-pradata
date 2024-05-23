@@ -9,12 +9,12 @@ class TutorFeedBackSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class AdminSideFeedbackSerializer(serializers.ModelSerializer):
-    # user_name = serializers.CharField(source='user_id.get_full_name',read_only=True)
+
     user_name = serializers.CharField(source="user_id.email",read_only=True)
     tutor_name = serializers.CharField(source="tutor_id.email",read_only=True)
     user_profile = serializers.ImageField(source='user_id.profile_image',read_only=True)
     tutor_profile = serializers.ImageField(source='tutor_id.profile_image',read_only=True)
-    # ratinggggggggggggg =
+
     class Meta:
         model = Feedback
         fields = '__all__'

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "rating",
     "payment",
     "django_filters",
+    "contact",
 ]
 
 MIDDLEWARE = [

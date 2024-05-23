@@ -29,26 +29,6 @@ const AdminUserDataPage = () => {
       <div className="container full-width" style={{ width: '100%', marginTop: -25 }}>
         <div className="row">
           <div className="col-md-12">
-            {/* <div className="d-flex justify-content-end mt-2">
-              <TextField
-                label="Search"
-                variant="outlined"
-                value={tempSearchQuery}
-                onChange={(e) => setTempSearchQuery(e.target.value)}
-              />
-            {'  '}
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  // setTempSearchQuery(searchQuery)
-                  setSearchQuery(tempSearchQuery)
-                  setCurrentPage(1)
-                }}
-              >
-                Search
-              </Button>
-            </div> */}
             <div className="container mt-2">
               <div className="row justify-content-center">
                 <div className="col-auto">

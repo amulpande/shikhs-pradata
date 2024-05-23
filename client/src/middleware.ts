@@ -82,7 +82,7 @@ export const config = {
     '/profile',
     '/login',
     '/register',
-    '/tutor-details:path*',
+    '/tutor-details/:path+',
     '/my-booking',
     // '/admin/login',// admin/login will excluded from middleware matcher so it won't re direct to login page
     '/admin/:path*',

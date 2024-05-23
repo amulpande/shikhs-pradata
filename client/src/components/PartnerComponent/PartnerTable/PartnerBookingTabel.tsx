@@ -5,7 +5,7 @@ import React from 'react'
 interface PropsType {
     data: BookingType[]
     loading: boolean
-    customActionButtons: (booking: any) => React.ReactNode
+    customActionButtons: (booking: BookingType) => React.ReactNode
 }
 
 const PartnerBookingTabel = ({ data, loading, customActionButtons }: PropsType) => {

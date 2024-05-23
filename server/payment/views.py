@@ -37,7 +37,6 @@ class StripeCheckoutView(APIView):
         tutor_id = request.data.get("tutor_id")
         booking_id = request.data.get("booking_id")
         user_id = request.user.id
-        # print('price',price)
         try:
 
             # stripe accepts ind money as paise so we need to convert amount in paise
@@ -61,8 +60,6 @@ class StripeCheckoutView(APIView):
                     "tutor_id": tutor_id,
                 },
             )
-            print("intent metadata ", intent.metadata)
-
             checkout_session = stripe.checkout.Session.create(
                 line_items=[
                     {
@@ -101,13 +98,10 @@ class StripeWebhookView(APIView):
             return HttpResponse(status=400)
 
         if event["type"] == "checkout.session.completed":
-            print("inside checkout session completed")
             session = event["data"]["object"]
 
-            # print('session coming or not ', session)
             payment_intent = session.get("payment_intent")
 
-            print("payment intent ", payment_intent)
             tutor_total_amount = session.get("amount_total") / 100
             admin_amount = (
                 tutor_total_amount * 0.1
@@ -116,16 +110,13 @@ class StripeWebhookView(APIView):
                 tutor_total_amount - admin_amount
             )  # tutor payment after deduction of admin 10 %
 
-            # print('amount ',amount)
             metadata = session.get("metadata")
-            print("Meta data   ", metadata)
 
             try:
                 user_id = metadata.get("user_id")
                 tutor_id = metadata.get("tutor_id")
                 booking_id = metadata.get("booking_id")
 
-                print("user id ", user_id)
                 user = User.objects.get(pk=user_id)
                 tutor = User.objects.get(pk=tutor_id)
                 booking = Booking.objects.get(pk=booking_id)
@@ -202,7 +193,6 @@ class AdminTotalEarningApi(APIView):
 
             # total booking
             total_booking = Booking.objects.count()
-            # print(total_user)
 
             return Response(
                 {
@@ -240,14 +230,12 @@ class TutorTotalEarningApi(APIView):
             # tutor last 30 days earnig
             # thirty_days_ago = timezone.now() - timedelta(days=30)
             start_date = timezone.now() - timedelta(days=30)
-            print("start date", start_date)
 
             payments = (
                 Payment.objects.filter(tutor_id=user.id)
                 .filter(payment_date__gte=start_date)
                 .aggregate(total=Sum("tutor_amount"))
             )
-            # print(payments)
             monthly_income = payments['total'] or 0
             
             

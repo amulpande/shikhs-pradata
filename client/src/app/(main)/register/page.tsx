@@ -47,7 +47,9 @@ const RegisterHomePage = () => {
             // sending user data  
             try {
                 const response = await userRegisterApi(formData)
-                registeredSuccessfullyNotify()
+                if(response.status==200){
+                    registeredSuccessfullyNotify()
+                }
                 router.push('/login')
             } catch (error: any) {
                 if (error.response.data.email[0] == 'user with this email already exists.') {

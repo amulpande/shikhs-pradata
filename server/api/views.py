@@ -36,6 +36,13 @@ from django.db.models import Q
 from api.models import User
 import os
 
+#cutom permission mixin for isAuthenticated and user permission
+class IsAdminPermissionMixin:
+    permission_classes = [IsAuthenticated,IsAdmin]
+    
+    
+class IsTutorPermissionMixin:
+    permission_classes=[IsAuthenticated,IsTutor]
 
 # User registration api view
 class UserRegisterApiView(APIView):
@@ -78,7 +85,9 @@ class UserLoginApiView(APIView):
 
     def post(self, request, format=None):
         try:
+            print('request data',request.data)
             serializer = self.serializer_class(data=request.data)
+            print('serializer ',serializer)
 
             valid = serializer.is_valid(raise_exception=False)
             status_code = status.HTTP_401_UNAUTHORIZED
@@ -88,7 +97,52 @@ class UserLoginApiView(APIView):
                 "errors": "Invalid Credentials",
             }
             if valid:
+                print('Valid user')
                 if serializer.data["role"] == "3":
+                    status_code = status.HTTP_200_OK
+                    if serializer.data["isDeleted"] == True:
+                        return Response({'Error':'Invalid User'},status=status.HTTP_401_UNAUTHORIZED)
+
+                    response = {
+                        "success": True,
+                        "statuCode": status_code,
+                        "access": serializer.data["access"],
+                        "refresh": serializer.data["refresh"],
+                        "user": {
+                            "id": serializer.data["id"],
+                            "email": serializer.data["email"],
+                            "first_name": serializer.data["first_name"],
+                            "last_name": serializer.data["last_name"],
+                            "role": serializer.data["role"],
+                            "address": serializer.data["address"],
+                            "gender": serializer.data["gender"],
+                            "profile_image": serializer.data["profile_image"],
+                            "contact": serializer.data["contact"],
+                        },
+                    }
+                elif serializer.data["role"] =='2':
+                    status_code = status.HTTP_200_OK
+                    if serializer.data["isDeleted"] == True:
+                        return Response({'Error':'Invalid User'},status=status.HTTP_401_UNAUTHORIZED)
+
+                    response = {
+                        "success": True,
+                        "statuCode": status_code,
+                        "access": serializer.data["access"],
+                        "refresh": serializer.data["refresh"],
+                        "user": {
+                            "id": serializer.data["id"],
+                            "email": serializer.data["email"],
+                            "first_name": serializer.data["first_name"],
+                            "last_name": serializer.data["last_name"],
+                            "role": serializer.data["role"],
+                            "address": serializer.data["address"],
+                            "gender": serializer.data["gender"],
+                            "profile_image": serializer.data["profile_image"],
+                            "contact": serializer.data["contact"],
+                        },
+                    }
+                elif serializer.data["role"] =='1':
                     status_code = status.HTTP_200_OK
                     if serializer.data["isDeleted"] == True:
                         return Response({'Error':'Invalid User'},status=status.HTTP_401_UNAUTHORIZED)
@@ -505,8 +559,8 @@ class TutorDataByIdApiView(APIView):
         serializer = self.serializer_class(user)
         return Response(serializer.data,status=status.HTTP_200_OK)
     
-class DeleteUserOrTutorApi(APIView):
-    permission_classes = [IsAuthenticated,IsAdmin]
+class DeleteUserOrTutorApi(IsAdminPermissionMixin,APIView):
+    # permission_classes = [IsAuthenticated,IsAdmin]
     serializer_class = UserDeleteByAdminSerializer
     def patch(self,request,pk):
         try:

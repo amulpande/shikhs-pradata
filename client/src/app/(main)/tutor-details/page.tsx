@@ -81,7 +81,7 @@ const TutorDetailsPage = () => {
                         <h1>Tutor Details</h1>
                         <ul>
                             <li>
-                                <a href="index">HOME</a>
+                                <a href="/index">HOME</a>
                             </li>
                             <li>TUTOR DETAILS</li>
                         </ul>

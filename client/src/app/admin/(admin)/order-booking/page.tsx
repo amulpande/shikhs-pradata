@@ -8,7 +8,7 @@ const AdminOrderBookingPage = () => {
   const [sort, setSort] = useState<string>('-id')
   const [status, setStatus] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10);
-  const { data, totalCount, totalPages } = useBookingFetchData(getAllOrderBookingApi, currentPage, sort, status,pageSize)
+  const { data, totalCount, totalPages } = useBookingFetchData(getAllOrderBookingApi, currentPage, sort, status, pageSize)
   return (
     <>
       <div className="d-flex justify-content-end mt-2">
@@ -34,7 +34,10 @@ const AdminOrderBookingPage = () => {
           <option value={'-payment_status'}>Unpaid</option>
         </select>
 
-        <select className="form-select" value={status} onChange={(e) => setStatus(e.target.value)} style={{ maxWidth: '200px' }}>
+        <select className="form-select" value={status} onChange={(e) => {
+          setStatus(e.target.value)
+          setCurrentPage(1)
+        }} style={{ maxWidth: '200px' }}>
           <option value={''}>Filter</option>
           <option value={'Accepted'}>Accepted</option>
           <option value={'Rejected'}>Rejected</option>

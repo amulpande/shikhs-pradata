@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Grid, CircularProgress } from '@mui/material';
 import * as api from '../../../lib/api/allApi';
+import Swal from 'sweetalert2'
+
 
 const PasswordResetForm = () => {
     const [email, setEmail] = useState<string>('');
@@ -15,13 +17,27 @@ const PasswordResetForm = () => {
         e.preventDefault();
 
         setLoading(true);
-        
-        const response = await api.userResetEmailPasswordApi(email);
-        if(response.status===200){
 
+        try {
+            const response = await api.userResetEmailPasswordApi(email);
+            if (response) {
+                Swal.fire({
+                    title: "Email sent!",
+                    text: "Email has been sent to you!",
+                    icon: "success"
+                });
+            }
+        } catch (error:any) {
+            console.error('Error sending email ',error)
+            const response = error?.response?.data?.non_field_errors[0] || 'Something went wrong try again later'
+            Swal.fire({
+                title: "Something went wrong!",
+                text: response,
+                icon: "failed"
+              });
+        } finally {
+            setLoading(false)
         }
-        // End loading state
-        setLoading(false);
     };
 
     return (
@@ -49,6 +65,7 @@ const PasswordResetForm = () => {
                 </Grid>
             </form>
         </div>
+
     );
 };
 

@@ -99,6 +99,23 @@ def updateBookingStatus(request,pk):
         return Response({'Error':'This order is not booked for you'},status=status.HTTP_404_NOT_FOUND)
     except Booking.DoesNotExist:
         return Response({'Message':'Booking does not exist'})
+    
+@api_view(['PATCH'])   
+@permission_classes([IsUser]) 
+def cancelOrderByUser(request,pk):
+    try:
+        booking = Booking.objects.get(pk=pk)
+        user = TutorSeriliazer(request.user)
+        userId = user.data['email']
+        if str(booking.user_id) == str(userId):
+            serializer = BookingStatusUpdateSerializer(booking,data = request.data,partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'Message':'Order has been approved'},status=status.HTTP_204_NO_CONTENT)
+            return Response({'Error':'Status not found which you have provided'},status=status.HTTP_404_NOT_FOUND)
+        return Response({'Error':'This order is not booked for you'},status=status.HTTP_404_NOT_FOUND)
+    except Booking.DoesNotExist:
+        return Response({'Message':'Booking does not exist'})
    
 # Tutor can delete booking
 @api_view(['DELETE'])
@@ -114,7 +131,7 @@ def deleteBookingByTutor(request,pk,format=None):
 
 # User check order confirm or not
 class UserCheckOrderApproval(generics.ListAPIView):
-    permission_classes=[IsAuthenticated,IsUser]
+    permission_classes=[IsAuthenticated,IsUser|IsTutor]
     pagination_class = UserBookingOrderPagination
     serializer_class = BookingSerializer
     filter_backends = [DjangoFilterBackend]
@@ -154,3 +171,4 @@ class SendMailForMeetingToUserApiView(APIView):
             
         except:
             return Response({'Error':'Something went wrong'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        

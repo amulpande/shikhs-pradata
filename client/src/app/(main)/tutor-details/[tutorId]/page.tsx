@@ -5,14 +5,19 @@ import { getTutorDataByidApi } from '@lib/api/allApi'
 import './TutorDetail.module.css'
 import Image from 'next/image'
 import BookingModelComponent from '@/components/ModalComponent/ModelComponent'
+import { RooState } from '@lib/store/store'
+import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
 // import { makeStyles } from '@mui/styles';
 
 
-const TutorDetailsByIdPage = ({ params }:any) => {
+const TutorDetailsByIdPage = ({ params }: any) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const [data, setData] = useState<TutorType>()
+  const router = useRouter()
+  const isAuthenticated = useSelector((state: RooState) => state.authData.isAuthenticated)
   useEffect(() => {
     const fetchData = async () => {
       const response = await getTutorDataByidApi(params.tutorId)
@@ -29,7 +34,7 @@ const TutorDetailsByIdPage = ({ params }:any) => {
             <h1>Service Details</h1>
             <ul>
               <li>
-                <a href="index">HOME</a>
+                <a href="/index">HOME</a>
               </li>
               <li>SERVICE DETAILS</li>
             </ul>
@@ -101,7 +106,12 @@ const TutorDetailsByIdPage = ({ params }:any) => {
                 <br />
                 <form>
                   <div style={{ justifyContent: 'center' }}>
-                    <button type='button' className='btn-md btn btn-dark effect  form-control' onClick={() => setOpen(!open)}>Book Now</button>
+                    <button type='button' className='btn-md btn btn-dark effect  form-control' onClick={() => {
+                      if(!isAuthenticated){
+                        router.push('/login')
+                      }
+                      setOpen(!open)
+                    }}>Book Now</button>
                   </div>
                 </form>
                 <hr />

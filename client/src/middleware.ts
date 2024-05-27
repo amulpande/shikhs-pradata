@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getAuthCookies } from '@lib/utils/cookieStore'
-
+// roles are as 
+/*
+  1 : admin,
+  2 : tutor,
+  3 : user
+*/
 export async function middleware(request: NextRequest) {
 
   const accessToken = request.cookies.get('token')?.value
@@ -27,6 +32,7 @@ export async function middleware(request: NextRequest) {
   }
 
 
+  console.log('token role ',tokenData?.role)
   if (pathname === '/admin/index') {
     if (tokenData?.role === 1) {
       return NextResponse.next()
@@ -37,7 +43,7 @@ export async function middleware(request: NextRequest) {
     if (tokenData?.role == 1) {
       return NextResponse.next()
     }else{
-        return NextResponse.redirect(new URL('/admin/login', request.url))
+        return NextResponse.redirect(new URL('/login', request.url))
     }
   }
 
@@ -47,7 +53,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next()
     }
     else{
-      return NextResponse.redirect(new URL('/partner/partner-login', request.url))
+      return NextResponse.redirect(new URL('/login', request.url))
     }
   }
 
@@ -55,8 +61,8 @@ export async function middleware(request: NextRequest) {
   const LoggedInUserNotAccessPaths = request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register'
   if (LoggedInUserNotAccessPaths) {
     if (accessToken) {
-      if (tokenData.role == 3) {
-        return NextResponse.redirect(new URL("/profile", request.url))
+      if (tokenData.role == 3 || tokenData.role == 2) {
+        return NextResponse.next()
       }
     }
   }
@@ -82,7 +88,7 @@ export const config = {
     '/profile',
     '/login',
     '/register',
-    '/tutor-details/:path+',
+    // '/tutor-details/:path+',
     '/my-booking',
     // '/admin/login',// admin/login will excluded from middleware matcher so it won't re direct to login page
     '/admin/:path*',

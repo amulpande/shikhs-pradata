@@ -21,7 +21,9 @@ interface TutorCardProps {
     rating: any
 }
 
+
 const TutorCard: React.FC<TutorCardProps> = ({ tutor, index, rating }) => {
+    const [hover, setHover] = useState(false);
     return (
         <MotionDiv
             initial="hidden"
@@ -55,11 +57,11 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor, index, rating }) => {
                         </Typography>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
                             <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold', marginRight: '5px' }}>
-                                <i className="fas fa-clock"></i> {tutor?.experience} Year  
+                                <i className="fas fa-clock"></i> {tutor?.experience} Year
                             </Typography>
                             {" "}
                             <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                                 <i className="fas fa-rupee-sign"></i> {tutor?.price}
+                                <i className="fas fa-rupee-sign"></i> {tutor?.price}
                             </Typography>
                         </div>
                     </div>
@@ -79,8 +81,34 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor, index, rating }) => {
                     // 👇 Edit padding to further adjust position
                     p: -5,
                 }}>
-                    <Link href={`/tutor-details/${tutor.id}`}>
+                    {/* <Link href={`/tutor-details/${tutor.id}`}>
                         <Button size="small" variant="contained" color="primary">
+                            Learn More
+                        </Button>
+                    </Link> */}
+                    <Link href={`/tutor-details/${tutor.id}`} passHref>
+                        <Button
+                            size="small"
+                            variant="contained"
+                            color="primary"
+                            style={{
+                                // background: hover ? 'linear-gradient(45deg, #FF8E53 30%, #FE6B8B 90%)' : 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+                                background: hover ? '#1E88E5' : '#1976D2',
+                                border: 0,
+                                borderRadius: 3,
+                                // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+                                boxShadow: '0 3px 5px 2px rgba(25, 118, 210, .3)',
+                                color: 'white',
+                                height: 48,
+                                padding: '0 30px',
+                                textTransform: 'uppercase',
+                                transition: 'background 0.3s ease-in-out, transform 0.2s ease',
+                                transform: hover ? 'scale(1.05)' : 'scale(1)',
+                                animation: !hover ? 'pulse 2s infinite' : 'none'
+                            }}
+                            onMouseEnter={() => setHover(true)}
+                            onMouseLeave={() => setHover(false)}
+                        >
                             Learn More
                         </Button>
                     </Link>

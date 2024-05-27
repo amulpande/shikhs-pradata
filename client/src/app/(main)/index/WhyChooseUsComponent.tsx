@@ -17,7 +17,7 @@ const WhyChooseUsComponent = () => {
                             <div className="why-we-text-area">
                                 <div className="default-section-heading">
                                     <h6>WHY CHOOSE US</h6>
-                                    <h3>We Provide provide you best teacher possible</h3>
+                                    <h3>We Provide you best teacher possible</h3>
                                 </div>
                                 <div className="why-we-card">
                                     <i className="flaticon-circuit" />

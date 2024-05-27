@@ -41,7 +41,7 @@ const ResetPasswordPage = ({ params }: {
     <>
       <Container maxWidth="sm" style={{ marginTop: '2rem' }}>
         <Typography variant="h4" gutterBottom align="center">
-          Reset Password for {params.slug[0]}
+          Reset Password
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField

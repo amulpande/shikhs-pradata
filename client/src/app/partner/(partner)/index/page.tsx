@@ -39,7 +39,7 @@ const PartnerIndexPage = () => {
                     <div className="card bg-primary text-white mb-4">
                         <div className="card-body">Total Earning</div>
                         <div className="card-footer d-flex align-items-center justify-content-between">
-                            <h3>{tutorAllData?.total_earning}</h3>
+                            <h3><i className="fas fa-rupee-sign"></i> {tutorAllData?.total_earning}</h3>
                             <div className="small text-white"><i className="fas fa-angle-right"></i></div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@ const PartnerIndexPage = () => {
                     <div className="card bg-secondary text-white mb-4">
                         <div className="card-body">Monthly Income</div>
                         <div className="card-footer d-flex align-items-center justify-content-between">
-                            <h3> {tutorAllData?.monthly_income}</h3>
+                            <h3><i className="fas fa-rupee-sign"></i> {tutorAllData?.monthly_income}</h3>
                             <div className="small text-white"><i className="fas fa-angle-right"></i></div>
                         </div>
                     </div>

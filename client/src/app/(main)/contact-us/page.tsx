@@ -2,6 +2,7 @@
 import { postContactUsApi } from '@lib/api/allApi'
 import { customErrorMessageErrorNotify, customSuccessMessageErrorNotify } from '@lib/notification-toastify/notification-toastify'
 import { ContactUsType } from '@lib/types/types';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
@@ -25,14 +26,13 @@ const MainContactUsPage = () => {
     }
     return (
         <>
-
             <div className="uni-banner">
                 <div className="container">
                     <div className="uni-banner-text">
                         <h1>Contact Us</h1>
                         <ul>
                             <li>
-                                <a href="/index">Home</a>
+                                <Link href="/index">Home</Link>
                             </li>
                             <li>Contact Us</li>
                         </ul>

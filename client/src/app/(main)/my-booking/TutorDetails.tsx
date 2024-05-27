@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Button, Form, Image } from 'react-bootstrap';
 
-const TutorDetails = ({ show, onHide, order }) => {
+const TutorDetails = ({ show, onHide, order }:{show:boolean,onHide:any,order:any}) => {
     return (
         <>
             <Modal show={show} onHide={onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>

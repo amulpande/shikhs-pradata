@@ -21,6 +21,7 @@ const PartnerBookingTabel = ({ data, loading, customActionButtons }: PropsType) 
                             <th scope="col">Address</th>
                             <th scope="col">Time</th>
                             <th scope="col">Date</th>
+                            {/* <th scope="col">User Cancelled</th> */}
                             <th scope="col">Status</th>
 
                         </tr>
@@ -37,6 +38,7 @@ const PartnerBookingTabel = ({ data, loading, customActionButtons }: PropsType) 
                                 <td>{booking?.user_address}</td>
                                 <td>{booking?.booking_time}</td>
                                 <td>{booking?.booking_date}</td>
+                                {/* <td>{booking?.usr_cancellation_reason.length>0?booking?.usr_cancellation_reason.length>0:'NAN'}</td> */}
                                 <td >
                                     {customActionButtons(booking)}
                                 </td>

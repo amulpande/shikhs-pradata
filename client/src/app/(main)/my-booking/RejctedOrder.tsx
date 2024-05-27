@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap';
 
-const RejctedOrder = ({ show, onHide, order }) => {
+const RejctedOrder = ({ show, onHide, order }:{show:boolean,onHide:any,order:any}) => {
   return (
     <>
       <Modal show={show} onHide={onHide} centered>

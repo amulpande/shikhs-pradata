@@ -11,6 +11,7 @@ import TutorDetails from './TutorDetails';
 import RejctedOrder from './RejctedOrder';
 import useBookingFetchData from '@lib/hooks/useBookingFetchData';
 import { CldImage } from 'next-cloudinary';
+import CancelOrderByUser from './CancelOrderByUser';
 
 const MyBookingPage = () => {
     const [selectedTutor, setSelectedTutor] = useState<Number>()
@@ -23,6 +24,7 @@ const MyBookingPage = () => {
     const [orderBy, setOrderBy] = useState('-id')
     const [status, setStatus] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
+    const [showMyCancelOrder, setShowMyCancerOrder] = useState<boolean>(false)
 
     const { data: myOrderData, loading, totalPages } = useBookingFetchData(userMyBookingOrderApi, currentPage, orderBy, status, 9)
 
@@ -63,6 +65,11 @@ const MyBookingPage = () => {
     const handleClose = () => {
         setShow(false)
         setShowCancelModal(false)
+        setShowMyCancerOrder(false)
+    }
+    const handleOpenCancelOrder = (order: BookingType) => {
+        setSelectedTutor(order?.id)
+        setShowMyCancerOrder(true)
     }
 
     return (
@@ -80,7 +87,6 @@ const MyBookingPage = () => {
                     </div>
                 </div>
             </div>
-
 
             {loading ?
                 <LoadingComponent />
@@ -130,7 +136,7 @@ const MyBookingPage = () => {
                                                     <Card variant="outlined" style={{ margin: '2px', textAlign: 'center' }}>
                                                         <CardContent>
                                                             <Typography variant="h5" component="div" gutterBottom className='card-header'>
-                                                                Order Details
+                                                                Order Details {order?.id}
                                                             </Typography>
                                                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', width: '200px', margin: '0 auto' }}>
                                                                 <CldImage
@@ -162,23 +168,75 @@ const MyBookingPage = () => {
                                                             <Typography variant="body1" gutterBottom>
                                                                 <strong> Payment Status </strong>: {order?.payment_status}
                                                             </Typography>
-                                                            {order?.status === 'Accepted' && (
-                                                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                                    <Button variant='contained' size="small" onClick={() => handleOpenTutor(order)} style={{ marginRight: '10px', flex: 1 }}><i className='fa fa-user'></i></Button>
-                                                                    <Button variant="contained" size="small" color="warning" onClick={() => handleOpen(order?.tutor_id)} style={{ marginRight: '10px', flex: 1 }}><i className='fa fa-comments'></i></Button>
-                                                                    <div style={{ flex: 1 }}>
-                                                                        <CheckOut totalPrice={order?.tutor_price} tutorId={order?.tutor_id} bookingId={order?.id} bookingStatus={order?.payment_status} />
+
+                                                            {order?.status === 'Accepted' && order?.usr_cancellation_reason.length == 0 && (
+                                                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
+                                                                    <Button
+                                                                        variant='contained'
+                                                                        size="small"
+                                                                        onClick={() => handleOpenTutor(order)}
+                                                                        style={{ marginRight: '10px' }}
+                                                                    >
+                                                                        {/* <i className='fa fa-user'></i> */}
+                                                                        Tutor
+                                                                    </Button>
+                                                                    {
+                                                                        order?.payment_status == 'Paid' ?
+                                                                        (<Button
+                                                                            variant="contained"
+                                                                            size="small" color="warning"
+                                                                            onClick={() => handleOpen(order?.tutor_id)}
+                                                                            style={{ marginRight: '10px' }}
+                                                                        >
+                                                                            {/* <i className='fa fa-comments'></i> */}
+                                                                            Feedback
+                                                                        </Button>)
+                                                                        :
+                                                                        (
+                                                                            <Button variant='contained' onClick={() => handleOpenCancelOrder(order)} style={{ backgroundColor: 'red', marginRight: '10px' }}>
+                                                                                Cancel
+                                                                            </Button>
+                                                                        )
+                                                                    }
+                                                                    <div>
+                                                                        {/* <Button onClick={()=>{
+                                                                            const isConfirmed = window.confirm('Once payment done than its not refundable')
+                                                                        }}>
+                                                                            Pay
+                                                                        </Button> */}
+
+                                                                        <CheckOut
+                                                                            totalPrice={order?.tutor_price}
+                                                                            tutorId={order?.tutor_id}
+                                                                            bookingId={order?.id}
+                                                                            bookingStatus={order?.payment_status}
+                                                                        />
                                                                     </div>
+
                                                                 </div>
                                                             )}
                                                             {order?.status === 'Rejected' && (
-                                                                <Button variant='contained' style={{ backgroundColor: 'red' }} onClick={() => handleCancelOrder(order)}>Cancelled</Button>
+                                                                <Button variant='contained' style={{ backgroundColor: 'red' }} onClick={() => handleCancelOrder(order)}>Rejected</Button>
                                                             )}
-                                                            {
-                                                                order?.status === 'Pending' && (
-                                                                    <Button variant='contained' disabled={true}>Pending</Button>
-                                                                )
-                                                            }
+                                                            {order?.usr_cancellation_reason.length > 0 ? (
+                                                                <Button variant='contained'>You have canceled</Button>
+                                                            ) : (
+                                                                <>
+                                                                    {/* {(order?.status === 'Pending' || (order?.status === 'Accepted' && order?.payment_status !== 'Paid')) && (
+                                                                        // <Button variant='contained' onClick={() => handleOpenCancelOrder(order)} style={{ backgroundColor: 'red', marginRight: '10px' }}>
+                                                                        //     Cancel Order
+                                                                        // </Button>
+                                                                    )} */}
+                                                                    {order?.status === 'Pending' && (
+                                                                        <>
+                                                                            <Button variant='contained' onClick={() => handleOpenCancelOrder(order)} style={{ backgroundColor: 'red', marginRight: '10px' }}>
+                                                                                Cancel
+                                                                            </Button>
+                                                                            <Button variant='contained' disabled={true}>Pending</Button>
+                                                                        </>
+                                                                    )}
+                                                                </>
+                                                            )}
                                                         </CardContent>
                                                     </Card>
                                                 </Grid>
@@ -198,6 +256,7 @@ const MyBookingPage = () => {
                     onChange={(event, page) => setCurrentPage(page)}
                 />
             </div>
+            <CancelOrderByUser show={showMyCancelOrder} onHide={handleClose} order={selectedTutor} />
             <RejctedOrder show={showCancelModal} onHide={handleClose} order={selectedCancelData} />
             <TutorDetails show={showTutor} onHide={handleCloseTutor} order={selectedTutorData} />
             <FeedbackComponent show={show} handleClose={handleClose} tutorId={selectedTutor} />

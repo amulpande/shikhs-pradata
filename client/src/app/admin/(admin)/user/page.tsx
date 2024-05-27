@@ -1,9 +1,7 @@
 'use client'
-import { adminDeleteUserApi, getAllUserDataApi } from '@lib/api/allApi'
-import React, { useEffect, useState } from 'react'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Button, Grid, Pagination } from "@mui/material";
-import { UserDataTypes } from '@lib/types/types';
-import useTutorFetchData from '@lib/hooks/useTutorFetchData';
+import {  getAllUserDataApi } from '@lib/api/allApi'
+import React, {  useState } from 'react'
+import { Table, TableBody, TableCell, TableHead, TableRow, Button, Pagination } from "@mui/material";
 import useUserFetch from '@lib/hooks/useUserFetch';
 import { CldImage } from 'next-cloudinary';
 
@@ -54,14 +52,14 @@ const AdminUserDataPage = () => {
               </div>
             </div>
             <div className="card mt-2">
-              <div className="card-header">
+              {/* <div className="card-header">
                 <h4>USER</h4>
-              </div>
+              </div> */}
               <div className='card'>
 
                 <div style={{ overflowX: 'auto' }}>
                   <Table aria-label="user data table">
-                    <TableHead>
+                    <TableHead className='card-header'>
                       <TableRow>
                         <TableCell>Profile</TableCell>
                         <TableCell>Name</TableCell>
@@ -85,7 +83,7 @@ const AdminUserDataPage = () => {
                             <TableCell>{user?.address}</TableCell>
                             <TableCell>{user?.contact}</TableCell>
                             <TableCell>{user?.gender}</TableCell>
-                            <TableCell><Button variant='contained' onClick={() => handleDelete(user?.id)}><i className='fa fa-trash'></i></Button></TableCell>
+                            <TableCell><Button  variant='contained' onClick={() => handleDelete(user?.id)}><i className='fa fa-trash'></i></Button></TableCell>
 
                           </TableRow>
                         ))}

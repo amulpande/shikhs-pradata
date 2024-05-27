@@ -56,7 +56,7 @@ const AdminIndexPage = () => {
             <div className="card-body">Total Earning</div>
             <div className="card-footer d-flex align-items-center justify-content-between">
               <Link href='/admin/my-payment'>
-                <h3 className='text-white'>{allData?.total_earning}</h3>
+                <h3 className='text-white'><i className="fas fa-rupee-sign"></i> {allData?.total_earning}</h3>
               </Link>
               <div className="small text-white"><i className="fas fa-angle-right"></i></div>
             </div>
@@ -68,7 +68,7 @@ const AdminIndexPage = () => {
             <div className="card-body">Last 30 Days Income</div>
             <div className="card-footer d-flex align-items-center justify-content-between">
               <Link href='/admin/my-payment'>
-                <h3 className='text-white'> {allData?.Last_month_earning}</h3>
+                <h3 className='text-white'><i className="fas fa-rupee-sign"></i> {allData?.Last_month_earning}</h3>
               </Link>
               <div className="small text-white"><i className="fas fa-angle-right"></i></div>
             </div>

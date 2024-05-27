@@ -17,25 +17,29 @@ function CheckOut({ totalPrice, tutorId, bookingId, bookingStatus }: { totalPric
   const [error, setError] = useState<string | null>(null);
 
   const handleCheckout = async () => {
-    try {
-      const payment = await getPaymentApi({ 'price': totalPrice, 'tutor_id': tutorId, 'booking_id': bookingId })
+    const isConfirmed = window.confirm('Once Payment done than its not refundale. So are you sure?');
+    if (isConfirmed) {
 
-      const data = payment.data;
-      const stripe = await stripePromise;
+      try {
+        const payment = await getPaymentApi({ 'price': totalPrice, 'tutor_id': tutorId, 'booking_id': bookingId })
 
-      if (!stripe) {
-        throw new Error("Stripe.js has not loaded yet");
+        const data = payment.data;
+        const stripe = await stripePromise;
+
+        if (!stripe) {
+          throw new Error("Stripe.js has not loaded yet");
+        }
+
+        const { error: stripeError } = await stripe.redirectToCheckout({
+          sessionId: data.sessionId,
+        });
+
+        if (stripeError) {
+          throw new Error(stripeError.message);
+        }
+      } catch (error: any) {
+        setError(error.message);
       }
-
-      const { error: stripeError } = await stripe.redirectToCheckout({
-        sessionId: data.sessionId,
-      });
-
-      if (stripeError) {
-        throw new Error(stripeError.message);
-      }
-    } catch (error: any) {
-      setError(error.message);
     }
   };
 
@@ -44,16 +48,16 @@ function CheckOut({ totalPrice, tutorId, bookingId, bookingStatus }: { totalPric
     <div>
       {totalPrice !== 0 && (
         <button
-        className="rounded"
+          className="rounded"
           style={{
-            backgroundColor: '#778899', color: 'white', 
+            backgroundColor: '#778899', color: 'white',
             cursor: bookingStatus === 'Paid' ? 'not-allowed' : 'pointer',
             filter: bookingStatus === 'Paid' ? 'blur(0.5px)' : 'none',
           }}
           onClick={handleCheckout}
           disabled={bookingStatus == 'Paid'}
         >
-         {totalPrice}
+          {totalPrice}
         </button>
       )}
     </div>

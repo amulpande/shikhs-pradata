@@ -88,7 +88,8 @@ interface BookingType {
     user_profile:string,
     tutor_profile:string,
     user_contact:number,
-    user_address:string
+    user_address:string,
+    usr_cancellation_reason:string,
 }
 
 

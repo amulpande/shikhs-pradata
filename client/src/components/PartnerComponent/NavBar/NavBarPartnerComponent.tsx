@@ -41,13 +41,13 @@ const PartnerHeader = () => {
                         aria-expanded="false"
                         onClick={() => {
                           dispatch(authLogout())
-                          router.push('/partner/partner-login')
+                          router.push('/login')
                         }}
                       >
                         LOGOUT
                       </button>
                       :
-                      <Link href={'/partner/partner-login'}>
+                      <Link href={'/login'}>
 
                         <button type="button"
                           className="btn btn-warning"

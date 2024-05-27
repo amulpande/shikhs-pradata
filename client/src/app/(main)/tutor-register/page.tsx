@@ -87,7 +87,7 @@ const TutorRegisterPage = () => {
         const response = await tutorRegisterApi(formData)
         if (response.status==200){
           registeredSuccessfullyNotify()
-          router.push('/partner/partner-login')
+          router.push('/login')
           
         }
       } catch (error:any) {
@@ -109,7 +109,7 @@ const TutorRegisterPage = () => {
             <h1>REGISTER</h1>
             <ul>
               <li>
-                <Link href="index">HOME</Link>
+                <Link href="/index">HOME</Link>
               </li>
               <li>REGISTER</li>
             </ul>
@@ -417,7 +417,7 @@ const TutorRegisterPage = () => {
                     Register Now
                   </button>
                   <p>
-                    Already Have An Account? <Link href="/partner/partner-login">Login</Link>
+                    Already Have An Account? <Link href="/login">Login</Link>
                   </p>
                 </form>
               </div>

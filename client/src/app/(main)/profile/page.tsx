@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { userProfileApi, userProfileUpdateApi } from '@lib/api/allApi';
 import { CldImage } from 'next-cloudinary';
 import { UserProfileTypes } from '@lib/types/types';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { customErrorMessageErrorNotify, customSuccessMessageErrorNotify } from '@lib/notification-toastify/notification-toastify';
 
 const ProfilePage = () => {
   const [userProfile, setUserProfile] = useState<UserProfileTypes>({
@@ -41,7 +43,7 @@ const ProfilePage = () => {
             <h1>MY BOOKING</h1>
             <ul>
               <li>
-                <a href="index">HOME</a>
+                <a href="/index">HOME</a>
               </li>
               <li>MY BOOKING</li>
             </ul>
@@ -65,8 +67,13 @@ const ProfilePage = () => {
                           const { first_name,last_name,address,contact} = userProfile
                           const data:any = { first_name,last_name,address,contact}
                           const response = await userProfileUpdateApi(data)
+                          if(response){
+                            customSuccessMessageErrorNotify('PROFILE UPDATED')
+                            setUpadateMode(!updateMode)
+                          }
                         } catch (error) {
                           console.error('Error updating profile', error)
+                          customErrorMessageErrorNotify('SOMETHING WENT WONR TRY AGAIN LATTER!')
                         }
                       }}>
                         <div className="col-md-12">
@@ -151,7 +158,7 @@ const ProfilePage = () => {
                                     Update
                                   </button>}
                                 <button type="button" className="btn btn-secondary btn-lg" onClick={() => setUpadateMode(!updateMode)}>
-                                  Edit
+                                  <i className='fa fa-edit'></i>
                                 </button>
                               </div>
                             </div>
@@ -167,6 +174,7 @@ const ProfilePage = () => {
           </div>
         </div>
       </section>
+      <ToastContainer/>
     </>
   );
 };

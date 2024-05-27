@@ -1,7 +1,5 @@
 import axios from "axios";
-import { setCookies } from "./cookieStore";
-
-
+import { setCookies, getAuthCookies } from "./cookieStore";
 
 const axiosInstance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -11,7 +9,6 @@ const axiosInstance = axios.create({
 		accept: 'application/json',
 	}
 })
-
 axiosInstance.interceptors.request.use(
 	(config) => {
 		const access_token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;;
@@ -42,13 +39,14 @@ axiosInstance.interceptors.response.use(
 		if (error?.response?.data?.code === 'token_not_valid' && error?.response?.status === 401) {
 			const refreshToken = localStorage.getItem('refresh_token')
 			if (refreshToken) {
+
 				return axiosInstance.post('user/login/token/refresh/', { refresh: refreshToken })
 					.then((response) => {
 						const auth = {
 							access_token: response.data.access,
 							refresh_token: response.data.refresh,
 						}
-						setCookies('token',JSON.stringify(auth))
+						setCookies('token', JSON.stringify(auth))
 						localStorage.setItem('access_token', response.data.access)
 						axiosInstance.defaults.headers['Authorization'] =
 							'Bearer ' + response.data.access
@@ -60,8 +58,8 @@ axiosInstance.interceptors.response.use(
 					.catch((err) => {
 
 					})
-			} 
-		} 
+			}
+		}
 		return Promise.reject(error)
 	}
 )

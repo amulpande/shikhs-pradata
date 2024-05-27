@@ -38,12 +38,21 @@ const LoginHomePage = () => {
       if (response.data.statuCode === 200) {
         successNotify()
         dispatch(authLogin(response.data))
-        router.push('/profile')
+        console.log('response ',response.data)
+        setTimeout(() => {
+          if (response?.data?.user?.role == 2) {
+            router.push('/partner/index')
+          } else if(response?.data?.user?.role == 1){
+            router.push('/admin/index')
+          }else{
+            router.push('/profile')
+          }
+        }, 200)
       }
-      if(response.data.Error){
+      if (response.data.Error) {
         customErrorMessageErrorNotify('You are not a user')
       }
-    } catch (error:any) {
+    } catch (error: any) {
       // if(error.status==401){
       //   customErrorMessageErrorNotify('You are not a user')
       // }

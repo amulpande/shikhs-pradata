@@ -32,6 +32,9 @@ export const userBookTutorApi = (data:UserBookTutortypes) =>
         }
     })
 
+export const userCancelBookingOrderApi =  (id:number,data:{usr_cancellation_reason:string})=>
+    axiosInstance.patch(`booking/user/cancel-order/${id}`,data)
+
 
 // all rating for tutor
 export const ratingTutorApi = () =>

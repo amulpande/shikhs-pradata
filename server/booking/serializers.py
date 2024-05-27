@@ -28,6 +28,7 @@ class BookingStatusUpdateSerializer(serializers.ModelSerializer):
         fields = [
             'status',
             'cancellation_reason',
+            'usr_cancellation_reason',
         ]
         
         

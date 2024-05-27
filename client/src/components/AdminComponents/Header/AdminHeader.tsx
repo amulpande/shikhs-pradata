@@ -41,14 +41,14 @@ const AdminHeader = () => {
                         aria-expanded="false"
                         onClick={() => {
                           dispatch(authLogout())
-                          router.push('/admin/login')
+                          router.push('/login')
                         }}
                       >
                         <span className="sr-only">Open user menu</span>
                         LOGOUT
                       </button>
                       :
-                      <Link href={'/admin/login'}>
+                      <Link href={'/login'}>
                         <button type="button" className="btn btn-warning" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                           <span className="sr-only">Open user menu</span>
                           LOGIN

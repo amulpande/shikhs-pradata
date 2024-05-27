@@ -22,7 +22,7 @@ const TopBarHome = () => {
       <meta content="width=device-width, initial-scale=1.0" name="viewport" />
       {/* <link type="image/x-icon" />
        */}
-       <link rel="icon" href="/next.svg" />
+      <link rel="icon" href="/next.svg" />
       <div className="topbar">
         <div className="container">
           <div className="topbar-content">
@@ -87,7 +87,7 @@ const TopBarHome = () => {
                       </li>
 
                       <li>
-                        <Link className="dropdown-item" href="/partner/partner-login">
+                        <Link className="dropdown-item" href="/login">
                           LOGIN
                         </Link>
                       </li>
@@ -104,8 +104,10 @@ const TopBarHome = () => {
                       <button className="btn bg-transparent" type="button"
                         id="dropdownMenuButton1"
                         onClick={() => {
-                          dispatch(authLogout())
-                          router.push('/login')
+                          setTimeout(() => {
+                            dispatch(authLogout())
+                            router.push('/login')
+                          }, 500)
                         }}
                       >
                         {/* <i className="fa fa-sign"></i> */}

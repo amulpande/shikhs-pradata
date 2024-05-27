@@ -65,11 +65,11 @@ const LoadMore = ({ subjects, order_by }: { subjects: string, order_by: string }
 
     // tutors average rating will be sent
     const getTutorAverageRating = (tutorId: number) => {
-        const tutorRatings = rating.filter((item) => item.tutor_id === tutorId && !isNaN(parseFloat(item.star)));
+        const tutorRatings = rating.filter((item:any) => item.tutor_id === tutorId && !isNaN(parseFloat(item.star)));
         if (tutorRatings.length === 0) {
             return 'No rating available';
         }
-        const totalRating = tutorRatings.reduce((acc, curr) => acc + parseFloat(curr.star), 0);
+        const totalRating = tutorRatings.reduce((acc, curr:any) => acc + parseFloat(curr.star), 0);
         const averageRating = totalRating / tutorRatings.length;
         return averageRating.toFixed(2);
     };

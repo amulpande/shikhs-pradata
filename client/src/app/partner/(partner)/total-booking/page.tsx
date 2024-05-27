@@ -8,12 +8,20 @@ import { Pagination } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import Swal from 'sweetalert2'
+import CancelledByUserModal from '../new-booking-request/CancelledByUserModal'
 
 const PartnerRejectedBookingPage = () => {
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [sort, setSort] = useState<string>('-id')
     const [status, setStatus] = useState<string>('')
+    const [showModal, setShowModal] = useState<boolean>(false)
+    const [cancelReason, setCancelReason] = useState('')
     const router = useRouter()
+    const handleOpen = (booking: BookingType) => {
+        setShowModal(true)
+        setCancelReason(booking?.usr_cancellation_reason)
+    }
 
     const { data, loading, totalPages } = useBookingFetchData(tutorGetAcceptedAllBooking, currentPage, sort, status)
     const renderInvoice = () => {
@@ -35,22 +43,33 @@ const PartnerRejectedBookingPage = () => {
         const meetingLink = `${window.location.protocol}//${window.location.host}/video-call/${roomID}?roomId=${roomID}`;
 
         // Send meeting link to the user
-        const response = await tutorSendMeetingUrlToUserApi({user_id: booking?.user_id,meeting_link: meetingLink});
-        if(response.status==200){
-            
+        const response = await tutorSendMeetingUrlToUserApi({ user_id: booking?.user_id, meeting_link: meetingLink });
+        if (response) {
+            Swal.fire({
+                title: "Meeting!",
+                text: "Meeting link has been sent to student!",
+                icon: "success"
+            });
         }
 
         router.push(`/video-call/${roomID}?role=host`);
     };
-    
+
     const renderButton = (booking: BookingType) => (
         <>
-            <button className='btn btn-success mr-2'> {booking?.payment_status} </button>
-            {
-                booking?.payment_status == 'Unpaid' &&
-                // <Link href={`/video-call/${roomIdToSend}`}>
-                // </Link>
-                <button className='btn btn-secondary' onClick={() => handleCreateMeeting(booking)} > <i className='fa fa-video'></i> </button>
+            {booking?.usr_cancellation_reason.length > 0 ? <button className='btn btn-danger mr-2' onClick={() => {
+                handleOpen(booking)
+            }}><i className="far fa-window-close"></i></button> : (
+                <>
+                    <button className='btn btn-success mr-2'> {booking?.payment_status} </button>
+                    {
+                        booking?.payment_status == 'Paid' &&
+                        // <Link href={`/video-call/${roomIdToSend}`}>
+                        // </Link>
+                        <button className='btn btn-secondary' onClick={() => handleCreateMeeting(booking)} > <i className='fa fa-video'></i> </button>
+                    }
+                </>
+            )
             }
         </>
     )
@@ -62,7 +81,10 @@ const PartnerRejectedBookingPage = () => {
                     <option value={'booking_date'}>Earliest Date</option>
                     <option value={'-booking_date'}>Oldest Date</option>
                 </select>
-                <select className="form-select me-2" value={status} onChange={(e) => setStatus(e.target.value)} style={{ maxWidth: '200px' }}>
+                <select className="form-select me-2" value={status} onChange={(e) => {
+                    setStatus(e.target.value)
+                    setCurrentPage(1)
+                }} style={{ maxWidth: '200px' }}>
                     <option value={''}>Filter</option>
                     <option value={'Unpaid'}>Unpaid</option>
                     <option value={'Paid'}>Paid</option>
@@ -79,6 +101,7 @@ const PartnerRejectedBookingPage = () => {
                 />
             </div>
             {/* <InvoiceCompoent/> */}
+            <CancelledByUserModal show={showModal} onHide={() => setShowModal(false)} order={cancelReason} />
         </>
     )
 }

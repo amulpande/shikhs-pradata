@@ -27,8 +27,8 @@ const PartnerIndexPage = () => {
             {
                 label: '# of Votes',
                 data: [tutorAllData?.pending_request, tutorAllData?.accpted_request, tutorAllData?.rejected_request, tutorAllData?.total_request],
-                backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#FF6390'],
-                hoverBackgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#FF6390']
+                backgroundColor: ['#36A2EB', '#FF6384', '#E1B919', '#70E45E'],
+                hoverBackgroundColor: ['#36A2EB', '#FF6384', '#E1B919', '#70E45E']
             }
         ]
     };

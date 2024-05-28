@@ -85,9 +85,8 @@ class UserLoginApiView(APIView):
 
     def post(self, request, format=None):
         try:
-            print('request data',request.data)
+
             serializer = self.serializer_class(data=request.data)
-            print('serializer ',serializer)
 
             valid = serializer.is_valid(raise_exception=False)
             status_code = status.HTTP_401_UNAUTHORIZED
@@ -97,7 +96,7 @@ class UserLoginApiView(APIView):
                 "errors": "Invalid Credentials",
             }
             if valid:
-                print('Valid user')
+                role = serializer.data['role']
                 if serializer.data["role"] == "3":
                     status_code = status.HTTP_200_OK
                     if serializer.data["isDeleted"] == True:
@@ -538,13 +537,15 @@ class AdminAllUserDataApiView(generics.ListAPIView):
     pagination_class = UserPagination
     
     def get_queryset(self):
-        queryset = User.userObject.get_all_user()
+        # queryset = User.userObject.get_all_user()
         query = self.request.query_params.get('search')
         if query:
-            queryset = queryset.filter(
+            queryset = User.userObject.get_all_user().filter(
                 Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(email__icontains=query) | Q(address__icontains=query) 
                 # Add more fields to search here
             )
+        else:
+            queryset = self.queryset
         return queryset
     
 class TutorDataByIdApiView(APIView):

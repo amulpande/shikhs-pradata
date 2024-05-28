@@ -6,6 +6,7 @@ import { UserProfileTypes } from '@lib/types/types';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { customErrorMessageErrorNotify, customSuccessMessageErrorNotify } from '@lib/notification-toastify/notification-toastify';
+import Link from 'next/link';
 
 const ProfilePage = () => {
   const [userProfile, setUserProfile] = useState<UserProfileTypes>({
@@ -17,6 +18,7 @@ const ProfilePage = () => {
     profile_image: ''
   })
   const [updateMode, setUpadateMode] = useState<boolean>(true)
+  const [imageFile, setImageFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     userProfileApi()
@@ -43,7 +45,7 @@ const ProfilePage = () => {
             <h1>MY BOOKING</h1>
             <ul>
               <li>
-                <a href="/index">HOME</a>
+                <Link href="/index">HOME</Link>
               </li>
               <li>MY BOOKING</li>
             </ul>
@@ -57,17 +59,48 @@ const ProfilePage = () => {
               <div className="card card-style1 border-0">
                 <div className="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                   <div className="row align-items-center">
-                    <div className="col-lg-4 mb-4 mb-lg-0">
+                    {/* <div className="col-lg-4 mb-4 mb-lg-0 position-relative">
                       <CldImage className='rounded' src={userProfile?.profile_image || ''} width={300} height={300} alt="..." />
+                      <div className='position-absolute bottom-0 end-0'>
+                        <button className='btn btn-secondary btn-round'><i className='fa fa-plus'></i></button>
+                      </div>
+                    </div> */}
+                    <div className="col-lg-4 mb-4 mb-lg-0 position-relative">
+                      <CldImage className="rounded-circle" src={userProfile?.profile_image || ''} width={300} height={300} alt="..." />
+                      {!updateMode && <div className="position-absolute btn-container">
+                        <button className="btn btn-secondary btn-sm btn-round" onClick={() => {
+                          document.getElementById('customImage')?.click()
+                        }}>
+                          <i className="fa fa-plus"></i>
+                        </button>
+                      </div>}
+                      <input
+                        type='file'
+                        id = 'customImage'
+                        name='file'
+                        className='form-control visually-hidden'
+                        onChange={(e)=>{
+                          const file = e.target.files && e.target.files[0];
+                          if(file){
+                            setImageFile(file)
+                            setUserProfile((prevState:any)=>({
+                              ...prevState,profile_image:URL.createObjectURL(file)
+                            }));
+                          }
+                        }}
+                      />
                     </div>
                     <div className="col-lg-8" >
                       <form className="row g-3 " onSubmit={async (e) => {
                         e.preventDefault()
                         try {
-                          const { first_name,last_name,address,contact} = userProfile
-                          const data:any = { first_name,last_name,address,contact}
+                          const { first_name, last_name, address, contact } = userProfile
+                          const data: any = { first_name, last_name, address, contact }
+                          if(imageFile){
+                            data.profile_image = imageFile
+                          }
                           const response = await userProfileUpdateApi(data)
-                          if(response){
+                          if (response) {
                             customSuccessMessageErrorNotify('PROFILE UPDATED')
                             setUpadateMode(!updateMode)
                           }
@@ -174,7 +207,7 @@ const ProfilePage = () => {
           </div>
         </div>
       </section>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 };

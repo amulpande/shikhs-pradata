@@ -88,6 +88,7 @@ const PartnerRejectedBookingPage = () => {
                     <option value={''}>Filter</option>
                     <option value={'Unpaid'}>Unpaid</option>
                     <option value={'Paid'}>Paid</option>
+                    {/* <option value={'usr_cancellation_reason'}>Cancelled</option> */}
                 </select>
             </div>
             <div>

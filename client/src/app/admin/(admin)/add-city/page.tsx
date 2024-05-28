@@ -7,6 +7,7 @@ import { cityAlreadyExistError } from '../../../../../lib/notification-toastify/
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import CityAdminComponent from '@/components/AdminComponents/CityAdminComponent/CityAdminComponent'
+import Swal from 'sweetalert2'
 
 const AddCityPage = () => {
   const [selectedState, setSelectedState] = useState('');
@@ -62,7 +63,13 @@ const AddCityPage = () => {
           <Button variant="contained" color="success" onClick={async () => {
             adminAddCityApi({ city_name: selectedCity.toUpperCase(), city_state: selectedState.toUpperCase() })
               .then((response) => {
-                // if()
+                if(response){
+                  Swal.fire({
+                    title: "City Added!",
+                    text: "You have added city!",
+                    icon: "success"
+                });
+                }
               })
               .catch((error) => {
                 cityAlreadyExistError(error.response.data.city_name[0])

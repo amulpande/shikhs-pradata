@@ -34,7 +34,6 @@ const ResetPasswordPage = ({ params }: {
 
     } catch (error) {
       customErrorMessageErrorNotify('Not able to change password Try again later')
-      throw error
     }
   }
   return (

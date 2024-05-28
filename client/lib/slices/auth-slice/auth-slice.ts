@@ -37,12 +37,14 @@ const authSlice = createSlice({
             
             localStorage.setItem('access_token', payload.access)
             localStorage.setItem('refresh_token', payload.refresh)
+            localStorage.setItem('role', payload.user.role)
         },
         authLogout: (state) => {
             state.isAuthenticated = false
             state.userAccessToken = null
             localStorage.removeItem('access_token')
             localStorage.removeItem('refresh_token')
+            localStorage.removeItem('role')
             clearCookies('token')
             // clearCookies('role')
         }

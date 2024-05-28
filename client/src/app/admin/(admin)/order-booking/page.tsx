@@ -1,14 +1,14 @@
 'use client'
 import { getAllOrderBookingApi } from '@lib/api/allApi'
 import useBookingFetchData from '@lib/hooks/useBookingFetchData'
-import React, { useEffect, useState } from 'react'
-import { Table, Button, TableBody, TableCell, TableHead, TableRow, Avatar, TableContainer, Grid, makeStyles, Pagination } from '@mui/material';
+import React, { useState } from 'react'
+import { Table, TableBody, TableCell, TableHead, TableRow, Grid,Pagination } from '@mui/material';
 const AdminOrderBookingPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [sort, setSort] = useState<string>('-id')
   const [status, setStatus] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10);
-  const { data, totalCount, totalPages } = useBookingFetchData(getAllOrderBookingApi, currentPage, sort, status, pageSize)
+  const { data, totalPages } = useBookingFetchData(getAllOrderBookingApi, currentPage, sort, status, pageSize)
   return (
     <>
       <div className="d-flex justify-content-end mt-2">

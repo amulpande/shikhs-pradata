@@ -116,6 +116,7 @@ const MyBookingPage = () => {
                                                     <option value={'-id'}>Sort</option>
                                                     <option value={'payment_status'}>Paid</option>
                                                     <option value={'-payment_status'}>Unpaid</option>
+                                                    <option value={'-usr_cancellation_reason'}>Your Cancelled order</option>
                                                 </select>
 
                                                 <select className="form-select" value={status} onChange={(e) => {
@@ -136,7 +137,7 @@ const MyBookingPage = () => {
                                                     <Card variant="outlined" style={{ margin: '2px', textAlign: 'center' }}>
                                                         <CardContent>
                                                             <Typography variant="h5" component="div" gutterBottom className='card-header'>
-                                                                Order Details {order?.id}
+                                                                Order Details 
                                                             </Typography>
                                                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', width: '200px', margin: '0 auto' }}>
                                                                 <CldImage

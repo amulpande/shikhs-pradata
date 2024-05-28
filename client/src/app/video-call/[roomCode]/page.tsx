@@ -40,6 +40,7 @@ const VideoCallPage = ({  params  }: any) => {
         showAudioVideoSettingsButton: role=='host',
         showTurnOffRemoteCameraButton : role == 'host',
         showTurnOffRemoteMicrophoneButton : role == 'host',
+        showRoomTimer: role == 'host',
       });
       
     }

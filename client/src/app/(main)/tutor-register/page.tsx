@@ -174,7 +174,7 @@ const TutorRegisterPage = () => {
 
                   <div className="form-group ">
                     <textarea
-                      placeholder="Enter Your Address where service provided"
+                      placeholder="Enter Your Address"
                       name="address"
                       className="form-control"
                       id="result"
@@ -267,7 +267,7 @@ const TutorRegisterPage = () => {
                       type="password"
                       name="confirmPassword"
                       className="form-control"
-                      placeholder="Password"
+                      placeholder="Confirm Password"
                       maxLength={12}
                       minLength={5}
                       value={formik.values.confirmPassword}

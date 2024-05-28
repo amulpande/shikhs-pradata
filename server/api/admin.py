@@ -8,7 +8,7 @@ from contact.models import ContactUs
 # Register your models here.
 #User display data in django admin dashboard
 class UserAdmin(admin.ModelAdmin):
-    list_display=['email','first_name','role','address','contact','profile_image','gender','tutor_approve']
+    list_display=['id','email','first_name','role','address','contact','profile_image','gender','tutor_approve']
     
 class CityAdmin(admin.ModelAdmin):
     list_display=['id','city_name','city_state']

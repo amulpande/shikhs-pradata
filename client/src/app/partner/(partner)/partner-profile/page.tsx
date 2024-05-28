@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const PartnerProfilePage = () => {
     const [updateMode, setUpadateMode] = useState<boolean>(true)
-    const [profileUpdated,setProfileUpdated] = useState<boolean>(false)
+    const [profileUpdated, setProfileUpdated] = useState<boolean>(false)
     const [tutorProfile, setTutorProfile] = useState<TutorProfile>({
         first_name: '',
         last_name: '',
@@ -19,6 +19,7 @@ const PartnerProfilePage = () => {
         price: '',
         profile_image: ''
     })
+    const [imageFile, setImageFile] = useState<File | null>(null);
     useEffect(() => {
         const fetchTutorProfile = async () => {
             try {
@@ -38,6 +39,20 @@ const PartnerProfilePage = () => {
             [name]: value
         }));
     };
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setTutorProfile((prevState: any) => ({
+                ...prevState,
+                profile_image: URL.createObjectURL(file)
+            }));
+        }
+    };
+    const handleImageSelect = () => {
+        // Trigger file input click
+        document.getElementById('customFile')?.click();
+    };
     return (
         <>
             <div className="container">
@@ -49,21 +64,24 @@ const PartnerProfilePage = () => {
                             <hr />
                         </div>
                         {/* Form START */}
-                        <form className="row g-3" onSubmit={async(e) => {
+                        <form className="row g-3" onSubmit={async (e) => {
                             e.preventDefault()
                             setProfileUpdated(false)
                             const { first_name, last_name, contact, address, price } = tutorProfile
-                            const data:any = { first_name, last_name, contact, address, price }
+                            const data: any = { first_name, last_name, contact, address, price }
+                            if (imageFile) {
+                                data.profile_image = imageFile;
+                            }
                             try {
                                 const response = await tutorUpdateProfile(data)
-                                if(response){
+                                if (response) {
                                     customSuccessMessageErrorNotify('Profile Updated')
                                 }
-                                
+
                             } catch (error) {
                                 console.error('Error updating profile ')
                                 customErrorMessageErrorNotify('Something went wrong try again latter')
-                            } finally{
+                            } finally {
                                 setProfileUpdated(true)
                             }
                         }}>
@@ -170,11 +188,30 @@ const PartnerProfilePage = () => {
                                         <div className="text-center">
                                             <div className="square position-relative display-2 mb-3">
 
-                                                {tutorProfile?.profile_image ? <CldImage src={tutorProfile?.profile_image || '' } width={500} height={500} className='rounded-circle' alt='...' />
+                                                {tutorProfile?.profile_image ? <CldImage src={tutorProfile?.profile_image || ''} width={500} height={500} className='rounded-circle' alt='...' />
                                                     :
                                                     <i className="fas fa-fw fa-user position-absolute top-150 start-150 translate-middle text-secondary" />
                                                 }
-                                                <input type="file" id="customFile" name="file" className="form-control visually-hidden" />
+                                                <div className="position-absolute end-0  mb-0 me-6">
+                                                    {
+                                                        !updateMode && (
+                                                            <button type="button" className="btn btn-secondary btn-circle" disabled={updateMode} onClick={handleImageSelect}>
+                                                                <i className="fas fa-plus"></i>
+                                                            </button>
+                                                        )
+                                                    }
+                                                    {/* <button type="button" className="btn btn-primary btn-circle" disabled={updateMode} onClick={handleImageSelect}>
+                                                        <i className="fas fa-plus"></i>
+                                                    </button> */}
+                                                </div>
+                                                {/* File input */}
+                                                <input
+                                                    type="file"
+                                                    id="customFile"
+                                                    name="file"
+                                                    className="form-control visually-hidden"
+                                                    onChange={handleImageChange}
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -196,7 +233,7 @@ const PartnerProfilePage = () => {
                     {/* Form END */}
                 </div>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
 
         </>
     )

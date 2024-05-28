@@ -39,12 +39,15 @@ axiosInstance.interceptors.response.use(
 		if (error?.response?.data?.code === 'token_not_valid' && error?.response?.status === 401) {
 			const refreshToken = localStorage.getItem('refresh_token')
 			if (refreshToken) {
+				// making sure that my role is updated as well since we are getting new access token
+				const role = localStorage.getItem('role')
 
 				return axiosInstance.post('user/login/token/refresh/', { refresh: refreshToken })
 					.then((response) => {
 						const auth = {
 							access_token: response.data.access,
 							refresh_token: response.data.refresh,
+							role : role
 						}
 						setCookies('token', JSON.stringify(auth))
 						localStorage.setItem('access_token', response.data.access)

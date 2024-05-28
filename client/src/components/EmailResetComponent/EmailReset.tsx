@@ -9,11 +9,11 @@ const PasswordResetForm = () => {
     const [email, setEmail] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
 
         setLoading(true);
@@ -33,7 +33,7 @@ const PasswordResetForm = () => {
             Swal.fire({
                 title: "Something went wrong!",
                 text: response,
-                icon: "failed"
+                icon: "error"
               });
         } finally {
             setLoading(false)

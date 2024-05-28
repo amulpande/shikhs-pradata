@@ -70,7 +70,7 @@ const LoginHomePage = () => {
             <h1>Login</h1>
             <ul>
               <li>
-                <a href="/index">Home</a>
+                <Link href="/index">Home</Link>
               </li>
               <li>Login</li>
             </ul>
@@ -111,7 +111,8 @@ const LoginHomePage = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <div className="acc-login-footer">
-                        <Link href="/register">Don't have account?</Link>
+                        <Link href="/register">{`Don't`} have account?</Link>
+                        <Link href="/tutor-register">{`Don't`} have Tutor account?</Link>
                         <Link href="forgot-password">Forgot password?</Link>
                       </div>
                     </Grid>

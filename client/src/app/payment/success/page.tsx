@@ -25,7 +25,7 @@ const page = () => {
                     </div>
                 </div>
                 <center>
-                    <Link href='/index'>
+                    <Link href='/my-booking'>
                         <button className='btn btn-success btn-lg'>Back To Website</button>
                     </Link>
                 </center>

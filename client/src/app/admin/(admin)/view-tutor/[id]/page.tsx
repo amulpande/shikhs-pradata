@@ -7,11 +7,13 @@ import { getTutorDataByidApi } from '@lib/api/allApi'
 import useTutorFetchData from '@lib/hooks/useTutorFetchData'
 import { Avatar, Box, Button, Grid, Paper, Typography } from '@mui/material';
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const ViewTutorByIdPage: React.FC<ParamIdType> = ({ params }) => {
   const id = params.id
   const [tutorData, setTutorData] = useState<TutorType>()
   const [loading, setLoading] = useState<boolean>(true)
+  const  router = useRouter()
   // useEffect
   useEffect(() => {
     getTutorDataByidApi(id).then((response) => {
@@ -44,9 +46,9 @@ const ViewTutorByIdPage: React.FC<ParamIdType> = ({ params }) => {
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-              <Link href={"/admin/approved-tutor"}>
-                <Button variant="contained" color="error">Back</Button>
-              </Link>
+              {/* <Link href={"/admin/approved-tutor"}> */}
+                <Button variant="contained" color="error" onClick={()=>router.back()}>Back</Button>
+              {/* </Link> */}
             </Box>
           </Grid>
         </Grid>

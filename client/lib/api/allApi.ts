@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BookingType, CityStateType, ContactUsType, ContactUsTypes, FetchTutorDataProps, PasswordReseType, TutorProfile, UserBookTutortypes, UserLoginType, UserProfileTypes } from "../types/types";
+import {  CityStateType, ContactUsType,  PasswordReseType, TutorProfile, UserBookTutortypes, UserLoginType, UserProfileTypes } from "../types/types";
 import axiosInstance from "../utils/axiosInstance";
 
 

@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject_id }: any) => {
     const time = ['08:00AM-09:00AM', '09:00AM-10:00AM',
-        '10:00AM:11:00AM', '11:00AM-12:00AM',
+        '10:00AM-11:00AM', '11:00AM-12:00AM',
         '12:00PM-01:00PM', '01:00PM-02:00PM',
         '02:00PM-03:00PM', '03:00PM-04:00PM',
         '04:00PM-05:00PM', '05:00PM-06:00PM',
@@ -25,7 +25,7 @@ const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject
         subject_id: subject_id
     })
 
-    const handleChange = (e) => {
+    const handleChange = (e:any) => {
         const { name, value } = e.target
         setBookingData({ ...bookingData, [name]: value })
     }
@@ -72,6 +72,7 @@ const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject
                                 if (response) {
                                     orderHasBeenBookedNotify()
                                 }
+                                handleClose()
                             } catch (error) {
                                 console.error('Error booking', error)
                                 orderNotBookedErrorNotify()

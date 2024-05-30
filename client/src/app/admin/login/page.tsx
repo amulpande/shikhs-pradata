@@ -48,7 +48,7 @@ const AdminLoginPage = () => {
   const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLInputElement>) => {
     setAdminLogin({ ...adminLogin, [e.target.name]: e.target.value })
   }
-  const handleLogin = async (e) => {
+  const handleLogin = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // Add your login logic here
     try {

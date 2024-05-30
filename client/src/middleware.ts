@@ -72,10 +72,6 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Handle general paths for logged-in users
-  // if (!accessToken) {
-  //   return NextResponse.redirect(new URL("/login", request.url))
-  // }
 
 }
 

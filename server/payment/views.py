@@ -20,6 +20,8 @@ from django.db.models import Sum
 from api.models import User, City, Subject
 from booking.models import Booking
 from rating.models import Feedback
+from django_filters.rest_framework import DjangoFilterBackend
+from payment.filters import  PaymentFilter
 
 # Create your views here.
 
@@ -270,6 +272,8 @@ class PaymentDataOfTutorApi(ListAPIView):
     permission_classes = [IsAuthenticated, IsTutor]
     serializer_class = TutorPaymentSerializer
     pagination_class = PaymentPaginationLimited
+    filter_backends = [DjangoFilterBackend]
+    filterset_class  = PaymentFilter
     
     def get_queryset(self):
         return Payment.objects.filter(tutor_id=self.request.user.id).all()
@@ -278,5 +282,7 @@ class PaymentDataOfAdminApi(ListAPIView):
     permission_classes = [IsAuthenticated, IsAdmin]
     serializer_class = AdminPaymentSerializer
     pagination_class = PaymentPaginationLimited
+    filter_backends = [DjangoFilterBackend]
+    filterset_class  = PaymentFilter
     queryset = Payment.objects.all()
     

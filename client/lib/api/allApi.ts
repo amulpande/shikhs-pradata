@@ -22,8 +22,8 @@ export const userResetEmailPasswordApi = (email: string) =>
 export const userPasswordResetApi = (uid: string, token: string, data:PasswordReseType) =>
     axiosInstance.post(`user/reset-password/${uid}/${token}/`, data)
 
-export const userMyBookingOrderApi = ({page=1,order_by='-id',status='',page_size=10}) =>
-    axiosInstance.get(`booking/user/my-order/?page=${page}&order_by=${order_by}&status=${status}&page_size=${page_size}`)
+export const userMyBookingOrderApi = ({page=1,order_by='-id',status='',page_size=10,bookingDate=''}) =>
+    axiosInstance.get(`booking/user/my-order/?page=${page}&order_by=${order_by}&status=${status}&page_size=${page_size}&booking_date=${bookingDate}`)
 
 export const userBookTutorApi = (data:UserBookTutortypes) =>
     axiosInstance.post('booking/user/book-tutor/',data=data,{
@@ -196,11 +196,13 @@ export const getAdminTotalEarningApi = ()  =>
 export const getTutorAllTotalngApi = () =>
     axiosInstance.get('payment/tutor/total-earning/')
 
-export const getAllPaymentDataForTutor = ({page}:{page:number}) =>
-    axiosInstance.get(`payment/tutor/all-payment/?page=${page}`)
+export const getAllPaymentDataForTutor = ({page,paymentDate}:{page:number,paymentDate:string}) =>
+    axiosInstance.get(`payment/tutor/all-payment/?page=${page}&payment_date=${paymentDate}`)
 
-export const getAllPaymentDataForAdmin = ({page}:{page:number}) =>
-    axiosInstance.get(`payment/admin/all-payment/?page=${page}`)
+
+
+export const getAllPaymentDataForAdmin = ({page,paymentDate}:{page:number,paymentDate:string}) =>
+    axiosInstance.get(`payment/admin/all-payment/?page=${page}&payment_date=${paymentDate}`)
 
 
 

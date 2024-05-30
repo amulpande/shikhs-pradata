@@ -95,7 +95,7 @@ const MainContactUsPage = () => {
                                                 if (response.status === 201) {
                                                     customSuccessMessageErrorNotify('We will contact you soon')
                                                 }
-                                                console.log('log ', response)
+                                                
                                             } catch (error) {
                                                 console.error('Something went wrong in contact', error)
                                                 customErrorMessageErrorNotify('Something went wrong try again later')

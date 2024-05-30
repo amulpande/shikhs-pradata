@@ -13,12 +13,12 @@ const AddCityPage = () => {
   const [selectedState, setSelectedState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
 
-  const handleStateChange = (e) => {
+  const handleStateChange = (e:any) => {
     setSelectedState(e.target.value);
     setSelectedCity(''); // Reset selected city when state changes
   };
 
-  const handleCityChange = (e) => {
+  const handleCityChange = (e:any) => {
     setSelectedCity(e.target.value);
   };
 

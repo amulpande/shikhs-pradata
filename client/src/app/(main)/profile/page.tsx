@@ -76,15 +76,15 @@ const ProfilePage = () => {
                       </div>}
                       <input
                         type='file'
-                        id = 'customImage'
+                        id='customImage'
                         name='file'
                         className='form-control visually-hidden'
-                        onChange={(e)=>{
+                        onChange={(e) => {
                           const file = e.target.files && e.target.files[0];
-                          if(file){
+                          if (file) {
                             setImageFile(file)
-                            setUserProfile((prevState:any)=>({
-                              ...prevState,profile_image:URL.createObjectURL(file)
+                            setUserProfile((prevState: any) => ({
+                              ...prevState, profile_image: URL.createObjectURL(file)
                             }));
                           }
                         }}
@@ -96,7 +96,7 @@ const ProfilePage = () => {
                         try {
                           const { first_name, last_name, address, contact } = userProfile
                           const data: any = { first_name, last_name, address, contact }
-                          if(imageFile){
+                          if (imageFile) {
                             data.profile_image = imageFile
                           }
                           const response = await userProfileUpdateApi(data)
@@ -116,9 +116,10 @@ const ProfilePage = () => {
                               <div className="row g-3">
                                 {/* First Name */}
                                 <div className="col-md-6">
-                                  <label className="form-label">First Name *</label>
+                                  <label htmlFor="firstNameInput" className="form-label">First Name *</label>
                                   <input
                                     type="text"
+                                    id='firstNameInput'
                                     name='first_name'
                                     className="form-control"
                                     placeholder=""
@@ -130,8 +131,9 @@ const ProfilePage = () => {
                                 </div>
                                 {/* Last name */}
                                 <div className="col-md-6">
-                                  <label className="form-label">Last Name *</label>
+                                  <label htmlFor="lastNameInput" className="form-label">Last Name *</label>
                                   <input
+                                    id='lastNameInput'
                                     name='last_name'
                                     type="text"
                                     className="form-control"
@@ -144,13 +146,13 @@ const ProfilePage = () => {
                                 </div>
                                 {/* Phone number */}
                                 <div className="col-md-6">
-                                  <label htmlFor="inputEmail4" className="form-label">
+                                  <label htmlFor="inputEmail" className="form-label">
                                     Email *
                                   </label>
                                   <input
                                     type="email"
                                     className="form-control"
-                                    id="inputEmail4"
+                                    id="inputEmail"
                                     disabled={true}
                                     value={userProfile?.email}
                                   />
@@ -158,8 +160,9 @@ const ProfilePage = () => {
                                 </div>
                                 {/* Mobile number */}
                                 <div className="col-md-6">
-                                  <label className="form-label">Mobile number *</label>
+                                  <label htmlFor="contactInput" className="form-label">Mobile number *</label>
                                   <input
+                                    id='contactInput'
                                     name='contact'
                                     type="text"
                                     className="form-control"
@@ -171,13 +174,13 @@ const ProfilePage = () => {
                                   />
                                 </div>
                                 <div className="col-md-6">
-                                  <label htmlFor="inputEmail4" className="form-label">
+                                  <label htmlFor="AddressInput" className="form-label">
                                     Address *
                                   </label>
                                   <textarea
                                     name='address'
                                     className="form-control"
-                                    id="inputEmail4"
+                                    id="AddressInput"
                                     value={userProfile?.address}
                                     disabled={updateMode}
                                     onChange={handleChange}
@@ -190,7 +193,7 @@ const ProfilePage = () => {
                                   <button type="submit" className="btn btn-success btn-lg">
                                     Update
                                   </button>}
-                                <button type="button" className="btn btn-secondary btn-lg" onClick={() => setUpadateMode(!updateMode)}>
+                                <button type="button" className="btn btn-secondary btn-lg" onClick={() => setUpadateMode(!updateMode)} aria-label="Edit profile">
                                   <i className='fa fa-edit'></i>
                                 </button>
                               </div>

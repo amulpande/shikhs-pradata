@@ -22,13 +22,13 @@ export default function PreviewPage() {
   }, []);
 
   return (
-    // <form action="http://127.0.0.1:8000/api/payment/create-checkout-session/" method="POST">
+    
     <form onSubmit={async(e)=>{
         e.preventDefault();
         try {
             const response = await getPaymentApi({'tutor_id':27,'price':'4000'})
             // const response = await getWebHookApi()
-            console.log('response of payment ',response)
+            // console.log('response of payment ',response)
         } catch (error) {
             console.error('Error getting payment session -> ',error)
         }

@@ -35,6 +35,7 @@ from django.db.models import Q
 
 from api.models import User
 import os
+from threading import Thread
 
 #cutom permission mixin for isAuthenticated and user permission
 class IsAdminPermissionMixin:
@@ -99,10 +100,12 @@ class UserLoginApiView(APIView):
                 role = serializer.data['role']
                 if serializer.data["role"] == "3":
                     status_code = status.HTTP_200_OK
-                    if serializer.data["isDeleted"] == True:
-                        return Response({'Error':'Invalid User'},status=status.HTTP_401_UNAUTHORIZED)
+                    
+                    if serializer.data["isDeleted"]=='True':
+                        return Response({'Error':'Invalids User'},status=status.HTTP_401_UNAUTHORIZED)
 
-                    response = {
+                    else:
+                        response = {
                         "success": True,
                         "statuCode": status_code,
                         "access": serializer.data["access"],
@@ -117,9 +120,16 @@ class UserLoginApiView(APIView):
                             "gender": serializer.data["gender"],
                             "profile_image": serializer.data["profile_image"],
                             "contact": serializer.data["contact"],
+                            "isDeleted":serializer.data["isDeleted"]
                         },
                     }
                 elif serializer.data["role"] =='2':
+                    tutor = User.objects.get(email=serializer.data['email'])
+                    if tutor.tutor_approve == False:
+                        return Response({'Message':'You are not approved by admin yet'},status=status.HTTP_401_UNAUTHORIZED)
+                    
+                    if tutor.user_blocked:
+                        return Response({'Message':'You have been blocked by Admin'},status=status.HTTP_403_FORBIDDEN)
                     status_code = status.HTTP_200_OK
                     if serializer.data["isDeleted"] == True:
                         return Response({'Error':'Invalid User'},status=status.HTTP_401_UNAUTHORIZED)
@@ -465,9 +475,13 @@ class  AdminBlockedTutorOrUserView(APIView):
             serializer.save()
             approved = serializer.data['user_blocked']
             if approved == True:
-                Utils.send_blocked_email(data)
+                thread = Thread(target=Utils.send_blocked_email,args=(data,))
+                thread.start()
+                # Utils.send_blocked_email(data)
             else:
-                Utils.send_approve_email(data)
+                thread = Thread(target=Utils.send_approve_email,args=(data,))
+                # Utils.send_approve_email(data)
+                thread.start()
             return Response({'message':'Updated user status'},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 

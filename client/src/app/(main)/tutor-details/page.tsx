@@ -57,10 +57,10 @@ const TutorDetailsPage = () => {
         fetchRating()
     }, [])
 
-    const handleSelectSubject = (e) => {
+    const handleSelectSubject = (e:React.ChangeEvent<HTMLSelectElement>) => {
         setSearchQuery(e.target.value);
     }
-    const handleOrderByChange = (e) => {
+    const handleOrderByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setOrderBy(e.target.value)
     }
     const getTutorAverageRating = (tutorId: number) => {
@@ -112,7 +112,7 @@ const TutorDetailsPage = () => {
                     ))
                 }
             </div>
-            {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} />)
+            {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} rating={rating} />)
                 : <h3 className='text-center'><CircularProgress /></h3>) : 'NO DATA FOUND...'}
         </>
     )

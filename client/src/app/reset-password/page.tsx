@@ -7,7 +7,7 @@ const ResetpasswordPage = () => {
         password2: ''
     })
 
-    const handleChange = (e) => {
+    const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         setResetPassword({ ...resetPassword, [e.target.name]: e.target.value })
     }
     return (

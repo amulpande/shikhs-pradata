@@ -137,7 +137,7 @@ const TutorDetailsByIdPage = ({ params }: any) => {
                 <br /> <hr />
                 <div className="vendor-name">
                   <strong>Learn by Good teacher </strong>
-                  <p>Pay when your teatching hour has been completed.</p>
+                  <p>All Tutor are excellent in their subject.</p>
                   <strong>Professionals</strong>
                   <p>We have Professionals teacher to help you guide</p>
                   <strong>All Subject</strong>

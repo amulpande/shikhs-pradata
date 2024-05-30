@@ -26,14 +26,14 @@ export const tutorRegistrationValidationSchema = yup.object({
 
     confirmPassword: yup.string()
         .required("Please confirm your password")
-        .oneOf([yup.ref('password'), null], "Passwords don't match."),
+        .oneOf([yup.ref('password'), ''], "Passwords don't match."),
 
     profileImage: yup.mixed().required('Profile image is required')
-        .test('fileType', 'Unsupported file format', (value) => {
+        .test('fileType', 'Unsupported file format', (value:any) => {
             if (!value) return true; // Skip if no value provided
             return ['image/jpeg', 'image/png', 'image/gif','image/webp','image/jpg'].includes(value.type);
         })
-        .test('fileSize', 'File size is too large', (value) => {
+        .test('fileSize', 'File size is too large', (value:any) => {
             if (!value) return true; // Skip if no value provided
             return value.size <= (5 * 1024 * 1024); // 5MB
         }),

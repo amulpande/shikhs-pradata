@@ -33,15 +33,15 @@ const ViewTutorByIdPage: React.FC<ParamIdType> = ({ params }) => {
             </Box>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Typography variant="h4" sx={{ marginBottom: 2 }}>{tutorData?.first_name}</Typography>
-            <Typography variant="body1" sx={{ marginBottom: 1 }}>Email: {tutorData?.email}</Typography>
-            <Typography variant="body1" sx={{ marginBottom: 1 }}>Contact: {tutorData?.contact}</Typography>
-            <Typography variant="body1" sx={{ marginBottom: 1 }}>Address: {tutorData?.address}</Typography>
-            <Typography variant="body1" sx={{ marginBottom: 1 }}>Price: {tutorData?.price}</Typography>
-            <Typography variant="body1" sx={{ marginBottom: 1 }}>Address: {tutorData?.address}</Typography>
-            <Typography variant="body1" sx={{ marginBottom: 1 }}>Price: {tutorData?.dob}</Typography>
-            <Typography variant="body1" sx={{ marginBottom: 1 }}>Address: {tutorData?.address}</Typography>
-            <Typography variant="body1" sx={{ marginBottom: 1 }}>Price: {tutorData?.price}</Typography>
+            <Typography variant="h4" sx={{ marginBottom: 2 }}>{tutorData?.first_name + ' ' + tutorData?.last_name}</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>Email : {tutorData?.email}</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>Contact : {tutorData?.contact}</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>Address : {tutorData?.address}</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>Price : {tutorData?.price}</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>Gender : {tutorData?.gender}</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>DOB : {tutorData?.dob}</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>Subject  : {tutorData?.subjects_name}</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>City : {tutorData?.city_name}</Typography>
 
           </Grid>
           <Grid item xs={12}>

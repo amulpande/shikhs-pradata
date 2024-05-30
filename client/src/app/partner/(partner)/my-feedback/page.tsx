@@ -20,7 +20,7 @@ const PartnerMyFeedBackPage = () => {
                 </thead>
                 <tbody>
                     {
-                        feedback && feedback.map((feed, index) => (
+                        feedback.length>0 ? feedback.map((feed, index) => (
                             <tr key={index} className="card-body">
                                 <td>
                                     <CldImage src={feed?.user_profile} height={100} width={100} alt='User Profile'/>
@@ -31,6 +31,10 @@ const PartnerMyFeedBackPage = () => {
                                 <td>{feed?.star}</td>
                             </tr>
                         ))
+                        :
+                        <tr>
+                            <td>No Data Found</td>
+                        </tr>
                     }
                 </tbody>
             </table>

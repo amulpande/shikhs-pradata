@@ -4,9 +4,7 @@ import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap';
 import Swal from 'sweetalert2'
 const CancelOrderByUser = ({ show, onHide, order }: { show: boolean, onHide: any, order: any }) => {
-    console.log('order ', order)
     const [cancelOrder, setCancelOrder] = useState('')
-    // console.log('cancel order ',cancelOrder)
 
     return (
         <>

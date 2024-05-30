@@ -25,8 +25,9 @@ const MyBookingPage = () => {
     const [status, setStatus] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [showMyCancelOrder, setShowMyCancerOrder] = useState<boolean>(false)
+    const [paymentDate, setPaymentDate] = useState<string>('')
 
-    const { data: myOrderData, loading, totalPages } = useBookingFetchData(userMyBookingOrderApi, currentPage, orderBy, status, 9)
+    const { data: myOrderData, loading, totalPages } = useBookingFetchData(userMyBookingOrderApi, currentPage, orderBy, status, 9, paymentDate)
 
     const handleCancelOrder = (order: BookingType) => {
         setShowCancelModal(true)
@@ -102,7 +103,7 @@ const MyBookingPage = () => {
                                             <hr />
                                             <strong>
                                                 • You don’t have to pay any extra money <br />
-                                                • Only pay once your session has completed <br />
+                                                • Once paid than it can not be refunded <br />
                                                 • You must give feedback for better understanding
                                             </strong>
 
@@ -119,7 +120,7 @@ const MyBookingPage = () => {
                                                     <option value={'-usr_cancellation_reason'}>Your Cancelled order</option>
                                                 </select>
 
-                                                <select className="form-select" value={status} onChange={(e) => {
+                                                <select className="form-select me-2" value={status} onChange={(e) => {
                                                     setStatus(e.target.value)
                                                     setCurrentPage(1)
                                                 }} style={{ maxWidth: '200px' }}>
@@ -128,6 +129,19 @@ const MyBookingPage = () => {
                                                     <option value={'Rejected'}>Rejected</option>
                                                     <option value={'Pending'}>Pending</option>
                                                 </select>
+
+                                                <input
+                                                    className='form-control me-2'
+                                                    style={{ maxWidth: '200px' }}
+                                                    id='paymentDate'
+                                                    name='paymentDate'
+                                                    value={paymentDate}
+                                                    type='date'
+                                                    onChange={(e) => {
+                                                        setPaymentDate(e.target.value)
+                                                        
+                                                    }}
+                                                />
                                             </div>
                                             <hr />
                                         </div>
@@ -137,7 +151,7 @@ const MyBookingPage = () => {
                                                     <Card variant="outlined" style={{ margin: '2px', textAlign: 'center' }}>
                                                         <CardContent>
                                                             <Typography variant="h5" component="div" gutterBottom className='card-header'>
-                                                                Order Details 
+                                                                Order Details
                                                             </Typography>
                                                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', width: '200px', margin: '0 auto' }}>
                                                                 <CldImage
@@ -171,7 +185,7 @@ const MyBookingPage = () => {
                                                             </Typography>
 
                                                             {order?.status === 'Accepted' && order?.usr_cancellation_reason.length == 0 && (
-                                                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
+                                                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                                     <Button
                                                                         variant='contained'
                                                                         size="small"
@@ -183,21 +197,21 @@ const MyBookingPage = () => {
                                                                     </Button>
                                                                     {
                                                                         order?.payment_status == 'Paid' ?
-                                                                        (<Button
-                                                                            variant="contained"
-                                                                            size="small" color="warning"
-                                                                            onClick={() => handleOpen(order?.tutor_id)}
-                                                                            style={{ marginRight: '10px' }}
-                                                                        >
-                                                                            {/* <i className='fa fa-comments'></i> */}
-                                                                            Feedback
-                                                                        </Button>)
-                                                                        :
-                                                                        (
-                                                                            <Button variant='contained' onClick={() => handleOpenCancelOrder(order)} style={{ backgroundColor: 'red', marginRight: '10px' }}>
-                                                                                Cancel
-                                                                            </Button>
-                                                                        )
+                                                                            (<Button
+                                                                                variant="contained"
+                                                                                size="small" color="warning"
+                                                                                onClick={() => handleOpen(order?.tutor_id)}
+                                                                                style={{ marginRight: '10px' }}
+                                                                            >
+                                                                                {/* <i className='fa fa-comments'></i> */}
+                                                                                Feedback
+                                                                            </Button>)
+                                                                            :
+                                                                            (
+                                                                                <Button variant='contained' onClick={() => handleOpenCancelOrder(order)} style={{ backgroundColor: 'red', marginRight: '10px' }}>
+                                                                                    Cancel
+                                                                                </Button>
+                                                                            )
                                                                     }
                                                                     <div>
                                                                         {/* <Button onClick={()=>{

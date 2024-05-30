@@ -21,10 +21,10 @@ const ResetPasswordPage = ({ params }: {
   const uid = params.slug[0]
   const token = params.slug[1]
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     setResetPassword({ ...resetPassword, [e.target.name]: e.target.value })
   }
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault()
     try {
       const response = await userPasswordResetApi(uid, token, resetPassword)

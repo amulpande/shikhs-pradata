@@ -1,5 +1,6 @@
 from django.core.mail import EmailMessage
 import os
+import threading
 
 class Utils:
 
@@ -43,3 +44,9 @@ class Utils:
             to=[data['user']]
         )
         email.send()
+        
+    # If want to sende EmailMessage instace directly from view and not create here as static method 
+    # than you can use it directly and send EmailMessage insatce 
+    @staticmethod
+    def send_email_thread(email_instance : EmailMessage):
+        email_instance.send()

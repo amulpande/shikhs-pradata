@@ -1,7 +1,7 @@
 import { PyamentType } from "@lib/types/types";
 import { useState, useEffect, useCallback } from "react"
 
-function usePaymentFetch(api: { ({ page}: { page: number }): Promise<any>; }, page: number){
+function usePaymentFetch(api: { ({ page,paymentDate}: { page: number,paymentDate:string }): Promise<any>; }, page: number,paymentDate:string=''){
     const [data,setData] = useState<PyamentType[]>([])
     const [loading,setLoading] = useState<boolean>(true)
     const [totalCount, setTotalCount] = useState<number>(0)
@@ -10,7 +10,7 @@ function usePaymentFetch(api: { ({ page}: { page: number }): Promise<any>; }, pa
 
     const fetchData = useCallback(async()=>{
         try {
-            const response = await api({page})
+            const response = await api({page,paymentDate})
             setData(response.data.results)
             setTotalCount(response.data.count)
             const calculatedTotalPages = Math.ceil(response.data.count / 5) // 5 data per page will displaying
@@ -21,7 +21,7 @@ function usePaymentFetch(api: { ({ page}: { page: number }): Promise<any>; }, pa
         }finally {
             setLoading(false);
         }
-    },[api,page])
+    },[api,page,paymentDate])
 
     useEffect(()=>{
         fetchData()

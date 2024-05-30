@@ -10,11 +10,11 @@ import { FeedbackType } from 'react-bootstrap/esm/Feedback';
 
 // let page = 2
 
-const LoadMore = ({ subjects, order_by }: { subjects: string, order_by: string },) => {
+const LoadMore = ({ subjects, order_by,rating }: { subjects: string, order_by: string,rating:FeedbackMainPageType[] },) => {
     const [page, setPage] = useState(2)
     const { ref, inView } = useInView()
     const [tutor, setTutor] = useState<TutorType[]>([])
-    const [rating, setRating] = useState<FeedbackMainPageType[]>([])
+    // const [rating, setRating] = useState<FeedbackMainPageType[]>([])
     useEffect(() => {
         // reseting data if subjects and order_by are changed
         setTutor([]);
@@ -48,20 +48,20 @@ const LoadMore = ({ subjects, order_by }: { subjects: string, order_by: string }
         }
     }, [inView, tutor, page, subjects, order_by])
 
-    useEffect(() => {
-        if (inView) {
-            const fetchRating = async () => {
-                try {
-                    const response = await ratingTutorApi();
-                    setRating(response.data);
-                } catch (error) {
-                    console.error('Error fetching tutor rating data:', error);
-                }
-            };
+    // useEffect(() => {
+    //     if (inView) {
+    //         const fetchRating = async () => {
+    //             try {
+    //                 const response = await ratingTutorApi();
+    //                 setRating(response.data);
+    //             } catch (error) {
+    //                 console.error('Error fetching tutor rating data:', error);
+    //             }
+    //         };
 
-            fetchRating();
-        }
-    }, [inView])
+    //         fetchRating();
+    //     }
+    // }, [inView])
 
     // tutors average rating will be sent
     const getTutorAverageRating = (tutorId: number) => {

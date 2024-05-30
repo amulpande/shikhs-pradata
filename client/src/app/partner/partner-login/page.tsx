@@ -47,7 +47,7 @@ const PartnerLoginPage = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTutorLogin({ ...tutorLogin, [e.target.name]: e.target.value })
     }
-    const handleLogin = async (e) => {
+    const handleLogin = async (e:any) => {
         e.preventDefault()
         // Add your login logic here
         try {

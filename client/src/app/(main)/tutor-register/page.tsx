@@ -100,6 +100,12 @@ const TutorRegisterPage = () => {
     }
   })
 
+  const calculateMaxDate = () => {
+    const today = new Date();
+    const past18Years = new Date(today.setFullYear(today.getFullYear() - 18));
+    return past18Years.toISOString().split('T')[0];
+  };
+  const mmaxDate = calculateMaxDate()
   return (
 
     <>
@@ -403,7 +409,7 @@ const TutorRegisterPage = () => {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       className={`form-control ${formik.touched.dob && formik.errors.dob ? 'is-invalid' : ''}`}
-                      max={new Date().toISOString().split('T')[0]} // Set maximum date to today
+                      max={mmaxDate} // Set maximum date to today
 
                     />
                     {formik.touched.dob && formik.errors.dob && (

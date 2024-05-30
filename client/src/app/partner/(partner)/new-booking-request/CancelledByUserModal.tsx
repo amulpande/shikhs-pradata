@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap';
 const CancelledByUserModal = ({ show, onHide, order }: { show: boolean, onHide: any, order: string }) => {
-  console.log('orderr ', order)
   return (
     <>
       <Modal show={show} onHide={onHide} centered>

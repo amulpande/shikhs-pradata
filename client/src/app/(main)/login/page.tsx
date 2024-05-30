@@ -29,7 +29,7 @@ const LoginHomePage = () => {
     setIsFormValid(isValid);
   }, [userLogindata]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     try {
@@ -38,13 +38,12 @@ const LoginHomePage = () => {
       if (response.data.statuCode === 200) {
         successNotify()
         dispatch(authLogin(response.data))
-        console.log('response ',response.data)
         setTimeout(() => {
           if (response?.data?.user?.role == 2) {
             router.push('/partner/index')
-          } else if(response?.data?.user?.role == 1){
+          } else if (response?.data?.user?.role == 1) {
             router.push('/admin/index')
-          }else{
+          } else {
             router.push('/profile')
           }
         }, 200)
@@ -53,10 +52,13 @@ const LoginHomePage = () => {
         customErrorMessageErrorNotify('You are not a user')
       }
     } catch (error: any) {
-      // if(error.status==401){
-      //   customErrorMessageErrorNotify('You are not a user')
-      // }
-      errorNotify();
+      if (error.response.status === 401 && error.response.data.Message) {
+        customErrorMessageErrorNotify(error.response.data.Message)
+      } else if (error.response.status === 403) {
+        customErrorMessageErrorNotify(error.response.data.Message)
+      }else{
+        errorNotify();
+      }
     } finally {
       setLoading(false);
     }

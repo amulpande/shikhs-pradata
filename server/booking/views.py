@@ -19,6 +19,7 @@ from api.models import User
 from booking.paginations import AdminBookingOrderPagination,UserBookingOrderPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from api.utils import Utils
+from threading import Thread
 
 
 class CheckingView (APIView):
@@ -39,12 +40,16 @@ class BookingOrderView(APIView):
         user = request.user.id
         tutor_id = request.data.get('tutor_id')
         try:
+            
             tutor_data = User.objects.get(pk=tutor_id)
             if tutor_data.tutor_approve == False:
                 return Response({'Error':'This Tutor is not approved yet'},status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response({'Error':'User does not exist'},status=status.HTTP_404_NOT_FOUND)
-        
+        print(f'user id {user} and tutor {tutor_id}')
+        if int(user) == int(tutor_id):
+            print('Condition checked')
+            return Response({'Error':'You can not book your self'},status=status.HTTP_400_BAD_REQUEST)
         serializer = BookingOrderSerializer(data={ **request.data , "user_id" : user })
         if serializer.is_valid():
             serializer.save()
@@ -166,7 +171,9 @@ class SendMailForMeetingToUserApiView(APIView):
             meeting_link = request.data.get('meeting_link')
             
             data = {'meeting':meeting_link,'tutor':'pande.amul.dcs24@vnsgu.ac.in','user':user_email}
-            Utils.send_meeting_email_to_user(data=data)
+            thread = Thread(target=Utils.send_meeting_email_to_user,args=(data,))
+            # Utils.send_meeting_email_to_user(data=data)
+            thread.start()
             return Response({'Message':'Email has been sent to the user'},status=status.HTTP_200_OK)
             
         except:

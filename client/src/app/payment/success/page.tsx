@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Payment.module.scss'
 import Link from 'next/link'
 
-const page = () => {
+const PaymentSuccessComponent = () => {
     return (
         <>
             <div className={styles.container}>
@@ -34,4 +34,4 @@ const page = () => {
     )
 }
 
-export default page
+export default PaymentSuccessComponent

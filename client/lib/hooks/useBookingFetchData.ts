@@ -7,13 +7,16 @@ const useBookingFetchData = (api: {
         page: number,
         order_by: string,
         status: string,
-        page_size: number
+        page_size: number,
+        bookingDate:string
     }): Promise<any>;
 },
     page: number = 1,
     order_by: string,
     status: string='',
-    page_size: number = 10) => {
+    page_size: number = 10,
+    bookingDate:string=''
+) => {
     // const  {page,} = 1 
     const [data, setData] = useState<BookingType[]>([])
     const [loading, setLoading] = useState<boolean>(true)
@@ -25,7 +28,7 @@ const useBookingFetchData = (api: {
     const fetchBookingData = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await api({ page, order_by, status, page_size })
+            const response = await api({ page, order_by, status, page_size ,bookingDate})
             setTotalCount(response.count)
             const calculatedTotalPages = Math.ceil(response.data.count / page_size); // Assuming 10 items per page
             setTotalPages(calculatedTotalPages)
@@ -36,7 +39,7 @@ const useBookingFetchData = (api: {
         } finally {
             setLoading(false)
         }
-    }, [api, page, order_by, status, page_size])
+    }, [api, page, order_by, status, page_size,bookingDate])
 
     useEffect(() => {
         fetchBookingData()

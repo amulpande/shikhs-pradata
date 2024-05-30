@@ -8,6 +8,9 @@ from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeErr
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from api.utils import Utils
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 """
@@ -91,6 +94,7 @@ class UserLoginSeriliazer(serializers.Serializer):
         fields = "__all__"
 
     def validate(self, attrs):
+        logger.info('User Login serializer %s',attrs)
         email = attrs["email"]
         password = attrs["password"]
 

@@ -1,0 +1,41 @@
+INFO 2024-06-01 08:36:19,780 schedular Scheduler started
+INFO 2024-06-01 08:36:20,587 schedular Scheduler started
+INFO 2024-06-01 08:36:20,599 autoreload Watching for file changes with StatReloader
+INFO 2024-06-01 08:36:20,627 serializers User Register Serializer hit
+INFO 2024-06-01 08:37:44,240 basehttp "GET /admin/api/user/ HTTP/1.1" 200 42637
+INFO 2024-06-01 08:37:44,310 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+WARNING 2024-06-01 08:37:44,964 log Not Found: /favicon.ico
+WARNING 2024-06-01 08:37:44,965 basehttp "GET /favicon.ico HTTP/1.1" 404 2215
+INFO 2024-06-01 08:37:52,058 basehttp "OPTIONS /api/rating/main/feedback/ HTTP/1.1" 200 0
+INFO 2024-06-01 08:37:52,060 basehttp "OPTIONS /api/rating/main/feedback/ HTTP/1.1" 200 0
+WARNING 2024-06-01 08:37:52,094 log Unauthorized: /api/rating/main/feedback/
+WARNING 2024-06-01 08:37:52,094 basehttp "GET /api/rating/main/feedback/ HTTP/1.1" 401 183
+WARNING 2024-06-01 08:37:52,097 log Unauthorized: /api/rating/main/feedback/
+WARNING 2024-06-01 08:37:52,098 basehttp "GET /api/rating/main/feedback/ HTTP/1.1" 401 183
+INFO 2024-06-01 08:37:52,106 basehttp "OPTIONS /api/user/login/token/refresh/ HTTP/1.1" 200 0
+INFO 2024-06-01 08:37:52,111 basehttp "OPTIONS /api/user/login/token/refresh/ HTTP/1.1" 200 0
+INFO 2024-06-01 08:37:52,121 basehttp "POST /api/user/login/token/refresh/ HTTP/1.1" 200 486
+INFO 2024-06-01 08:37:52,122 basehttp "POST /api/user/login/token/refresh/ HTTP/1.1" 200 486
+INFO 2024-06-01 08:37:52,222 basehttp "GET /api/rating/main/feedback/ HTTP/1.1" 200 1049
+INFO 2024-06-01 08:37:52,235 basehttp "GET /api/rating/main/feedback/ HTTP/1.1" 200 1049
+INFO 2024-06-01 08:37:55,546 basehttp "GET /api/rating/main/feedback/ HTTP/1.1" 200 1049
+INFO 2024-06-01 08:37:55,559 basehttp "GET /api/rating/main/feedback/ HTTP/1.1" 200 1049
+INFO 2024-06-01 08:55:22,979 basehttp "OPTIONS /api/payment/tutor/total-earning/ HTTP/1.1" 200 0
+INFO 2024-06-01 08:55:22,981 basehttp "OPTIONS /api/payment/tutor/total-earning/ HTTP/1.1" 200 0
+WARNING 2024-06-01 08:55:22,984 log Unauthorized: /api/payment/tutor/total-earning/
+WARNING 2024-06-01 08:55:22,984 basehttp "GET /api/payment/tutor/total-earning/ HTTP/1.1" 401 183
+WARNING 2024-06-01 08:55:22,986 log Unauthorized: /api/payment/tutor/total-earning/
+WARNING 2024-06-01 08:55:22,986 basehttp "GET /api/payment/tutor/total-earning/ HTTP/1.1" 401 183
+INFO 2024-06-01 08:55:23,030 basehttp "OPTIONS /api/user/login/token/refresh/ HTTP/1.1" 200 0
+INFO 2024-06-01 08:55:23,033 basehttp "POST /api/user/login/token/refresh/ HTTP/1.1" 200 486
+INFO 2024-06-01 08:55:23,037 basehttp "POST /api/user/login/token/refresh/ HTTP/1.1" 200 486
+INFO 2024-06-01 08:55:23,054 basehttp "GET /api/payment/tutor/total-earning/ HTTP/1.1" 200 141
+INFO 2024-06-01 08:55:23,065 basehttp "GET /api/payment/tutor/total-earning/ HTTP/1.1" 200 141
+INFO 2024-06-01 08:55:23,206 basehttp "GET /api/payment/tutor/total-earning/ HTTP/1.1" 200 141
+INFO 2024-06-01 08:55:23,218 basehttp "GET /api/payment/tutor/total-earning/ HTTP/1.1" 200 141
+INFO 2024-06-01 08:55:29,970 basehttp "GET /api/rating/main/feedback/ HTTP/1.1" 200 1049
+INFO 2024-06-01 08:55:29,984 basehttp "GET /api/rating/main/feedback/ HTTP/1.1" 200 1049
+INFO 2024-06-01 09:32:30,103 basehttp "OPTIONS /api/user/profile/ HTTP/1.1" 200 0
+INFO 2024-06-01 09:32:30,105 basehttp "OPTIONS /api/user/profile/ HTTP/1.1" 200 0
+INFO 2024-06-01 09:32:30,112 basehttp "GET /api/user/profile/ HTTP/1.1" 200 334
+INFO 2024-06-01 09:32:30,119 basehttp "GET /api/user/profile/ HTTP/1.1" 200 334

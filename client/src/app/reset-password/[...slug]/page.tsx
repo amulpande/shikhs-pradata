@@ -3,9 +3,9 @@ import { useState } from "react"
 import { userPasswordResetApi } from "@lib/api/allApi"
 import { PasswordReseType } from "@lib/types/types"
 import { Container, Typography, TextField, Button } from '@mui/material';
-import { customErrorMessageErrorNotify, customSuccessMessageErrorNotify } from "@lib/notification-toastify/notification-toastify";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2'
 
 
 const ResetPasswordPage = ({ params }: {
@@ -21,21 +21,30 @@ const ResetPasswordPage = ({ params }: {
   const uid = params.slug[0]
   const token = params.slug[1]
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     setResetPassword({ ...resetPassword, [e.target.name]: e.target.value })
   }
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     try {
       const response = await userPasswordResetApi(uid, token, resetPassword)
       if (response) {
-        customSuccessMessageErrorNotify('Password has been changed')
+        Swal.fire({
+          title: "Reset Password!",
+          text: "Password has been reset!",
+          icon: "success"
+        });
       }
 
     } catch (error) {
-      customErrorMessageErrorNotify('Not able to change password Try again later')
+      Swal.fire({
+        title: "Oops!",
+        text: "Token is either invalid or expired",
+        icon: "error"
+      });
     }
   }
+  const isSubmitDisabled = !resetPassword.password || !resetPassword.password2;
   return (
     <>
       <Container maxWidth="sm" style={{ marginTop: '2rem' }}>
@@ -63,12 +72,12 @@ const ResetPasswordPage = ({ params }: {
             onChange={handleChange}
             margin="normal"
           />
-          <Button variant="contained" color="primary" type="submit" fullWidth style={{ marginTop: '1rem' }}>
+          <Button variant="contained" color="primary" type="submit" fullWidth style={{ marginTop: '1rem' }} disabled={isSubmitDisabled}>
             Submit
           </Button>
         </form>
       </Container>
-      <ToastContainer/>
+      <ToastContainer />
     </>
 
   )

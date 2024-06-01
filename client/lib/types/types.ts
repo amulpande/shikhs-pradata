@@ -203,7 +203,23 @@ interface ContactUsTypes extends ContactUsType {
     id:number;
 };
 
-
+interface TutorRegisterDataType {
+    email: string,
+    firstName: string,
+    lastName: string,
+    contact: string,
+    gender: string,
+    address: string,
+    password: string,
+    confirmPassword: string,
+    profileImage: File | null,
+    short_bio: string,
+    city: string,
+    subjects: string,
+    experience: string,
+    dob: string,
+    price: string,
+  }
 export type {
     TutorType,
     UserLoginType,
@@ -225,5 +241,6 @@ export type {
     TutorAllTotalTypes,
     PyamentType,
     ContactUsTypes,
-    ContactUsType
+    ContactUsType,
+    TutorRegisterDataType,
 };

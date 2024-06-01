@@ -4,17 +4,13 @@ import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
 import { fetchTutorData } from '@lib/utils/action';
 import TutorCard from './TutorCard';
-import { ratingTutorApi } from '@lib/api/allApi';
 import { FeedbackMainPageType, TutorType } from '@lib/types/types';
-import { FeedbackType } from 'react-bootstrap/esm/Feedback';
 
-// let page = 2
-
-const LoadMore = ({ subjects, order_by,rating }: { subjects: string, order_by: string,rating:FeedbackMainPageType[] },) => {
+const LoadMore = ({ subjects, order_by,rating,next }: { subjects: string, order_by: string,rating:FeedbackMainPageType[] ,next:string },) => {
     const [page, setPage] = useState(2)
     const { ref, inView } = useInView()
     const [tutor, setTutor] = useState<TutorType[]>([])
-    // const [rating, setRating] = useState<FeedbackMainPageType[]>([])
+    const [nextUrl,setNextUrl] = useState<string|null>(next)
     useEffect(() => {
         // reseting data if subjects and order_by are changed
         setTutor([]);
@@ -22,46 +18,23 @@ const LoadMore = ({ subjects, order_by,rating }: { subjects: string, order_by: s
     }, [subjects, order_by]);
 
     useEffect(() => {
-        // if cursor hit the ref div than inview will be true and this fetchdata will be called
-        if (inView) {
+        // if cursor hit the ref div than inview will be true and if nextUrl is there than this fetchdata will be called
+        if (inView && nextUrl) {
             const fetchData = async () => {
                 try {
                     const response = await fetchTutorData({ page: page, search: subjects, order_by: order_by });
                     setTutor([...tutor, ...response.results]);
                     setPage((p) => p += 1)
+                    setNextUrl(response.next)
                 } catch (error) {
                     console.error('Error fetching tutor data:', error);
                 }
             };
 
             fetchData();
-            // const fetchRating = async () => {
-            //     try {
-            //         const response = await ratingTutorApi();
-            //         setRating(response.data);
-            //     } catch (error) {
-            //         console.error('Error fetching tutor rating data:', error);
-            //     }
-            // };
-
-            // fetchRating();
         }
-    }, [inView, tutor, page, subjects, order_by])
+    }, [inView, tutor, page, subjects, order_by,next,nextUrl])
 
-    // useEffect(() => {
-    //     if (inView) {
-    //         const fetchRating = async () => {
-    //             try {
-    //                 const response = await ratingTutorApi();
-    //                 setRating(response.data);
-    //             } catch (error) {
-    //                 console.error('Error fetching tutor rating data:', error);
-    //             }
-    //         };
-
-    //         fetchRating();
-    //     }
-    // }, [inView])
 
     // tutors average rating will be sent
     const getTutorAverageRating = (tutorId: number) => {

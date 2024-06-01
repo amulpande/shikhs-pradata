@@ -22,15 +22,16 @@ const TutorDetailsPage = () => {
     const [tutor, setTutorData] = useState<any>([]);
     const [rating, setRating] = useState<any[]>([])
     const [orderBy, setOrderBy] = useState<string>('-id')
+    const [next,setNext] = useState<string>('')
 
     const fetchTutors = useCallback(async () => {
         const tutors = await fetchTutorData({ page: 1, search: searchQuery, order_by: orderBy });
         setTutorData(tutors);
+        setNext(tutors.next)
+        console.log('teachre details ',tutors)
     }, [searchQuery, orderBy])
 
     useEffect(() => {
-
-
         fetchTutors()
     }, [fetchTutors]); // Trigger fetchTutors whenever searchQuery changes
     useEffect(() => {
@@ -39,6 +40,7 @@ const TutorDetailsPage = () => {
             try {
                 const response = await getSubjectsApi()
                 setSubject(response.data)
+                
             } catch (error) {
                 console.error("Error fetchig subject", error)
             }
@@ -112,7 +114,7 @@ const TutorDetailsPage = () => {
                     ))
                 }
             </div>
-            {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} rating={rating} />)
+            {tutor ? (tutor?.results?.length > 0 ? (tutor.next && <LoadMore subjects={searchQuery} order_by={orderBy} rating={rating} next={tutor.next}/>)
                 : <h3 className='text-center'><CircularProgress /></h3>) : 'NO DATA FOUND...'}
         </>
     )

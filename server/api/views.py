@@ -31,11 +31,13 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .filters import TurorFilter
 from api.utils import Utils
 from django.db.models import Q
+from rest_framework import serializers 
 # from rest_framework import DjangoFilterBackend
 
 from api.models import User
 import os
 from threading import Thread
+from api.services import UserService
 
 #cutom permission mixin for isAuthenticated and user permission
 class IsAdminPermissionMixin:
@@ -54,6 +56,7 @@ class UserRegisterApiView(APIView):
         try:
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
+                # print('user save hua',user)
                 user = serializer.save()
                 refresh = RefreshToken.for_user(user)
                 response_data = {
@@ -73,9 +76,11 @@ class UserRegisterApiView(APIView):
                 return Response(response_data, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:  # Catch generic exception for logging or debugging
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e: 
             return Response(
-                {"Message": "Registration failed"},
+                {"Message": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -98,81 +103,7 @@ class UserLoginApiView(APIView):
             }
             if valid:
                 role = serializer.data['role']
-                if serializer.data["role"] == "3":
-                    status_code = status.HTTP_200_OK
-                    
-                    if serializer.data["isDeleted"]=='True':
-                        return Response({'Error':'Invalids User'},status=status.HTTP_401_UNAUTHORIZED)
-
-                    else:
-                        response = {
-                        "success": True,
-                        "statuCode": status_code,
-                        "access": serializer.data["access"],
-                        "refresh": serializer.data["refresh"],
-                        "user": {
-                            "id": serializer.data["id"],
-                            "email": serializer.data["email"],
-                            "first_name": serializer.data["first_name"],
-                            "last_name": serializer.data["last_name"],
-                            "role": serializer.data["role"],
-                            "address": serializer.data["address"],
-                            "gender": serializer.data["gender"],
-                            "profile_image": serializer.data["profile_image"],
-                            "contact": serializer.data["contact"],
-                            "isDeleted":serializer.data["isDeleted"]
-                        },
-                    }
-                elif serializer.data["role"] =='2':
-                    tutor = User.objects.get(email=serializer.data['email'])
-                    if tutor.tutor_approve == False:
-                        return Response({'Message':'You are not approved by admin yet'},status=status.HTTP_401_UNAUTHORIZED)
-                    
-                    if tutor.user_blocked:
-                        return Response({'Message':'You have been blocked by Admin'},status=status.HTTP_403_FORBIDDEN)
-                    status_code = status.HTTP_200_OK
-                    if serializer.data["isDeleted"] == True:
-                        return Response({'Error':'Invalid User'},status=status.HTTP_401_UNAUTHORIZED)
-
-                    response = {
-                        "success": True,
-                        "statuCode": status_code,
-                        "access": serializer.data["access"],
-                        "refresh": serializer.data["refresh"],
-                        "user": {
-                            "id": serializer.data["id"],
-                            "email": serializer.data["email"],
-                            "first_name": serializer.data["first_name"],
-                            "last_name": serializer.data["last_name"],
-                            "role": serializer.data["role"],
-                            "address": serializer.data["address"],
-                            "gender": serializer.data["gender"],
-                            "profile_image": serializer.data["profile_image"],
-                            "contact": serializer.data["contact"],
-                        },
-                    }
-                elif serializer.data["role"] =='1':
-                    status_code = status.HTTP_200_OK
-                    if serializer.data["isDeleted"] == True:
-                        return Response({'Error':'Invalid User'},status=status.HTTP_401_UNAUTHORIZED)
-
-                    response = {
-                        "success": True,
-                        "statuCode": status_code,
-                        "access": serializer.data["access"],
-                        "refresh": serializer.data["refresh"],
-                        "user": {
-                            "id": serializer.data["id"],
-                            "email": serializer.data["email"],
-                            "first_name": serializer.data["first_name"],
-                            "last_name": serializer.data["last_name"],
-                            "role": serializer.data["role"],
-                            "address": serializer.data["address"],
-                            "gender": serializer.data["gender"],
-                            "profile_image": serializer.data["profile_image"],
-                            "contact": serializer.data["contact"],
-                        },
-                    }
+                response,status_code = UserService.get_login_response(serializer_data=serializer.data,role=role)
                 return Response(response, status=status_code)
             return Response(response, status=status_code)
         except Exception as e:
@@ -267,32 +198,8 @@ class TutorRegisterApiView(APIView):
         try:
             serilaizer = self.serializer_class(data=request.data)
             if serilaizer.is_valid():
-                user = serilaizer.save()
-                refresh = RefreshToken.for_user(user)
-                response_data = {
-                    "refresh": str(refresh),
-                    "access": str(refresh.access_token),
-                    "user": {
-                        "id": user.id,
-                        "email": user.email,
-                        "first_name": user.first_name,
-                        "last_name": user.last_name,
-                        "contact": user.contact,
-                        "gender": user.gender,
-                        "address": user.address,
-                        "role": str(user.role),
-                        "profile_image": str(user.profile_image),
-                        "short_bio": user.short_bio,
-                        "city": user.city.city_name if user.city else None,
-                        "subjects": (
-                            user.subjects.subject_name if user.subjects else None
-                        ),
-                        "experience": user.experience,
-                        "dob": user.dob,
-                        "price": user.price,
-                    },
-                }
-                return Response(response_data, status=status.HTTP_200_OK)
+                response_data, status_code = UserService.create_tutor_and_tokens(serilaizer)
+                return Response(response_data, status=status_code)
             else:
                 return Response(serilaizer.errors, status=status.HTTP_400_BAD_REQUEST)
         except:

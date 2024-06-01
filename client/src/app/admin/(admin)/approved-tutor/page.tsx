@@ -47,13 +47,6 @@ const ApproedTutorPage = () => {
       <div className='card-header'>
         <h3 className='card-title'>Approved Tutor List</h3>
       </div>
-      {/* <div className="form-group col-md-4">
-        <input className="form-control rounded-0 py-2" type="search" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} id="example-search-input"/>
-      </div> */}
-      {/* <div>
-
-        <input type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='Search' />
-      </div> */}
       <div className='mt-4 mr-15'>
 
         <TableComponent data={tutors} loading={loading} customActionButtons={renderCustomActionButtons} />

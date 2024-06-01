@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Grid, CircularProgress } from '@mui/material';
+import { TextField, Button, Typography, Grid, CircularProgress, Box } from '@mui/material';
 import * as api from '../../../lib/api/allApi';
 import Swal from 'sweetalert2'
 
@@ -9,11 +9,11 @@ const PasswordResetForm = () => {
     const [email, setEmail] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
-    const handleEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
 
-    const handleSubmit = async (e:React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         setLoading(true);
@@ -27,14 +27,14 @@ const PasswordResetForm = () => {
                     icon: "success"
                 });
             }
-        } catch (error:any) {
-            console.error('Error sending email ',error)
+        } catch (error: any) {
+            console.error('Error sending email ', error)
             const response = error?.response?.data?.non_field_errors[0] || 'Something went wrong try again later'
             Swal.fire({
                 title: "Something went wrong!",
                 text: response,
                 icon: "error"
-              });
+            });
         } finally {
             setLoading(false)
         }
@@ -57,10 +57,15 @@ const PasswordResetForm = () => {
                             onChange={handleEmailChange}
                         />
                     </Grid>
-                    <Grid item xs={12}>
-                        <Button type="submit" variant="contained" color="primary" disabled={loading}>
-                            {loading ? <CircularProgress size={24} /> : 'Reset Password'}
-                        </Button>
+                    <Grid item xs={12} container justifyContent="center" sx={{ mt: 2 }}>
+                        <Box display="flex" justifyContent="center" sx={{ gap: 2 }}>
+                            <Button type="submit" variant="contained" color="primary" disabled={!email.length}>
+                                {loading ? <CircularProgress size={24} /> : 'Reset Password'}
+                            </Button>
+                            <Button type="button" variant="contained" color="primary" disabled={loading} onClick={() => { }}>
+                                Back to Login
+                            </Button>
+                        </Box>
                     </Grid>
                 </Grid>
             </form>

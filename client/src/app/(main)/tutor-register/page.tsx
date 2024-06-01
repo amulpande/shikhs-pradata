@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { tutorRegisterApi, userRegisterApi } from '../../../../lib/api/allApi';
@@ -12,6 +12,9 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RooState } from '@lib/store/store';
+import { CircularProgress } from '@mui/material';
+import { TutorRegisterDataType } from '@lib/types/types';
+
 
 const TutorRegisterPage = () => {
 
@@ -19,30 +22,12 @@ const TutorRegisterPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const cityHai = useSelector((state:RooState )=> state.cityData.cityData)
   const subjectData = useSelector((state:RooState) => state.subjectData.subjects)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     dispatch(fetchCityDataApi())
     dispatch(fetchSubjectApi())
   }, [dispatch]);
 
-
-
-  interface TutorRegisterDataType {
-    email: string,
-    firstName: string,
-    lastName: string,
-    contact: string,
-    gender: string,
-    address: string,
-    password: string,
-    confirmPassword: string,
-    profileImage: File | null,
-    short_bio: string,
-    city: string,
-    subjects: string,
-    experience: string,
-    dob: string,
-    price: string,
-  }
   const initialValues: TutorRegisterDataType = {
     email: '',
     firstName: '',
@@ -64,7 +49,7 @@ const TutorRegisterPage = () => {
     initialValues,
     validationSchema: tutorRegistrationValidationSchema,
     onSubmit: async (values) => {
-
+      setIsLoading(true) 
       const formData = new FormData()
       formData.append('email', values.email)
       formData.append('first_name', values.firstName)
@@ -96,6 +81,8 @@ const TutorRegisterPage = () => {
           customErrorMessageErrorNotify(errorMessage) 
         }
         console.error('Error registering tutor',error)
+      } finally{
+        setIsLoading(false)
       }
     }
   })
@@ -420,7 +407,7 @@ const TutorRegisterPage = () => {
                   <button type='submit' name="registerbtn" className="submit-btn"
                   disabled={!formik.isValid || !formik.dirty}
                   >
-                    Register Now
+                    {isLoading ? <CircularProgress size={24} /> : 'Register Now'}
                   </button>
                   <p>
                     Already Have An Account? <Link href="/login">Login</Link>

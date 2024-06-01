@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -233,3 +234,54 @@ STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY =os.environ.get('STRIPE_PUBLISHABLE_KEY')
 
 STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')
+
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+
+# Ensure the logs directory exists
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
+    
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGS_DIR, 'app.log'),
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'api': {  # Custom logger for your application
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'api.service': {  # Custom logger for your application
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}

@@ -1,6 +1,9 @@
 from django.core.mail import EmailMessage
 import os
 import threading
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Utils:
 
@@ -50,3 +53,8 @@ class Utils:
     @staticmethod
     def send_email_thread(email_instance : EmailMessage):
         email_instance.send()
+        
+    @staticmethod 
+    def send_automate_email():
+        logger.info('Working now')
+        pass

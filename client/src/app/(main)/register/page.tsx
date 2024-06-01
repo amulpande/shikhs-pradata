@@ -7,7 +7,7 @@ import { userRegisterApi } from '@lib/api/allApi';
 import { registeredSuccessfullyNotify, userEmailAlreadyExistNotify } from '@lib/notification-toastify/notification-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TextField, Input, Button, Grid, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { TextField, Input, Button, Grid, Typography, Radio, RadioGroup, FormControlLabel, CircularProgress } from '@mui/material';
 import { UserRegisterType } from '@lib/types/types';
 import { useRouter } from 'next/navigation';
 
@@ -26,11 +26,12 @@ const initialValues: UserRegisterType = {
 const RegisterHomePage = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter()
-
+    const [isLoading,setIsLoading] = useState<boolean>(false)
     const formik = useFormik({
         initialValues,
         validationSchema: userRegistrationValuesValidationSchema,
         onSubmit: async (values) => {
+            setIsLoading(true)
             const formData = new FormData()
             formData.append('email', values.email)
             formData.append('first_name', values.firstName)
@@ -55,6 +56,8 @@ const RegisterHomePage = () => {
                 if (error.response.data.email[0] == 'user with this email already exists.') {
                     userEmailAlreadyExistNotify()
                 }
+            }finally{
+                setIsLoading(false)
             }
 
         }
@@ -154,6 +157,7 @@ const RegisterHomePage = () => {
                                                 name="password"
                                                 label="Password"
                                                 variant="outlined"
+                                                type='password'
                                                 value={formik.values.password}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
@@ -169,6 +173,7 @@ const RegisterHomePage = () => {
                                                 name="confirmPassword"
                                                 label="Confirm Password"
                                                 variant="outlined"
+                                                type='password'
                                                 value={formik.values.confirmPassword}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
@@ -227,7 +232,7 @@ const RegisterHomePage = () => {
                                             <Button type="submit" variant="contained" color="primary"
                                                 disabled={loading || !formik.dirty || !formik.isValid}
                                             >
-                                                Register Now
+                                                {isLoading ? <CircularProgress size={24} />: 'Register Now'}
                                             </Button>
                                         </Grid>
                                         {/* </Grid> */}

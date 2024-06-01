@@ -10,7 +10,9 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from api.utils import Utils
 import logging
 
-logger = logging.getLogger(__name__)
+from api.services import UserSerializerService,UserService
+
+logger = logging.getLogger('api')
 
 
 """
@@ -19,6 +21,7 @@ User Registration serializer
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
+    logger.info('User Register Serializer hit')
     password = serializers.CharField(max_length=128, required=True, write_only=True)
     password2 = serializers.CharField(max_length=128, required=True, write_only=True)
     # all_fields = serializers.SerializerMethodField()
@@ -43,35 +46,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-
-        email = validated_data.get("email")
-        first_name = validated_data.get("first_name")
-        last_name = validated_data.get("last_name")
-        contact = validated_data.get("contact")
-        gender = validated_data.get("gender")
-        address = validated_data.get("address")
-        profile_image = validated_data.get("profile_image")
-        password = validated_data.get("password")
-        password2 = validated_data.get("password2")
-
-        if password == password2:
-            user = User(
-                email=email,
-                first_name=first_name,
-                last_name=last_name,
-                contact=contact,
-                gender=gender,
-                profile_image=profile_image,
-                address=address,
-            )
-            user.set_password(password)
-            user.save()
-            return user
-
-        else:
-            raise serializers.ValidationError(
-                "Password and Confirm Password does not match!"
-            )
+        logger.info('User regitser serializer user create hit')
+        try:
+            return UserSerializerService.create_user(validated_data)
+        except serializers.ValidationError as e:
+            logger.info('User regitser serializer user create exception raised')
+            raise e  # re raised serializer error
 
 
 class UserLoginSeriliazer(serializers.Serializer):
@@ -95,35 +75,7 @@ class UserLoginSeriliazer(serializers.Serializer):
 
     def validate(self, attrs):
         logger.info('User Login serializer %s',attrs)
-        email = attrs["email"]
-        password = attrs["password"]
-
-        user = authenticate(email=email, password=password)
-
-        if user is None:
-            raise serializers.ValidationError("Invalid login credentials!")
-        try:
-            refresh = RefreshToken.for_user(user)
-            refresh_token = str(refresh)
-            access_token = str(refresh.access_token)
-            update_last_login(None, user)
-            validation = {
-                "id": user.id,
-                "access": access_token,
-                "refresh": refresh_token,
-                "email": user.email,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "contact": user.contact,
-                "address": user.address,
-                "gender": user.gender,
-                "profile_image": user.profile_image,
-                "role": user.role,
-                "isDeleted":user.isDeleted,
-            }
-            return validation
-        except User.DoesNotExist:
-            raise serializers.ValidationError("Invalid credential from userlogin")
+        return UserSerializerService.role_login(attrs=attrs)
 
 
 class UserSerializer(serializers.ModelSerializer):

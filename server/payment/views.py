@@ -284,5 +284,5 @@ class PaymentDataOfAdminApi(ListAPIView):
     pagination_class = PaymentPaginationLimited
     filter_backends = [DjangoFilterBackend]
     filterset_class  = PaymentFilter
-    queryset = Payment.objects.all()
+    queryset = Payment.objects.all().order_by('-id')
     

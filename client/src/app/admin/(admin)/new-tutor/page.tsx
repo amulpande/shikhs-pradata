@@ -50,13 +50,21 @@ const NewTutorJoinPage = () => {
         <>
             <div className='mt-10 mr-15' >
                 <TableComponent data={tutors} loading={loadings} customActionButtons={renderCustomActionButtons} />
-                <Pagination
+                {/* <Pagination
                     count={totalPages}
                     page={currentPage}
                     onChange={(event, page) => { setCurrentPage(page) }}
                     variant="outlined"
                     shape="rounded"
-                />
+                /> */}
+                <div className='mt-2 d-flex justify-content-center'>
+                    <Pagination
+                        count={totalPages}
+                        siblingCount={0}
+                        page={currentPage}
+                        onChange={(event, page) => setCurrentPage(page)}
+                    />
+                </div>
                 <ToastContainer />
             </div>
 

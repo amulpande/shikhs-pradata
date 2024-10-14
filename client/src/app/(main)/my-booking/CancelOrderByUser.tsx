@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap';
 import Swal from 'sweetalert2'
 const CancelOrderByUser = ({ show, onHide, order }: { show: boolean, onHide: any, order: any }) => {
-    const [cancelOrder, setCancelOrder] = useState('')
+    const [cancelOrder, setCancelOrder] = useState<string>('')
 
     return (
         <>
@@ -21,6 +21,9 @@ const CancelOrderByUser = ({ show, onHide, order }: { show: boolean, onHide: any
                         onChange={(e) => setCancelOrder(e.target.value)}
                         placeholder="Provide Reason"
                     />
+                    {
+                        cancelOrder.length > 3 && <p>Provide reason atleast 10 character long</p>
+                    }
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={onHide}>Close</Button>
@@ -37,7 +40,9 @@ const CancelOrderByUser = ({ show, onHide, order }: { show: boolean, onHide: any
                         } catch (error) {
                             console.error('Error in cancel order ', error)
                         }
-                    }}>Submit</Button>
+                    }}
+                    disabled={cancelOrder.length <= 10}
+                    >Submit</Button>
                 </Modal.Footer>
             </Modal>
         </>

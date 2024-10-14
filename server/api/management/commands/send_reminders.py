@@ -19,11 +19,10 @@ class Command(BaseCommand):
             
             # 
             # email for same tutor email will stored and than it will be sent once all booking data are there 
-            # for same user
+            # for same tutor, hence no need to send emails separately for every booking
             # 
             appointments_by_tutor = {} 
             
-
             for booking in bookings:
                 tutor_email = booking.tutor_id.email
                 if tutor_email not in appointments_by_tutor:

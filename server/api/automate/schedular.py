@@ -13,7 +13,7 @@ def start():
     scheduler.add_job(
         lambda: call_command('send_reminders'),
         trigger=CronTrigger(hour="6",minute="0"),
-        # trigger=IntervalTrigger(seconds=30), #for testing and try using command ->  python manage.py send_reminders
+        # trigger=IntervalTrigger(seconds=5), #for testing and try using command ->  python manage.py send_reminders
         id='send_reminders',
         max_instances=1,
         replace_existing=True

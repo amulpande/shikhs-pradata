@@ -61,13 +61,14 @@ const PartnerRejectedBookingPage = () => {
                 handleOpen(booking)
             }}><i className="far fa-window-close"></i></button> : (
                 <>
-                    <button className='btn btn-success mr-2'> {booking?.payment_status} </button>
-                    {
-                        booking?.payment_status == 'Paid' &&
-                        // <Link href={`/video-call/${roomIdToSend}`}>
-                        // </Link>
-                        <button className='btn btn-secondary' onClick={() => handleCreateMeeting(booking)} > <i className='fa fa-video'></i> </button>
-                    }
+                    <div className='d-flex align-items-center'>
+                        <button className='btn btn-success mr-2'>{booking?.payment_status}</button>
+                        {booking?.payment_status === 'Paid' && (
+                            <button className='btn btn-secondary' onClick={() => handleCreateMeeting(booking)}>
+                                <i className='fa fa-video'></i>
+                            </button>
+                        )}
+                    </div>
                 </>
             )
             }

@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2'
 
 
 const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject_id }: any) => {
@@ -70,19 +71,29 @@ const BookingModelComponent = ({ open, handleClose, handleOpen, tutorId, subject
                             try {
                                 const response = await userBookTutorApi(bookingData)
                                 if (response) {
-                                    orderHasBeenBookedNotify()
+                                    // orderHasBeenBookedNotify()
+                                    Swal.fire({
+                                        title: "Booking Completed!",
+                                        text: "Your appointment has been booked, now waiting for confirmation",
+                                        icon: "success"
+                                    });
                                 }
                                 handleClose()
                             } catch (error) {
                                 console.error('Error booking', error)
-                                orderNotBookedErrorNotify()
+                                // orderNotBookedErrorNotify()
+                                Swal.fire({
+                                    title: "Oops",
+                                    text: "Your Appointment has been cancelled!",
+                                    icon: "error"
+                                });
                             }
                         }}>
                         Book Now
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </>
     )
 }

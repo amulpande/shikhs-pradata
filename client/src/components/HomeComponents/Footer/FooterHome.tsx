@@ -55,7 +55,7 @@ const FooterHome = () => {
                                     <li>
                                         <i className="fas fa-envelope" />
                                         <p>Email:</p>
-                                        <Link href="#">shikhshapradata@example.com</Link>
+                                        <Link href="#">shikhshapradata@sp.in</Link>
                                     </li>
                                     <li>
                                         <i className="fas fa-phone-alt" />

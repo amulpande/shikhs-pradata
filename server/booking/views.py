@@ -46,9 +46,9 @@ class BookingOrderView(APIView):
                 return Response({'Error':'This Tutor is not approved yet'},status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response({'Error':'User does not exist'},status=status.HTTP_404_NOT_FOUND)
-        print(f'user id {user} and tutor {tutor_id}')
+        # print(f'user id {user} and tutor {tutor_id}')
         if int(user) == int(tutor_id):
-            print('Condition checked')
+            # print('Condition checked')
             return Response({'Error':'You can not book your self'},status=status.HTTP_400_BAD_REQUEST)
         serializer = BookingOrderSerializer(data={ **request.data , "user_id" : user })
         if serializer.is_valid():
@@ -106,9 +106,10 @@ def updateBookingStatus(request,pk):
         return Response({'Message':'Booking does not exist'})
     
 @api_view(['PATCH'])   
-@permission_classes([IsUser]) 
+@permission_classes([IsUser | IsTutor]) 
 def cancelOrderByUser(request,pk):
     try:
+        # print('isuser ',request.user)
         booking = Booking.objects.get(pk=pk)
         user = TutorSeriliazer(request.user)
         userId = user.data['email']
@@ -120,7 +121,7 @@ def cancelOrderByUser(request,pk):
             return Response({'Error':'Status not found which you have provided'},status=status.HTTP_404_NOT_FOUND)
         return Response({'Error':'This order is not booked for you'},status=status.HTTP_404_NOT_FOUND)
     except Booking.DoesNotExist:
-        return Response({'Message':'Booking does not exist'})
+        return Response({'Message':'Booking does not exist'},status=status.HTTP_404_NOT_FOUND)
    
 # Tutor can delete booking
 @api_view(['DELETE'])

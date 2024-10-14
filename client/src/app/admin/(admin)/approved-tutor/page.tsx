@@ -44,19 +44,27 @@ const ApproedTutorPage = () => {
   );
   return (
     <>
-      <div className='card-header'>
+      {/* <div className='card-header'>
         <h3 className='card-title'>Approved Tutor List</h3>
-      </div>
+      </div> */}
       <div className='mt-4 mr-15'>
 
         <TableComponent data={tutors} loading={loading} customActionButtons={renderCustomActionButtons} />
-        <Pagination
+        {/* <Pagination
           count={totalPages}
           page={currentPage}
           onChange={(event, page) => { setCurrentPage(page) }}
           variant="outlined"
           shape="rounded"
-        />
+        /> */}
+        <div className='mt-2 d-flex justify-content-center'>
+          <Pagination
+            count={totalPages}
+            siblingCount={0}
+            page={currentPage}
+            onChange={(event, page) => setCurrentPage(page)}
+          />
+        </div>
       </div>
 
     </>

@@ -4,14 +4,14 @@ from rest_framework import generics
 from contact.serailizers import ContactUsSerializer
 from rest_framework.permissions import IsAuthenticated
 from api.permissions import IsAdmin
-from contact.models import ContactUs
+from contact.models import ContactUs    
 from contact.paginations import ContactUsPaginations
 # Create your views here
 
 class ContactUsCreateView(generics.ListCreateAPIView):
     serializer_class = ContactUsSerializer
     pagination_class = ContactUsPaginations
-    queryset = ContactUs.objects.filter(isDeleted=False).all()
+    queryset = ContactUs.objects.filter(isDeleted=False).all().order_by('-id')
     
     def get_permissions(self):
         """

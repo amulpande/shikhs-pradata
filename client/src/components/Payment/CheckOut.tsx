@@ -35,10 +35,12 @@ function CheckOut({ totalPrice, tutorId, bookingId, bookingStatus }: { totalPric
         });
 
         if (stripeError) {
+          window.location.href = "http://localhost:3000/payment/fails"
           throw new Error(stripeError.message);
         }
       } catch (error: any) {
         setError(error.message);
+        window.location.href = "http://localhost:3000/payment/fails";
       }
     }
   };

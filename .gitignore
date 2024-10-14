@@ -1,5 +1,6 @@
 
 env/
 server/.env/
+server/logs/app.log
 
 client/.next/

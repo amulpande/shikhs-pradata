@@ -21,7 +21,7 @@ const MainContactUsPage = () => {
         setIsFormValid(isValid);
     }, [contactUs]);
 
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setContactUs({ ...contactUs, [e.target.name]: e.target.value })
     }
     return (
@@ -64,7 +64,7 @@ const MainContactUsPage = () => {
                                             <h4>Email</h4>
                                             <p>
                                                 <a href="mailto:pande.amul.dcs24@vnsgu.ac.in">
-                                                    pande.amul.dcs24@vnsgu.ac.in
+                                                    Click Me
                                                 </a>
                                             </p>
 
@@ -94,8 +94,15 @@ const MainContactUsPage = () => {
                                                 const response = await postContactUsApi(contactUs)
                                                 if (response.status === 201) {
                                                     customSuccessMessageErrorNotify('We will contact you soon')
+                                                    setContactUs({
+                                                        'name': '',
+                                                        'email': '',
+                                                        'contact': '',
+                                                        'subject': '',
+                                                        'message': ''
+                                                    })
                                                 }
-                                                
+
                                             } catch (error) {
                                                 console.error('Something went wrong in contact', error)
                                                 customErrorMessageErrorNotify('Something went wrong try again later')
@@ -174,12 +181,12 @@ const MainContactUsPage = () => {
                                             </div>
                                             <div className="col-md-12 col-sm-12 col-12">
                                                 <Button
-                                                variant='contained'
-                                                // color=''
-                                                className='btn btn-warning'
+                                                    variant='contained'
+                                                    // color=''
+                                                    className='btn btn-warning'
                                                     type="submit"
                                                     disabled={!isFormValid}
-                                                    
+
                                                 >
                                                     Submit
                                                 </Button>

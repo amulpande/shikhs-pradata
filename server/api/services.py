@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('api')
 
 # user, tutor and admin related services
 class UserService:

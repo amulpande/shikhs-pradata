@@ -1,0 +1,1582 @@
+{
+	"info": {
+		"_postman_id": "6aff75ef-c32b-4f9a-b309-734d59005aae",
+		"name": "Shikhsa pradata api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34276988"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test12455@test.com",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "contact",
+									"value": "9624980803",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "Male",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "A-105 Annapurn residency",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "profile_image",
+									"type": "file",
+									"src": "/C:/Users/AMUL/OneDrive/Pictures/Saved Pictures/ai-generated-8570323_1920.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/user/register/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"pande.amul.dcs24@vnsgu.ac.in\",\r\n    \"password\":\"Amul#4577:)))\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/user/login/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEzMjc2NTg4LCJpYXQiOjE3MTMyNjkzODgsImp0aSI6IjU5YTBlNjRlYzFlNDRhNzA5MjgxMjMzY2FhYWZkZmFkIiwidXNlcl9pZCI6Mn0.V-SYU12BJtS8spckRkNE18cE1sK9b4k0IyDrPkatr8Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\":\"Amul\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/user/profile/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU0NDc2LCJpYXQiOjE3MTcwNDcyNzYsImp0aSI6IjQ1ZjRkOThiNTQyZTQzNmFiYmFmYTZhOTVkNWYxZjdmIiwidXNlcl9pZCI6NDB9.tl0of52v0no-1lSE69K2FLZgoZOjbM4rpUznyM1-gbs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/user/profile/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEzOTQ3NjE1LCJpYXQiOjE3MTM5NDA0MTUsImp0aSI6IjEyYzg4ZGMwNjJmMzRmNDFiZmIwM2Q5YzM1MmE0NGFjIiwidXNlcl9pZCI6Mn0.gQVQPyCv50-3S6a51uMJr9q6KgnxX8l8NXNKVFyybKc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"Amul#4577:)\",\r\n    \"password2\": \"Amul#4577:)\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/user/change-password/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"change-password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"email\":\"pande.amul.dcs24@vnsgu.ac.in\"\r\n    \"password\": \"Amul#4577:)))\",\r\n    \"password2\": \"Amul#4577:)))\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/user/reset-password/MjI/c7owzi-3dfb138fae0d4f45a59ad6a6f4a11951/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"reset-password",
+								"MjI",
+								"c7owzi-3dfb138fae0d4f45a59ad6a6f4a11951",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check-order-status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2NTUzOTY2LCJpYXQiOjE3MTY1NDY3NjYsImp0aSI6IjBmNGY2MmJmNWE1NjQ0ODBiMTA5NTkxMTU2MDc5NzRmIiwidXNlcl9pZCI6MjJ9.95zW8wsOzaoV8y-CekJjiiXPZmvPC__-yij1tAOhJQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/booking/user/my-order/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"booking",
+								"user",
+								"my-order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "book-tutor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/booking/tutor/all-booking-order/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"booking",
+								"tutor",
+								"all-booking-order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order-cancel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2NTUzOTY2LCJpYXQiOjE3MTY1NDY3NjYsImp0aSI6IjBmNGY2MmJmNWE1NjQ0ODBiMTA5NTkxMTU2MDc5NzRmIiwidXNlcl9pZCI6MjJ9.95zW8wsOzaoV8y-CekJjiiXPZmvPC__-yij1tAOhJQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usr_cancellation_reason\":\"Sorry, but for some reason not able to attend\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/booking/user/cancel-order/21",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"booking",
+								"user",
+								"cancel-order",
+								"21"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "city",
+			"item": [
+				{
+					"name": "display",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/city/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"city",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city_name\":\"VAPI\",\r\n    \"city_state\":\"GUJARAT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/admin/city/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"city",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city_name\": \"VAPI\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/admin/city/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"city",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subject",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "display",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/subject/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"subject",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject_name\": \"ENGLISH\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/admin/subject/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"subject",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/subject/2",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"subject",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "disable-subject",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/subject/disable/12",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"subject",
+								"disable",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tutor",
+			"item": [
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2NTQ1NzMwLCJpYXQiOjE3MTY1Mzg1MzAsImp0aSI6IjIxNTFkNGUwYmM0OTQyODM5YjM4ODAyNWI3MDg5ZGVkIiwidXNlcl9pZCI6Mzh9.S5OLpmg3lyjuTusRAle9E5193Dj1yWiJg7CmD_Y3W4Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/tutor/profile/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"tutor",
+								"profile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "xapivim283@avastu.com",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Xavim",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Berserk",
+									"type": "text"
+								},
+								{
+									"key": "contact",
+									"value": "9988774455",
+									"type": "text"
+								},
+								{
+									"key": "profile_image",
+									"type": "file",
+									"src": "/C:/xampp/htdocs/homeservice/gallery/938101.png"
+								},
+								{
+									"key": "password",
+									"value": "Amul#4577:)",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "Amul#4577:)",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "Male",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Vnsgu Hostel",
+									"type": "text"
+								},
+								{
+									"key": "experience",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "subjects",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "22/01/2000",
+									"type": "text"
+								},
+								{
+									"key": "short_bio",
+									"value": "English Grammer are hard for students which i want to make it Fun for them",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "500",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/tutor/register/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"tutor",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ladiki2492@avastu.com\",\r\n    \"password\":\"Amul#4577:)\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/user/login/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEzMjc2Njg4LCJpYXQiOjE3MTMyNjk0ODgsImp0aSI6Ijc0Y2ExMWVmNmRiMjQ1YjNiZjczOTY4YWMwNzNhNTg0IiwidXNlcl9pZCI6MTR9.9J18dd_1eb3Kg-Hd6TmgmBiPweErJjqoGShcep5euzw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "contact",
+									"value": "5544778844",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/tutor/update/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"tutor",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "turor-all-booking-order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2NTc1LCJpYXQiOjE3MTcwNDkzNzUsImp0aSI6IjliMThlNTdjODkwOTQ2NGE5MzUxODEyNjJlZjBhNThhIiwidXNlcl9pZCI6Mzh9.gA5ZPmy4MVMf-qOCGnswE_BF6jsZBTjjr54bgwPWAVE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/booking/tutor/all-booking-order/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"booking",
+								"tutor",
+								"all-booking-order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve-reject-order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/booking/tutor/all-accepted-booking-order/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"booking",
+								"tutor",
+								"all-accepted-booking-order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all-accepted-order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2NTc1LCJpYXQiOjE3MTcwNDkzNzUsImp0aSI6IjliMThlNTdjODkwOTQ2NGE5MzUxODEyNjJlZjBhNThhIiwidXNlcl9pZCI6Mzh9.gA5ZPmy4MVMf-qOCGnswE_BF6jsZBTjjr54bgwPWAVE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/booking/tutor/all-accepted-booking-order/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"booking",
+								"tutor",
+								"all-accepted-booking-order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my-feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2NTc1LCJpYXQiOjE3MTcwNDkzNzUsImp0aSI6IjliMThlNTdjODkwOTQ2NGE5MzUxODEyNjJlZjBhNThhIiwidXNlcl9pZCI6Mzh9.gA5ZPmy4MVMf-qOCGnswE_BF6jsZBTjjr54bgwPWAVE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/rating/tutor/feedback/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"rating",
+								"tutor",
+								"feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my-payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2NTc1LCJpYXQiOjE3MTcwNDkzNzUsImp0aSI6IjliMThlNTdjODkwOTQ2NGE5MzUxODEyNjJlZjBhNThhIiwidXNlcl9pZCI6Mzh9.gA5ZPmy4MVMf-qOCGnswE_BF6jsZBTjjr54bgwPWAVE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/payment/tutor/payment/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"payment",
+								"tutor",
+								"payment",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my-total-earning",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2NTc1LCJpYXQiOjE3MTcwNDkzNzUsImp0aSI6IjliMThlNTdjODkwOTQ2NGE5MzUxODEyNjJlZjBhNThhIiwidXNlcl9pZCI6Mzh9.gA5ZPmy4MVMf-qOCGnswE_BF6jsZBTjjr54bgwPWAVE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/payment/tutor/total-earning/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"payment",
+								"tutor",
+								"total-earning",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-payment",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "send-meeting-link",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MzY2NTE3LCJpYXQiOjE3MTYzNTkzMTcsImp0aSI6IjM4YmRkMDk1ZTI1NzQ4NTc5NTA0ZmY2MmZiZWNlZDM4IiwidXNlcl9pZCI6MjJ9.J5rQM9Z997m2N3qY0bnWnVh68DagLSmIGiNpu5A7LjA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":\"22\",\r\n    \"meeting_link\":\"this is yout meeting link\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/booking/tutor/send-meeting-link/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"booking",
+								"tutor",
+								"send-meeting-link",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "all-user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MTUwODg1LCJpYXQiOjE3MTcxNDM2ODUsImp0aSI6Ijg4MmFkMzczNzZhODQzZDQ4OWVmOTM4MTgyNmZmMmZjIiwidXNlcl9pZCI6MX0.URXQNz4nXTe_tA9rRBCJPA_-sNH3rD3gT02CZSKKAlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/get-all-user",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"get-all-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Tutor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2MTUyLCJpYXQiOjE3MTcwNDg5NTIsImp0aSI6Ijc3ZDA0ZTkzNTM1NjRhYWZiYzgzNDc4NTRlZTY1MTFmIiwidXNlcl9pZCI6MX0.E-Ll_bJt-szWZToxf0oAGZAUPeUy4V9tvUirmRsDuCw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/all-tutor/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"all-tutor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Not Approved Tutor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE0NjM3Njc4LCJpYXQiOjE3MTQ2MzA0NzgsImp0aSI6IjUwNzExYmE1YjM3MTQ2OGE4MWFjMTM2ZjhhMTFmN2Y0IiwidXNlcl9pZCI6MX0.Yo1bFOerOgLFOheEIBGixJ6OwFCkde7t6M4QNY8ozvk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/all-not-approved-tutor/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"all-not-approved-tutor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Tutor Request",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tutor_approve\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/admin/approveTutor/14",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"approveTutor",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/admin/login/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "blocked-tutor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2MTUyLCJpYXQiOjE3MTcwNDg5NTIsImp0aSI6Ijc3ZDA0ZTkzNTM1NjRhYWZiYzgzNDc4NTRlZTY1MTFmIiwidXNlcl9pZCI6MX0.E-Ll_bJt-szWZToxf0oAGZAUPeUy4V9tvUirmRsDuCw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/all-blocked-tutor/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"all-blocked-tutor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unblocked-tutor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE0NjQ3NDYzLCJpYXQiOjE3MTQ2NDAyNjMsImp0aSI6IjFmNDUzOTUwMWVlYTRiZGM4NWY2OGU5M2U3Y2RmMGM5IiwidXNlcl9pZCI6MX0.LhrJwdvx8breYiPW9sOdIJ3ING3VnfXnzZWY6_GWrkg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_blocked\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/admin/blocked-unblocked-tutor/24",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"blocked-unblocked-tutor",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-tutor-data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2MTUyLCJpYXQiOjE3MTcwNDg5NTIsImp0aSI6Ijc3ZDA0ZTkzNTM1NjRhYWZiYzgzNDc4NTRlZTY1MTFmIiwidXNlcl9pZCI6MX0.E-Ll_bJt-szWZToxf0oAGZAUPeUy4V9tvUirmRsDuCw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/get-tutor-data/38",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"get-tutor-data",
+								"38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all-approve-tutor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2MTUyLCJpYXQiOjE3MTcwNDg5NTIsImp0aSI6Ijc3ZDA0ZTkzNTM1NjRhYWZiYzgzNDc4NTRlZTY1MTFmIiwidXNlcl9pZCI6MX0.E-Ll_bJt-szWZToxf0oAGZAUPeUy4V9tvUirmRsDuCw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/admin/all-approved-tutor/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"admin",
+								"all-approved-tutor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2MTUyLCJpYXQiOjE3MTcwNDg5NTIsImp0aSI6Ijc3ZDA0ZTkzNTM1NjRhYWZiYzgzNDc4NTRlZTY1MTFmIiwidXNlcl9pZCI6MX0.E-Ll_bJt-szWZToxf0oAGZAUPeUy4V9tvUirmRsDuCw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/rating/admin/tutor-feedback/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"rating",
+								"admin",
+								"tutor-feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check-my-earning",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1Njc5MTEyLCJpYXQiOjE3MTU2NzE5MTIsImp0aSI6ImM3ODMyYzcxOTQyMjQwZjJiYjk3ZWRmMjhhMWJjMjBiIiwidXNlcl9pZCI6MjV9.Ekfr1B1AKI1VuqZ8_rvp_JnUgtgwmcCT63Iyf2zST90",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/payment/admin/payment/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"payment",
+								"admin",
+								"payment",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my-total-earning",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MDU2MTUyLCJpYXQiOjE3MTcwNDg5NTIsImp0aSI6Ijc3ZDA0ZTkzNTM1NjRhYWZiYzgzNDc4NTRlZTY1MTFmIiwidXNlcl9pZCI6MX0.E-Ll_bJt-szWZToxf0oAGZAUPeUy4V9tvUirmRsDuCw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/payment/admin/total-earning/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"payment",
+								"admin",
+								"total-earning",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order-booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2NDcwNDQ2LCJpYXQiOjE3MTY0NjMyNDYsImp0aSI6IjQ2MzliNjY3YjM4YTQxNzhiMmI0M2ZiYTczZjFlMjQyIiwidXNlcl9pZCI6MX0.m5dzEDkDWSPrY8DoMqGLpgihb192j9Sf2P8l1CxQCks",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/booking/admin/order-booking/?page_size=5",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"booking",
+								"admin",
+								"order-booking",
+								""
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "booking",
+			"item": [
+				{
+					"name": "get booking",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "token",
+			"item": [
+				{
+					"name": "verify token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/user/login/token/verify/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"login",
+								"token",
+								"verify",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/user/login/token/refresh/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"login",
+								"token",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "feedback",
+			"item": [
+				{
+					"name": "post-feedback",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":22,\r\n    \"tutor_id\":27,\r\n    \"review\": \"your work was amazing\",\r\n    \"star\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/rating/feedback-tutor/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"rating",
+								"feedback-tutor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/rating/admin/tutor-feedback/approve-disapprove/<pk>",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"rating",
+								"admin",
+								"tutor-feedback",
+								"approve-disapprove",
+								"<pk>"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "contact-us",
+			"item": [
+				{
+					"name": "create-contact",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2NDU4MDc3LCJpYXQiOjE3MTY0NTA4NzcsImp0aSI6ImUxNmI1MjY5NmJiMTQ4ODc5NzM0NWI2MTg2YTQ1ZDc3IiwidXNlcl9pZCI6MX0.RJ06vwUs1rb-NOydVGpxlRtmPypaEpr--NT83JYr_W4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"luffy\",\r\n    \"email\": \"luffy@example.com\",\r\n    \"contact\": \"8855446622\",\r\n    \"subject\": \"related to delete\",\r\n    \"message\": \"Hello, my account has been deleted by you or something must have happend so can you please look into that\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/contact/create-contact-us/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"contact",
+								"create-contact-us",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crud-contact",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2NDU4MDc3LCJpYXQiOjE3MTY0NTA4NzcsImp0aSI6ImUxNmI1MjY5NmJiMTQ4ODc5NzM0NWI2MTg2YTQ1ZDc3IiwidXNlcl9pZCI6MX0.RJ06vwUs1rb-NOydVGpxlRtmPypaEpr--NT83JYr_W4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/contact/contact-us-details/8/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"contact",
+								"contact-us-details",
+								"8",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
